@@ -1,0 +1,54 @@
+<div class="ui main container">
+  <div class="ui grid">
+
+    <div class="four wide column">
+      <div class="ui vertical fluid tabular menu">
+        <a class="item" 
+        ng-class="{ active: a.name == vm.assignmentName }" 
+        ng-click="vm.setAssignment(a.id)" 
+        ng-repeat="a in vm.srv.assignments">
+        <div class="header">{{a.name}}</div>
+        (due {{ vm.srv.getDueDate(a.due) }}</a>
+      </div>
+    </div>
+
+    <div class="twelve wide stretched column">
+      <div class="ui segment">
+
+        <h2 class="ui header">{{ vm.assignmentName }}</h2>
+        <span class="right floated text item">due {{ vm.srv.getDueDate(vm.assignmentDue) }} before class</span>
+
+        <div class="ui message transition" ng-class="{ hidden: 'simple' != vm.assignmentId }">
+        <p>In this assignment you will create a JavaScript enabled web page.  
+
+          <strong>HTML:</strong>
+          <div class="ui horizontal bulleted list">          
+            <div class="item">doctype</div>          
+            <div class="item">tags (table, div, span, ...)</div>
+            <div class="item">HTML5 drag and drop</div>
+          </div>
+
+          <br/>
+          <strong>JavaScript:</strong>
+          <div class="ui horizontal bulleted list">
+            <div class="item">manipulate DOM</div>
+            <div class="item">button click</div>
+            <div class="item">interval</div>
+            <div class="item">timeout</div>
+            <div class="item">onSubmit validation</div>
+            <div class="item">window popup</div>
+          </div>          
+
+        </div> <!-- end simple-->
+
+
+        <div class="ui message transition" ng-class="{ hidden: 'jsgame' != vm.assignmentId }">
+          Javascript game
+        </div> <!-- end jsgame -->
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

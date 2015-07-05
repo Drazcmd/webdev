@@ -1,0 +1,43 @@
+{
+	"assignments": [
+	{ "name": "Simple Page", "due": 3, "id": "simple" },	
+	{ "name": "Javascript Game", "due": 7, "id": "jsgame" },
+	{ "name": "App Design", "due": 11 , "id":"design"},
+	{ "name": "Front-End App", "due": 15 , "id": "frontend"},
+	{ "name": "Unrefined Full App", "due": 23, "id": "backend"},
+	{ "name": "Refined Full App", "due": 29, "id": "final" }
+	],
+
+	"sessions": [
+	{ "day": 1, "topic": "HTML", "exercise": "hello world page"},
+	{ "day": 2, "topic": "Javascript", "exercise": "manipulate the DOM"},
+	{ "day": 3, "topic": "HTTP and Forms", "exercise": "exercise post and get to control output"},
+	{ "day": 4, "topic": "CSS", "exercise": "touch of style"},
+	{ "day": 5, "topic": "Events and DHTML", "exercise": "js controlled css, nav bars, menus, etc"},
+	{ "day": 6, "topic": "more javascript", "exercise": "js game"},
+	{ "day": 7, "topic": "HTML5", "exercise": "canvas game"},
+	{ "day": 8, "topic": "Extensions and Style Frameworks", "exercise": "beautification"},
+	{ "day": 9, "topic": "JS Libraries", "exercise": "more modern js"},
+	{ "day": 10, "topic": "MVC", "exercise": "design project"},
+	{ "day": 11, "topic": "AngularJS", "exercise": "implementation"},
+	{ "day": 12, "topic": "AngularJS", "exercise": "custom directives"},
+	{ "day": 13, "topic": "Front End Unit Testing", "exercise": "karma"},
+	{ "day": 14, "topic": "Headless Browsing", "exercise": "casper"},
+	{ "day": 15, "topic": "RECESS"},
+	{ "day": 16, "topic": "Web Server Architectures", "exercise": "Local Webserver"},
+	{ "day": 17, "topic": "CGI, Python and WSGI", "exercise": "Python Webapp"},
+	{ "day": 18, "topic": "Frameworks the RESTful way", "exercise": "(Frameworked) Local App"},
+	{ "day": 19, "topic": "Web hosting", "exercise": "Hosted App"},
+	{ "day": 20, "topic": "Databases", "exercise": "SQL Exercise"},
+	{ "day": 21, "topic": "Back End Unit Testing", "exercise": "Add Test Suite to App"},
+	{ "day": 22, "topic": "Salted Authorization", "exercise": "Add Login to App"},
+	{ "day": 23, "topic": "security: SQL, XSS, CSRF, XSSI, HTTPS", "exercise": "security exercises"},
+	{ "day": 24, "topic": "service APIs", "exercise": "connect"},
+	{ "day": 25, "topic": "Modern Authorization", "exercise": "OAuth2 Login"},
+	{ "day": 26, "topic": "scalability, server caching, AWS, GAE", "exercise": "migrate to PaaS"},
+	{ "day": 27, "topic": "web services: S3, Hadoop, Spark, metrics", "exercise": "add metrics"},
+	{ "day": 28, "topic": "THANKSGIVING"},
+	{ "day": 29, "topic": "presentations"}, 
+	{ "day": 30, "topic": "presentations"}
+	]
+}
