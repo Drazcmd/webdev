@@ -10,7 +10,7 @@
 			<tr ng-repeat="session in vm.sessions">
 				<td>{{vm.getDueDate(session.day)}}</td>
 				<td>
-					<a ng-href="#/assignments/{{session.assignment.id}}">
+					<a class="linkInverted" ng-href="#/assignments/{{session.assignment.id}}">
 						{{ session.assignment ? session.assignment.name : ""}}
 					</a>
 				</td>

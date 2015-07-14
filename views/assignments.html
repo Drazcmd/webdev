@@ -19,25 +19,22 @@
         <span class="right floated text item">due {{ vm.srv.getDueDate(vm.assignmentDue) }} before class</span>
 
         <div class="ui message transition" ng-class="{ hidden: 'simple' != vm.assignmentId }">
-        <p>In this assignment you will create a JavaScript enabled web page.  
+          <p>In this assignment you will create a web page to demonstrate your understanding of HTML and basic JavaScript functionality.  We will create a semi-functional main page stub for our web application.  It will consist of &quot;cards&quot; that contain recent blob postings or picture uploads.  A &quot;card&quot; can be an image or a block of text.
+          </p>
+          <p>Requirements:</p>
+          <ul>            
+            <li>Use a <code>&lt;table&gt;</code> to layout a regular grid of &quot;cards&quot;.  There should be a sufficient number of cards so that scrolling down is necessary to view them all.</li>
+            <li>Use an <code>&lt;interval&gt;</code> to periodically cycle through different images for each image card</li>
+            <li>Use a <code>&lt;timeout&gt;</code> to inform the user to login or that they can register for a free account</li>
+            <li>A button to login, results in window popup when clicked</li>            
+            <li>A link to register a new account, takes the user to some other web page, e.g., <a href="http://www.rice.edu" target="_blank">http://www.rice.edu</a></li>
+            <li>Text field for search, with search button.  Search button performs &quot;validation&quot; on text and results in window popup informing the user if they have a valid search term</li>
+          </ul>
 
-          <strong>HTML:</strong>
-          <div class="ui horizontal bulleted list">          
-            <div class="item">doctype</div>          
-            <div class="item">tags (table, div, span, ...)</div>
-            <div class="item">HTML5 drag and drop</div>
-          </div>
+          <div class="ui section divider"></div>
 
-          <br/>
-          <strong>JavaScript:</strong>
-          <div class="ui horizontal bulleted list">
-            <div class="item">manipulate DOM</div>
-            <div class="item">button click</div>
-            <div class="item">interval</div>
-            <div class="item">timeout</div>
-            <div class="item">onSubmit validation</div>
-            <div class="item">window popup</div>
-          </div>          
+
+          <p>...</p>          
 
         </div> <!-- end simple-->
 

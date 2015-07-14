@@ -2,6 +2,10 @@ body {
 	background-color: #FFFFFF;
 }
 
+.linkInverted {
+	color: #FFFF00;	
+}
+
 #riceLogo {
 	width: 6em;
 	margin-top:-1em;
