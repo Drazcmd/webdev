@@ -219,7 +219,7 @@
 1. Jetty
 1. Servlets, ASP, JSP
 1. NodeJS
-1. XAMPP, MAMP, LAMP
+1. WAMP, XAMPP, MAMP, LAMP
 1. **inclass** nginx server
 
 ## CGI, Python and WSGI
@@ -283,27 +283,52 @@
 ## Salted Authorization
 
 1. User Authentication
-1. 
+1. Hashing
+1. Rainbow Tables
+1. Add some salt
+1. Add some pepper
+1. Sessions
+1. Captcha
+1. **inclass** add user authentication
 
-## security: SQL, XSS, CSRF, XSSI, HTTPS
+## Security
 
-Security: SQL injection, XSS, CSRF, XSSI, HTTPS
+1. Cross origin resource sharing (CORS)
+1. SQL injection
+1. Man in the Middle
+1. Transport Layer Security and HTTPS
+1. Encryption
+1. Cross-site scripting (XSS) and inclusion (XSSI)
+1. Cross-site request forgery (CSRF)
+1. Throttling and DOS
+1. **inclass** some aforementioned security exercise
 
-## service APIs
+## Third Party Authorization
 
-Web services and advanced topics such as
-    scalability with server caching and Google App Engine
-    security with OAuth
-    storage with S3
-    metrics, metrics, metrics!
+1. OAuth 
+1. OAuth 2.0
+1. More security topics: WS-Security, Kerberos
+1. **inclass** add OAuth2 authentication
 
 ### Assignment: Integrated Web App
 
-## Modern Authorization
-
 ## scalability, server caching, AWS, GAE
 
-## integrating web services: S3, Hadoop, Spark, metrics
+1. Scalable Web Services
+1. Server Caching, memcache
+1. Google Ape Engine design
+1. Amazon Web Services design
+
+## Service APIs
+
+1. Google APIs
+1. Google Analytics
+1. Web metrics
+1. S3 Storage
+
+## Integrating Web Services
+
+1. Leveraging Hadoop and Spark
 
 ---
 
