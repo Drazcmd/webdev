@@ -33,15 +33,38 @@
 
           <div class="ui section divider"></div>
 
-
-          <p>...</p>          
+          <p></p>
 
         </div> <!-- end simple-->
 
 
         <div class="ui message transition" ng-class="{ hidden: 'jsgame' != vm.assignmentId }">
-          Javascript game
+          In this assignment you create a simple JavaScript game to be played in a browser.  
         </div> <!-- end jsgame -->
+
+        <div class="ui message transition" ng-class="{ hidden: 'design' != vm.assignmentId }">
+          In this assignment you will layout the frontend and functional design of your web application.
+        </div> <!-- end design -->
+
+        <div class="ui message transition" ng-class="{ hidden: 'frontend' != vm.assignmentId }">
+          In this assignment you will implement the frontend of your web application.
+        </div> <!-- end frontend -->
+
+        <div class="ui message transition" ng-class="{ hidden: 'backend' != vm.assignmentId }">
+          In this assignment you will deploy your web application.
+        </div> <!-- end backend -->
+
+        <div class="ui message transition" ng-class="{ hidden: 'integrated' != vm.assignmentId }">
+          In this assignment you will integrate your web application with external services.
+        </div> <!-- end integrated -->
+
+        <div class="ui message transition" ng-class="{ hidden: 'final' != vm.assignmentId }">
+          In this assignment you will deliver your multi-user web application.
+        </div> <!-- end final -->
+
+
+
+
 
       </div>
     </div>
