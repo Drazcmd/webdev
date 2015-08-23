@@ -19,16 +19,59 @@
         <span class="right floated text item">due {{ vm.srv.getDueDate(vm.assignmentDue) }} before class</span>
 
         <div class="ui message transition" ng-class="{ hidden: 'simple' != vm.assignmentId }">
-          <p>In this assignment you will create a web page to demonstrate your understanding of HTML and basic JavaScript functionality.  We will create a semi-functional main page stub for our web application.  It will consist of &quot;cards&quot; that contain recent blob postings or picture uploads.  A &quot;card&quot; can be an image or a block of text.
+          <p>In this assignment you will create web pages to demonstrate your understanding of HTML and basic JavaScript functionality.  We will create semi-functional main page and registration page stubs for our web application.  The main page will consist of &quot;cards&quot; that contain recent blob postings or picture uploads.  A &quot;card&quot; can be an image or a block of text.
           </p>
-          <p>Requirements:</p>
+
+          <p>For <em>this</em> assignment, do not follow unobtrusive coding style: Each page should be self-contained with an internal <code>script</code> tag -- no separate javascript files.  Use Chrome as your standard supported browser.</p>
+
+          <h5>Main Page Requirements</h5>
           <ul>            
             <li>Use a <code>&lt;table&gt;</code> to layout a regular grid of &quot;cards&quot;.  There should be a sufficient number of cards so that scrolling down is necessary to view them all.</li>
-            <li>Use an <code>&lt;interval&gt;</code> to periodically cycle through different images for each image card</li>
-            <li>Use a <code>&lt;timeout&gt;</code> to inform the user to login or that they can register for a free account</li>
-            <li>A button to login, results in window popup when clicked</li>            
-            <li>A link to register a new account, takes the user to some other web page, e.g., <a href="http://www.rice.edu" target="_blank">http://www.rice.edu</a></li>
-            <li>Text field for search, with search button.  Search button performs &quot;validation&quot; on text and results in window popup informing the user if they have a valid search term</li>
+            <li>Each card should either be an image or a block of text, e.g., <em>lorem ipsum</em>.  Have about the same number of each.</li>
+            <li>At least one card should have both text and an image</li>
+            <li>At least one card should have a link that opens a new window and navigates to an external site, e.g., http://www.rice.edu</li>
+            <li>Use an <code>interval</code> to periodically cycle through different images for each image card</li>            
+            <li>Each image card contains a button to stop the interval, and another button to start the interval.  All intervals are started by default.</li>
+            <li>Use a <code>timeout</code> (after several seconds) to inform the user to login or that they can register for a free account</li>
+            <li>A button to login, results in window popup when clicked with an informative message.</li> 
+            <li>A link to register for a new account, takes the user to the registration page (see below)</li>
+          </ul>
+          <h5>Registration Page Requirements</h5>
+          <ul>
+            <li>A <code>form</code> with text fields for users's</li>
+            <ul>            
+              <div class="ui horizontal bulleted list">                
+                <span class="item"></span>
+                <span class="item">desired account name</span>
+                <span class="item">first name</span>
+                <span class="item">last name</span>
+                <span class="item">address (optional)</span>
+                <span class="item">city</span>
+                <span class="item">state</span>                
+                <span class="item">phone number (optional)</span>
+                <span class="item">date of birth</span>
+                <span class="item">email address</span>
+                <span class="item">password</span>
+                <span class="item">password confirmation</span>                
+              </div>              
+            </ul>
+            <li>There should also be a hidden field that contains the current timestamp in millis</li>
+            <li>Clear button that empties all fields (resets the timestamp)</li>
+            <li>Submit button that performs validation on the form</li>
+            <ul>
+              <li>All fields are required except those that are optional.</li>
+              <li>Fields should be validated for proper content, i.e., valid phone number, valid email address.  [These do not need to be exhaustive]</li>
+              <li>leave a stub for (or implement if you like) city+state lookup</li>
+              <li>validate password equality with confirmation field</li>
+              <li>leave a stub to check if the account name is available</li>
+            </ul>
+            <li>The submit button makes a GET request to the form processor page (see below) with the form contents</li>
+          </ul>
+
+          <h5>Form Processor Requirements</h5>
+          <ul>
+            <li>Extract the query parameter from the location and display the key-value pairs in a table</li>
+            <li>The &quot;hidden field&quot; timestamp should be rendered as a human readable datetime</li>
           </ul>
 
           <div class="ui section divider"></div>
