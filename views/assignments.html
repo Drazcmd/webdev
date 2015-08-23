@@ -22,17 +22,18 @@
 
         <h2 class="ui header">{{ vm.assignmentName }}</h2>
         <div class="ui transition right floated text item" ng-class="{ hidden: !vm.assignmentId }">
-          due {{ vm.srv.getDueDate(vm.assignmentDue) }} before class<br/>
-          Turnin repo: <strong>COMP(431|531)-F15:hw-{{ vm.assignmentId }}</strong>
+          <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} <em>before</em> class at 2:30 PM<br/>
+          Turnin repo: <strong>COMP431-F15:hw-{{ vm.assignmentId }}</strong>
         </div>
 
         <div class="ui message transition" ng-class="{ hidden: vm.assignmentId }">
           <ul>
           <li>Assignments will be collected using Turnin.</li>
           <li>Each assignment page has the associated repo, they are <em>case sensitive</em></li>
+          <li>Even if you are enrolled in COMP531 still use the COMP431 repository name for submission</li>
           <li><a href="https://docs.rice.edu/confluence/display/ITDIY/Using+the+'turnin'+command+to+manage+homework">Turnin instructions</a></li>
           <li>In-class exercises are also collected via Turnin with repo 
-              <strong>COMP(431|531)-F15:inclass-#</strong> with the class number for # (i.e., the numeric value in <em>Topic</em> on the <a href="#/schedule">Schedule page)</a></li>
+              <strong>COMP431-F15:inclass-#</strong> with the class number for # (i.e., the numeric value in <em>Topic</em> 1on the <a href="#/schedule">Schedule page)</a></li>
         </div>
 
         <div class="ui message transition" ng-class="{ hidden: 'simple' != vm.assignmentId }">
@@ -47,9 +48,9 @@
             <li>Each card should either be an image or a block of text, e.g., <em>lorem ipsum</em>.  Have about the same number of each.</li>
             <li>At least one card should have both text and an image</li>
             <li>At least one card should have a link that opens a new window and navigates to an external site, e.g., http://www.rice.edu</li>
-            <li>Use an <code>interval</code> to periodically cycle through different images for each image card</li>            
+            <li>Use an <code>interval</code> to periodically cycle through different images for each image card.  The interval times should be a random number of seconds between 1 and 5 inclusive.</li>
             <li>Each image card contains a button to stop the interval, and another button to start the interval.  All intervals are started by default.</li>
-            <li>Use a <code>timeout</code> (after several seconds) to inform the user to login or that they can register for a free account</li>
+            <li>Use a <code>timeout</code> (after 3 seconds) to inform the user to login or that they can register for a free account</li>
             <li>A button to login, results in window popup when clicked with an informative message.</li> 
             <li>A link to register for a new account, takes the user to the registration page (see below)</li>
           </ul>
