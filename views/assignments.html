@@ -2,12 +2,17 @@
   <div class="ui grid">
 
     <div class="four wide column">
-      <div class="ui vertical fluid tabular menu">
+      <div class="ui vertical fluid tabular menu">    
+        <a class="item" 
+        ng-class="{ active: vm.assignmentName === 'General Info' }" 
+        ng-click="vm.setAssignment()">
+        <div class="header">General Info</div>
+        </a>            
         <a class="item" 
         ng-class="{ active: a.name == vm.assignmentName }" 
         ng-click="vm.setAssignment(a.id)" 
         ng-repeat="a in vm.srv.assignments">
-        <div class="header">{{a.name}}</div>
+        <div class="header">{{a.hwid}}. {{a.name}}</div>
         (due {{ vm.srv.getDueDate(a.due) }})</a>
       </div>
     </div>
@@ -16,7 +21,19 @@
       <div class="ui segment">
 
         <h2 class="ui header">{{ vm.assignmentName }}</h2>
-        <span class="right floated text item">due {{ vm.srv.getDueDate(vm.assignmentDue) }} before class</span>
+        <div class="ui transition right floated text item" ng-class="{ hidden: !vm.assignmentId }">
+          due {{ vm.srv.getDueDate(vm.assignmentDue) }} before class<br/>
+          Turnin repo: <strong>COMP(431|531)-F15:hw-{{ vm.assignmentId }}</strong>
+        </div>
+
+        <div class="ui message transition" ng-class="{ hidden: vm.assignmentId }">
+          <ul>
+          <li>Assignments will be collected using Turnin.</li>
+          <li>Each assignment page has the associated repo, they are <em>case sensitive</em></li>
+          <li><a href="https://docs.rice.edu/confluence/display/ITDIY/Using+the+'turnin'+command+to+manage+homework">Turnin instructions</a></li>
+          <li>In-class exercises are also collected via Turnin with repo 
+              <strong>COMP(431|531)-F15:inclass-#</strong> with the class number for # (i.e., the numeric value in <em>Topic</em> on the <a href="#/schedule">Schedule page)</a></li>
+        </div>
 
         <div class="ui message transition" ng-class="{ hidden: 'simple' != vm.assignmentId }">
           <p>In this assignment you will create web pages to demonstrate your understanding of HTML and basic JavaScript functionality.  We will create semi-functional main page and registration page stubs for our web application.  The main page will consist of &quot;cards&quot; that contain recent blob postings or picture uploads.  A &quot;card&quot; can be an image or a block of text.

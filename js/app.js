@@ -56,6 +56,12 @@
         vm.assignmentId = null;
         
         function setAssignment(id) {
+            if (!id) {
+                vm.assignmentName = 'General Info';
+                vm.assignmentDue = undefined;
+                vm.assignmentId = undefined;
+                return;
+            }
             var a = vm.srv.getAssignment(id);
             if (a == undefined) {
                 id = 'simple';
@@ -111,11 +117,12 @@
         $http.get('planning.json').success(function(data) {
             srv.sessions.length = 0;
             angular.forEach(data.sessions, function(row) {
-                srv.sessions.push(row);
+                srv.sessions.push(row);                
                 for (var i = 0; i < data.assignments.length; ++i) {
                     var assignment = data.assignments[i];
                     if (assignment.due == row.day) {
                         row.assignment = assignment;
+                        row.assignment.hwid = i + 1;
                         srv.assignments[assignment.id] = assignment;
                     }
                 }
