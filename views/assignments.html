@@ -27,7 +27,7 @@
         </div>
 
         <div class="ui message transition" ng-class="{ hidden: vm.assignmentId }">
-          <ul>
+          <uls
           <li>Assignments will be collected using Turnin.</li>
           <li>Each assignment page has the associated repo, they are <em>case sensitive</em></li>
           <li>Even if you are enrolled in COMP531 still use the COMP431 repository name for submission</li>
@@ -56,7 +56,7 @@
           </ul>
           <h5>Registration Page Requirements</h5>
           <ul>
-            <li>A <code>form</code> with text fields for users's</li>
+            <li>A <code>form</code> with text fields for user's</li>
             <ul>            
               <div class="ui horizontal bulleted list">                
                 <span class="item"></span>
@@ -79,10 +79,12 @@
             <ul>
               <li>All fields are required except those that are optional.</li>
               <li>Fields should be validated for proper content, i.e., valid phone number, valid email address.  [These do not need to be exhaustive]</li>
-              <li>leave a stub for (or implement if you like) city+state lookup</li>
+              <li>Account name can only be upper or lower case letters and numbers, but may not start with a number</li>
+              <li>leave a stub for (or implement if you like) city+state confirmation (i.e., Berkeley, TX doesn't exist)</li>
               <li>validate password equality with confirmation field</li>
               <li>leave a stub to check if the account name is available</li>
             </ul>
+            <li>If the form is not valid then use an alert to inform the user what is wrong</li>
             <li>The submit button makes a GET request to the form processor page (see below) with the form contents</li>
           </ul>
 
