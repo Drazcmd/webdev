@@ -34,9 +34,11 @@
 	{"item":"hidden timestamp is rendered as human readable datetime", "pts":3 }
 ]},
 {"section":"Style", "items":[
-	{"item":"Code is properly formatted (indentation, spacing)", "pts":5 },
-	{"item":"function and variable names are descriptive", "pts":5 },
-	{"item":"attribute values are quoted", "pts":5 },
-	{"item":"appropriate use of whitespace", "pts":5 }
+	{"item":"Code is properly formatted (indentation, spacing)", "pts": 2 },
+	{"item":"function and variable names are descriptive", "pts":2 },
+	{"item":"attribute values are quoted", "pts":2 },
+	{"item":"appropriate use of whitespace", "pts": 2 },
+	{"item":"code is not complex", "pts": 2 },
+	{"item":"code 'smells' right", "pts": 10 }
 ]}
 ]
