@@ -54,12 +54,34 @@
         vm.assignmentName = null;
         vm.assignmentDue = null;
         vm.assignmentId = null;
+        vm.rubric = null;
+        vm.url = null;
+        vm.showRubric = false;
+
+        vm.computeTotalPoints = function(items) {
+            return items.map(function(item) { return item.pts })
+                        .reduce(function(l,r) { return l + r })
+        }
+
+        vm.getTotalPoints = function() {
+            if (vm.rubric)
+                return vm.computeTotalPoints(
+                    vm.rubric.map(function(sec) { return sec.items })
+                        .reduce(function(l,r) { return l.concat(r) })
+                    )
+            else
+                return 0;
+        }
+
+        console.log('loaded up with ', vm.params)
         
         function setAssignment(id) {
             if (!id) {
                 vm.assignmentName = 'General Info';
                 vm.assignmentDue = undefined;
                 vm.assignmentId = undefined;
+                vm.url = undefined;
+                vm.rubric = undefined;
                 return;
             }
             var a = vm.srv.getAssignment(id);
@@ -71,11 +93,15 @@
                 vm.assignmentName = a.name;
                 vm.assignmentDue = a.due;
                 vm.assignmentId = id;
+                vm.url = 'views/assignments/' + id + '.html';
+                vm.rubric = a.rubric;
+                vm.showRubric = false;
             }
         }
         $timeout(function() {
             setAssignment($routeParams.assignmentId);
         }, 100);
+
     }
     
     MainCtrl.$inject = ['$route', '$routeParams', '$location']
@@ -113,7 +139,10 @@
         srv.getAssignment = function(id) {
             return srv.assignments[id];
         }
-        
+
+        var getRubric = function(assignment) {
+        }
+
         $http.get('planning.json').success(function(data) {
             srv.sessions.length = 0;
             angular.forEach(data.sessions, function(row) {
@@ -124,10 +153,14 @@
                         row.assignment = assignment;
                         row.assignment.hwid = i + 1;
                         srv.assignments[assignment.id] = assignment;
+                        $http.get('data/rubric-'+assignment.id+'.json')
+                             .success(function(data) {
+                                row.assignment.rubric = data;
+                            });
                     }
                 }
             });
         });
-    }
 
+    }
 })(window.angular);

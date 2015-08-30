@@ -1,0 +1,42 @@
+[
+{"section":"Main Page", "items":[
+	{"item":"header including doctype, html, head with at least one meta", "pts":1 },
+	{"item":"author in meta or comment", "pts":1 },
+	{"item":"table with grid of cards", "pts":3 },
+	{"item":"sufficient number of cards to require scrolling", "pts":3 },
+	{"item":"each card has image or text", "pts":3 },
+	{"item":"at least one card has both text and image", "pts":3 },
+	{"item":"at least one card has link to external site in new window", "pts":3 },
+	{"item":"each card updates image at random interval", "pts":5 },
+	{"item":"each card contains a button to stop the interval", "pts":5 },
+	{"item":"each card contains a button to start the interval", "pts":5 },
+	{"item":"timeout after 3 seconds to inform user to login or register", "pts":3},
+	{"item":"login button with informative popup", "pts":3 },
+	{"item":"register link navigates to registration page", "pts":3 }
+]},
+{"section":"Registration Page", "items":[
+	{"item":"header including doctype, html, head with at least one meta", "pts":1 },
+	{"item":"author in meta or comment", "pts":1 },
+	{"item":"page contains a form", "pts":1 },
+	{"item":"There are input text areas for the following: account name, first name, last name, address, city, state, phone number, date of birth, email, password, password confirmation", "pts":3 },
+	{"item":"password and password confirmation should be password type", "pts":1 },
+	{"item":"Hidden field containing current timestamp in millis", "pts":3 },
+	{"item":"clear button to empty fields", "pts":3 },
+	{"item":"submit button executes JavaScript validation function", "pts":3 },
+	{"item":"each field is validated for correctness, i.e., valid phone number, email, etc", "pts":5 },
+	{"item":"alert user of invalid form contents", "pts":5 },
+	{"item":"submit button makes GET request to form processor page", "pts":3 }
+]},
+{"section":"Form Processor Page", "items":[
+	{"item":"header including doctype, html, head with at least one meta", "pts":1 },
+	{"item":"author in meta or comment", "pts":1 },
+	{"item":"extract query parameter from location and display key-value pairs in a table", "pts":5 },
+	{"item":"hidden timestamp is rendered as human readable datetime", "pts":3 }
+]},
+{"section":"Style", "items":[
+	{"item":"Code is properly formatted (indentation, spacing)", "pts":5 },
+	{"item":"function and variable names are descriptive", "pts":5 },
+	{"item":"attribute values are quoted", "pts":5 },
+	{"item":"appropriate use of whitespace", "pts":5 }
+]}
+]

@@ -40,3 +40,13 @@ body {
 	margin-top: 2em;
 }
 
+.rubrichead {
+	font-size:150%; 
+	padding-top:0.5em; 
+	padding-bottom:0.5em;
+	padding-left: 0.5em;
+}
+
+th.rubrichead {
+	color: cyan !important;
+}
