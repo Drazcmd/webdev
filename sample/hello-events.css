@@ -1,0 +1,34 @@
+#response {
+	border: 1pt solid blue;
+	position: fixed;
+	right: 1em;
+	bottom: 1em;
+	min-height: 5em;
+	min-width: 60%;
+}
+
+.redBox { 
+	background-color: red;
+	min-width: 30em;
+	padding: 1em 1em 1em 1em;
+}
+
+.greenBox { 
+	background-color: green;
+	min-width: 10em;
+	min-height: 5em;
+	margin: 2em 2em 2em 2em;
+	padding: 1em 1em 1em 1em;
+}
+
+.blueBox { 
+	background-color: blue;
+	min-width: 10em;
+	min-height: 5em;
+	margin: 2em 2em 2em 2em;
+	padding: 1em 1em 1em 1em;
+}
+
+.vspace { 
+	min-height: 30em;
+}
