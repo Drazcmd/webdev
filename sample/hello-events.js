@@ -129,17 +129,44 @@ window.onload = function() {
 	document.getElementById("keypress").onkeypress = keymsg
 
 	// save some memory: add handlers only to the outer div
+	// className for the property?
 	var box = document.getElementById("box")
 	box.onmouseover = function(e) {
 		appendResponse('mouseover ' + e.target.className)
+		Array.prototype.forEach.call(e.target.children, function(el) { 
+			el.style.visibility = 'visible';	
+		})
 	}
 	box.onmouseout = function(e) {
-		
 		appendResponse(indent + 'mouseout ' + e.target.className)
+		Array.prototype.forEach.call(e.target.children, function(el) { 
+			if (e.relatedTarget != el && 
+				el.className.indexOf("hideable") >= 0)
+			{
+				el.style.visibility = 'hidden';	
+			}
+		})
 	}
 	box.onmousedown = function(e) {
 		appendResponse('mouse button ' + e.button + ' on ' + e.target.className)
 	}
 	var indent = ''
 	for (var ii=0; ii < 35; ++ii) indent += '&nbsp;'
+
+	// move the box
+	var moveBox = document.getElementById("moveTheBox")
+	var dirs = ['left', 'right', 'none']
+	var dirii = 0;
+	moveBox.innerHTML = "Float box: " + dirs[dirii]
+	var theBox = document.getElementsByClassName("blueBox")[0]
+	moveBox.onclick = function(e) {
+		theBox.style['min-width'] = '25%'
+		theBox.style.cssFloat = dirs[dirii]
+		dirii = (dirii + 1) % dirs.length
+		moveBox.innerHTML = "Float box: " + dirs[dirii]
+	}
+
+	console.log('theBox.style.cssText', theBox.style.cssText)
+	console.log('theBox.style', theBox.style)
+	console.log('computedStyle(theBox)', window.getComputedStyle(theBox))
 }

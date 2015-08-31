@@ -29,6 +29,15 @@
 	padding: 1em 1em 1em 1em;
 }
 
+.purpleBox {
+	background-color: purple;
+	min-width: 75%;
+	min-height: 50%;
+	margin: 2em 2em 2em 2em;
+	padding: 1em 1em 1em 1em;
+	visibility: hidden;
+}
+
 .vspace { 
 	min-height: 30em;
 }
