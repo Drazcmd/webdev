@@ -1,0 +1,16 @@
+
+.box { 
+	display: block; 
+	border: 3pt solid black; 
+	height: 35%; 
+	width: 35%;	
+	position: absolute;
+	top: 6em;
+	left: 2em;
+	cursor: pointer;
+}
+
+.bugImage {
+	display: inline;
+	position: absolute;
+}
