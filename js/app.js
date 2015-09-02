@@ -100,7 +100,7 @@
         }
         $timeout(function() {
             setAssignment($routeParams.assignmentId);
-        }, 100);
+        }, 200);
 
     }
     

@@ -1,0 +1,45 @@
+<!DOCTYPE>
+<html>
+
+<body>
+	<img id="image" height="200px" src="../images/RiceLogo.jpg">
+	<br/>
+	Interval took <span id="timer"></span>
+</body>
+
+<script>
+window.onload = function() {
+	
+	var idx = 0;
+	var images = [
+		'https://upload.wikimedia.org/wikipedia/commons/d/de/Lovett_Hall.jpg',
+		'https://upload.wikimedia.org/wikipedia/commons/6/67/JFK_at_Rice_University.jpg',
+		'https://recreation.rice.edu/assets/0/100/145/190/3a6e620f-1b9d-4234-87db-3229e47a3d30.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/3/3e/Rice_University_-_Rice_statue_with_Lovett_Hall.JPG',
+		'https://upload.wikimedia.org/wikipedia/commons/c/ce/Rice_University_-_Arboretum.JPG'
+	];
+
+	// var imgList = [];
+	// images.forEach(function(src) {
+	// 	var img = new Image();
+	// 	img.src=src
+	// 	imgList.push(img)
+	// })
+
+	var now = Date.now()
+	var el = document.getElementById("image");
+	setInterval(function() {		
+		el.src = images[idx++ % images.length]
+		
+		var elapsed = Date.now() - now;
+		document.getElementById("timer").innerHTML = elapsed		
+		now = Date.now();
+	}, 1000)
+
+	console.log('The image source by property is ', el.src)
+	console.log('The image source by attribute is', el.getAttribute('src'))
+
+}
+
+</script>
+</html>
