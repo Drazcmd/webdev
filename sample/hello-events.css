@@ -5,6 +5,7 @@
 	bottom: 1em;
 	min-height: 5em;
 	min-width: 60%;
+	z-index: -1;
 }
 
 .redBox { 

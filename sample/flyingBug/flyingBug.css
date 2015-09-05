@@ -2,8 +2,8 @@
 .box { 
 	display: block; 
 	border: 3pt solid black; 
-	height: 35%; 
-	width: 35%;	
+	height: 70%; 
+	width: 80%;	
 	position: absolute;
 	top: 6em;
 	left: 2em;
