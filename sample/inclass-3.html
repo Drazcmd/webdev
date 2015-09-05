@@ -45,8 +45,7 @@ function loadPrevious() {
 		if (elements.length == 1 && elements[0].type === "text") {
 			elements[0].value = value
 		} else {
-			Array.prototype.forEach.call(elements, function(input) {
-				console.log(kv[0] + " " + value, input)
+			Array.prototype.forEach.call(elements, function(input) {		
 				if (input.parentElement.textContent === value) {
 					input.checked = true
 				}
