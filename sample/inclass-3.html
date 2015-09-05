@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+<script>
+
+var expiry = new Date(2020, 0, 1)
+
+function validateAndSave() {
+	var inputs = document.getElementsByTagName("input")
+	// Here's a trick for you.  I like to use forEach
+	// because it is functional.  But the return of getElements...
+	// is a HTMLCollection not an Array.  So here I call the
+	// forEach function of the Array prototype using my object 
+	// as the target.  Pretty neat huh?
+	Array.prototype.forEach.call(inputs, function(input) {
+		if (input.type == "text") {
+			if (input.value.length == 0) {
+				//window.alert("Please supply " + input.name)
+			} else {
+				addCookie(input.name, input.value)
+			}
+		} else if (input.checked) {		
+			addCookie(input.name, input.parentElement.textContent)
+		}
+		// need to validate that a size, type, and payment have been selected
+		// need to validate that if credit card, then CC info is supplied.
+		
+		// we also need to "clear" old values, i.e., if I previously ordered
+		// black olives, but then my last order had no olives, then
+		// load previous order should not check olives.
+	})
+}
+
+function addCookie(key, value) {
+	console.log("Saving cookie: " + key + "=" + value)
+	document.cookie = key.trim() + "=" + encodeURIComponent(value.trim()) + "; expires=" + expiry.toUTCString()
+}
+
+function loadPrevious() {
+	document.cookie.split(';').forEach(function(cookie) {		
+		var kv = cookie.trim().split('=')
+		var value = decodeURIComponent(kv[1])
+		var elements = document.getElementsByName(kv[0])		
+		if (elements.length == 1 && elements[0].type === "text") {
+			elements[0].value = value
+		} else {
+			Array.prototype.forEach.call(elements, function(input) {
+				console.log(kv[0] + " " + value, input)
+				if (input.parentElement.textContent === value) {
+					input.checked = true
+				}
+			})
+		}
+	})
+
+}
+</script>
+</head>
+<body>
+<h1>Pizza Order Form</h1>
+
+<form onsubmit="return false">
+
+<h3>Customer Information</h3>
+<table>
+<tr><td>First Name</td><td><input type="text" name="firstName"></td></tr>
+<tr><td>Last Name</td><td><input type="text" name="lastName"></td></tr>
+<tr><td>Street Address</td><td><input type="text" name="address"></td></tr>
+<tr><td>City</td><td><input type="text" name="city"></td></tr>
+<tr><td>Zip</td><td><input type="text" name="zipcode"></td></tr>
+<tr><td>Phone Number</td><td><input type="text" name="phone"></td></tr>
+<tr><td colspan="2">&nbsp;</td></tr>
+</table>
+
+<h3>Pizza Size</h3>
+<div>
+	<label><input type="radio" name="size" value="l">Large</label>
+	<label><input type="radio" name="size" value="m">Medium</label>
+	<label><input type="radio" name="size" value="s">Small</label>
+	<label><input type="radio" name="size" value="p">Personal</label>
+</div>
+
+<h3>Pizza Type</h3>
+<div>
+	<label><input type="radio" name="pie">Meat-Lovers</label>
+	<label><input type="radio" name="pie">Veggies</label>
+	<label><input type="radio" name="pie">Hawaiian</label>
+	<label><input type="radio" name="pie">Greek</label>
+	<label><input type="radio" name="pie">Italian</label>
+	<label><input type="radio" name="pie">Custom</label>
+</div>
+
+<h3>Toppings</h3>
+<div>
+	<label><input type="checkbox" name="sausage">Sausage</label>
+	<label><input type="checkbox" name="pepperoni">Pepperoni</label>
+	<label><input type="checkbox" name="olive">Black Olives</label>
+	<label><input type="checkbox" name="onion">Red Onion</label>
+	<label><input type="checkbox" name="anchovies">Anchovies</label>
+</div>
+
+<h3>Payment Type</h3>
+<div>
+	<label><input type="radio" name="payment">Visa</label>
+	<label><input type="radio" name="payment">MasterCard</label>
+	<label><input type="radio" name="payment">Debit</label>
+	<label><input type="radio" name="payment">Check</label>
+	<label><input type="radio" name="payment">Cash</label>
+<br>
+	<label>CC#<input type="text" name="cc_number"></label>
+	<label>CVC#<input type="text" name="cc_cvc"></label>
+<br>
+	<label>Expiration<input type="text" name="cc_expiration"></label>
+</div>
+
+<br>
+
+<input type="button" onclick="loadPrevious(); return false;" value="Load Previous Order">
+<input type="submit" onclick="validateAndSave();" value="Place Order">
+<input type="reset" value="Clear">
+
+</form>
+
+</body>
+</html>
