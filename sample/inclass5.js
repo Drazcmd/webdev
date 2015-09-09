@@ -51,26 +51,24 @@ window.onload = function() {
 	var computedStyle = window.getComputedStyle(btn)
 	var btnWidth = computedStyle.width.replace('px','')
 	var btnHeight = computedStyle.height.replace('px','')
-	console.log(btnWidth)
-	console.log(btnHeight)
 
 	function moveButton() {
 		// "event" will be in scope when this is called
 		// except for the first time, where event.clientX = NaN
-		// but that's oaky because the button will still appear
+		// but that's okay because the button will still appear
 		// somewhere on the screen
 		var x = event.clientX + random()
 		var y = event.clientY + random()
 
 		// just in case we push off the edge of the window
-		while (x < 0 || x > window.innerWidth - btnWidth*2) {
+		while (x < 0 || x > window.innerWidth - btnWidth*3) {
 			x = Math.random()*window.innerWidth
 		}
-		while (y < 0 || y > window.innerHeight - btnHeight*2) {
+		while (y < 0 || y > window.innerHeight - btnHeight*5) {
 			y = Math.random()*window.innerHeight
 		}
 
-		// Remember to have set btn.style.position = fixed
+		// Remember to have set btn.style.position = fixed		
 		btn.style.left = x + 'px'
 		btn.style.top = y + 'px'			
 	}
