@@ -73,8 +73,8 @@ window.onload = function() {
 		btn.style.top = y + 'px'			
 	}
 
-	// Note I might instead have the button inside a div with 
-	// some size instead of adding margin to the btn itself
+	// Note I might instead have the button inside a div
+	// with some size instead of the btn itself
 	// that actually might be a better solution!
 	btn.onmouseover = function(event) {
 		if (!ctrlPressed && !gameWon) {
