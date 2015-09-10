@@ -1,7 +1,7 @@
 {
 	"assignments": [
 	{ "name": "Simple Page", "due": 4, "id": "simple" },	
-	{ "name": "Javascript Game", "due": 8, "id": "jsgame" },
+	{ "name": "Javascript Game", "due": 9, "id": "jsgame" },
 	{ "name": "App Design", "due": 12, "id":"design"},
 	{ "name": "Front-End App", "due": 16, "id": "frontend"},
 	{ "name": "Hosted Draft Web App", "due": 21, "id": "backend"},
