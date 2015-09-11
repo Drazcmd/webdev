@@ -100,13 +100,13 @@ var createApp = function(canvas) {
 		// hopefully a building didn't grow there...
 		c.fillStyle = "white"
 		c.beginPath()
-		c.arc(theSun.x, theSun.y, theSun.r, 0, 2*Math.PI)
+		c.arc(theSun.x, theSun.y, 1.5*theSun.r, 0, 2*Math.PI)
   		c.closePath()
   		c.fill()	
   		
   		//theSun.y = Math.random()*canvas.height/10 + theSun.r
   		theSun.t += 5  		
-  		theSun.y = canvas.height / 10 * (1 + Math.sin(Math.PI * theSun.t/180))  		  		
+  		theSun.y = theSun.r + canvas.height / 10 * (1 + Math.sin(Math.PI * theSun.t/180))  		  		
 		theSun.x += 5;
 		if (theSun.x > canvas.width) {
   			theSun.x = 0
