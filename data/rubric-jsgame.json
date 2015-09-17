@@ -1,0 +1,67 @@
+[
+{"section":"Merits", "items": [
+    {"item":"game loads in Chrome without errors", "pts":5 },
+    {"item":"game is playable in Chrome", "pts":5 },
+    {"item":"no lingering console messages", "pts":5 },
+    {"item":"game is primarily visually based with moving or transforming graphics", "pts":10 },
+    {"item":"game utilizes mouse for primary interaction", "pts":10 },
+    {"item":"unobtrusive JavaScript and CSS", "pts":10 },
+    {"item":"single player game, playable in about 10 minutes or less", "pts":10 },
+    {"item":"game has some unique aspect which makes the game your own", "pts":10 },
+    {"item":"source is well formatted", "pts":5 },
+    {"item":"source uses functions appropriately", "pts":5 },
+    {"item":"game difficulty adjusts by user action or with play over time", "pts":10 },
+    {"item":"game includes score that is updated during play", "pts":5 },
+    {"item":"game includes a metric other than score that is updated during or between play", "pts": 5},
+    {"item":"Correct HTML header including doctype, html, author meta tag in head", "pts": 5}
+]},
+{"section":"Demerits", "items": [
+    {"item":"game was not approved", "pts": 50},
+    {"item":"game crashes", "pts": 10},
+    {"item":"inappropriate character in filename, e.g., space", "pts": 10},
+
+    {"item":"non-descriptive variable name", "pts": 5},
+    {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 5},
+    {"item":"code smells bad", "pts": 5},
+
+    {"item":"variable names with improper case, e.g., wrongly MyVar instead of myVar", "pts": 5},
+    {"item":"inappropriate use of new Array, new Function, new Object", "pts": 5},
+    {"item":"variable incorrectly in global scope", "pts": 5},
+    {"item":"excessive comments", "pts": 5},
+    {"item":"dead code, e.g., commented or unreachable code", "pts": 5},
+    {"item":"code makes unchecked assumption", "pts": 5},
+    {"item":"variable not appropriately scoped (i.e., missing var, or var in wrong scope)", "pts": 5},
+    {"item":"non-CSS styling", "pts": 5},
+
+    {"item":"inefficient algorithm", "pts": 5},
+    {"item":"expensive network load", "pts": 5},
+    {"item":"function length is too long", "pts": 5},
+    {"item":"function performs too many functions", "pts": 5},
+    {"item":"complex code statement (should be broken up or is missing appropriate comment)", "pts": 5},
+
+    {"item":"unnecessary intermixing of content (HTML) and style (CSS)", "pts": 5},
+    {"item":"unnecessary intermixing of content (HTML) and logic (JavaScript)", "pts": 5},
+
+    {"item":"inappropriate magic value", "pts": 3},
+    {"item":"missing braces for blocks, e.g., if, for, while", "pts": 3},
+    {"item":"bad indentation", "pts": 3},
+
+    {"item":"poorly named function", "pts": 3},
+    {"item":"missing cached variable, e.g., not caching DOM lookup", "pts": 3},
+    {"item":"reassigning or multiply assigning variables", "pts": 3},
+    {"item":"code line length too long", "pts": 3},
+    {"item":"too much white space", "pts": 3},
+    {"item":"excessive use of DOM ids", "pts": 3},
+    {"item":"missing clear abstraction usage opportunity", "pts": 3},
+
+    {"item":"for loop used instead of more appropriate functional style", "pts": 2},
+    {"item":"variable not appropriately initialized", "pts": 2},
+    {"item":"did not use shortcut for boolean", "pts": 2},
+    {"item":"what comment, e.g., // set var to 0", "pts": 2},
+
+    {"item":"multi-line comment where // should be used instead", "pts": 1},
+    {"item":"long comment at end of line instead of on separate line", "pts": 1}
+
+]}
+
+]

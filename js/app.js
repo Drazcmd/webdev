@@ -66,7 +66,10 @@
         vm.getTotalPoints = function() {
             if (vm.rubric)
                 return vm.computeTotalPoints(
-                    vm.rubric.map(function(sec) { return sec.items })
+                    vm.rubric.map(function(sec) {                         
+                        return (sec.section === "Demerits") ? 
+                            [ {"item":"", "pts":0 } ] : sec.items 
+                    })
                         .reduce(function(l,r) { return l.concat(r) })
                     )
             else
