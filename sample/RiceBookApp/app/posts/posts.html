@@ -1,0 +1,20 @@
+
+<div ng-controller="PostCtrl as vm">
+  <aside>
+    <h3>New Post</h3>
+    <input type="text" class="form-control" placeholder="post title" ng-model="vm.post_title"><br>
+    <textarea class="form-control" placeholder="post body" ng-model="vm.post_body"></textarea><br>
+    <input type="button" class="btn btn-primary" value="Post" ng-click="vm.addPost()">
+  </aside>
+
+  <section>
+    <label for="search">Search</label>
+    <input type="text" placeholder="search keyword" ng-model="vm.searchKeyword" id="search">
+  </section>
+
+  <section ng-repeat="post in vm.posts | filter: vm.searchKeyword">
+    <h3>{{post.title}}</h3>
+    <p>{{post.body}}</p>
+    <input type="button" class="btn btn-primary" value="Delete" ng-click="vm.removePost(post.id)">
+  </section>
+</div>
