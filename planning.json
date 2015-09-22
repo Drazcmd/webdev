@@ -1,8 +1,8 @@
 {
 	"assignments": [
-	{ "name": "Simple Page", "due": 4, "id": "simple" },	
+	{ "name": "Simple Page", "due": 4, "id": "simple", "duetime":"2:30PM" },	
 	{ "name": "Javascript Game", "due": 9, "id": "jsgame" },
-	{ "name": "App Design", "due": 13, "id":"design"},
+	{ "name": "App Design", "due": 13, "id":"design", "duetime":"2:30PM" },
 	{ "name": "Front-End App", "due": 16, "id": "frontend"},
 	{ "name": "Hosted Draft Web App", "due": 20, "id": "backend"},
 	{ "name": "Integrated Web App", "due": 24, "id": "integrated"},

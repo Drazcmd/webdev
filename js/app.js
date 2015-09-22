@@ -105,6 +105,11 @@
             setAssignment($routeParams.assignmentId);
         }, 200);
 
+        vm.getDueTime = function(id) {
+            var duetime = vm.srv.getAssignment(id).duetime
+            return duetime ? "before class at 2:30 PM" : "after class by midnight"
+        }
+
     }
     
     MainCtrl.$inject = ['$route', '$routeParams', '$location']
@@ -154,7 +159,7 @@
                     var assignment = data.assignments[i];
                     if (assignment.due == row.day) {
                         row.assignment = assignment;
-                        row.assignment.hwid = i + 1;
+                        row.assignment.hwid = i + 1;                        
                         srv.assignments[assignment.id] = assignment;
                         $http.get('data/rubric-'+assignment.id+'.json')
                              .success(function(data) {
