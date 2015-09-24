@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>QUnit In Class Exercise</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.19.0.css">
+</head>
+<body>
+
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <script src="https://code.jquery.com/qunit/qunit-1.19.0.js"></script>
+  <script src="qunit-assert-close.js"></script>
+  <script src="qunit-inclass9-solution.js"></script>
+  <script>
+
+    // QUnit.test("one is one", function(assert) {
+    //   assert.equal(true, 1 === 1, 'one is one')
+    // })
+
+    function setupFixture() {
+      var fixture = $( "#qunit-fixture" );
+      fixture.append("<span>abcd</span>")
+      fixture.append("<input type='checkbox'>")
+      window.setupHandlers(fixture);
+      return fixture      
+    }
+
+    QUnit.test("set span text color to blue", function(assert) {
+      var fixture = setupFixture();
+      assert.equal($('span', fixture)[0].color, 'blue', 'color changed to blue')
+    })
+
+    QUnit.test("checkbox controls span color { checked:red, unchecked: green}", 
+      function(assert) {
+      var fixture = setupFixture();
+      // confirm the span is blue
+      assert.equal($('span', fixture)[0].color, 'blue', 'color changed to blue')
+
+      // click the checkbox
+      $('input', fixture).trigger('click')      
+
+      // confirm the color is red
+      assert.equal($('span', fixture)[0].color, 'red', 'color changed to red')      
+
+      // click the checkbox
+      $('input', fixture).trigger('click')
+      
+      // confirm the color is green
+      assert.equal($('span', fixture)[0].color, 'green', 'color changed to green')
+    })
+    
+    // this let's us write equal with precision
+    //    assert.close(1.0, 0.9, 0.1); // which is true
+    QUnit.module("qunit-assert-close plugin unit tests");
+
+    QUnit.test("compute trajectory after 1 second",function(assert) {
+      var obj = { x: 5, y: 10, vx: 1, vy: 2, ay: -0.1 }
+      
+      moveObject(obj, 1.0) // should be at [ 6, 11.95 ]
+      // add asserts
+
+      moveObject(obj, 1.0); // should be at [ 7, 13.80 ]
+      // add asserts
+
+      obj.ax = 0.5; obj.ay = -0.4;
+      moveObject(obj, 1.0); // should be at [ 8.25, 15.40 ]
+      // add asserts
+
+      // remove this one
+      assert.equal(true, 1 == 2, '1 is 2')
+    })
+
+    QUnit.test
+
+  </script>
+</body>
+</html>
