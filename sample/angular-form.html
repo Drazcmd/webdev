@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Angular Form</title>
+  	<script src="lib/angular-1.4.6/angular.js"></script>
+
+  	<style>
+  	.css-form input.ng-invalid.ng-touched {
+  		background-color: #FA787E;
+  	}
+  	.css-form input.ng-valid.ng-touched {
+  		background-color: #78FA89;
+  	}
+  	</style>
+
+</head>
+<body ng-app="formExample">
+<div ng-controller="FormCtrl as vm">
+	<form class="css-form">
+		<label>First Name: <input required type="text" ng-model="input.firstName"
+			ng-model-options="{ updateOn: 'default blur' }" 
+		></label><br>
+		<label>Last Name: <input required type="text" ng-model="input.lastName"
+			ng-model-options="{ updateOn: 'blur' }" 
+		></label><br>
+		<label>Email: <input type="email" ng-model="input.email"></label><br>
+		Gender:
+		<input type="radio" id="male" ng-model="input.gender" value="male">
+		<label for="male">male</label>
+		<input type="radio" id="female" ng-model="input.gender" value="female">
+		<label for="female">female</label><br>
+		<input type="reset" ng-click="vm.clear(input)" value="Clear">
+		<input type="button" ng-click="vm.restore(input)" value="Restore">
+		<input type="submit" ng-click="vm.save(input)" value="Save">
+	</form>
+	<pre>input = {{ input | json }}</pre>
+	<pre>saved = {{ vm.saved | json }}</pre>
+</div>
+<script>
+;(function() {
+	'use strict'
+	angular.module("formExample", [])
+		.controller("FormCtrl", FormCtrl)
+		;
+
+	function FormCtrl() {
+		var vm = this
+
+		vm.saved = {}
+
+		vm.save = function(input) {
+			vm.saved = angular.copy(input)
+		}
+
+		vm.clear = function(input) {
+			Object.keys(input).forEach(function(key) {
+				input[key] = undefined
+			})
+		}
+		vm.restore = function(input) {
+			Object.keys(vm.saved).forEach(function(key) {
+				input[key] = vm.saved[key]
+			})
+		}
+	}
+})()
+</script>
+</body>
+</html>
