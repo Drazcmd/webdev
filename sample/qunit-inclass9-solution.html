@@ -58,19 +58,23 @@
 
     QUnit.test("compute trajectory after 1 second",function(assert) {
       var obj = { x: 5, y: 10, vx: 1, vy: 2, ay: -0.1 }
-      
+
+      // we want this small, but not too small      
+      var prec = 0.0001
+
       moveObject(obj, 1.0) // should be at [ 6, 11.95 ]
-      // add asserts
+      assert.close(obj.x, 6, prec)
+      assert.close(obj.y, 11.95, prec)
 
       moveObject(obj, 1.0); // should be at [ 7, 13.80 ]
-      // add asserts
+      assert.close(obj.x, 7, prec)
+      assert.close(obj.y, 13.80, prec)
 
       obj.ax = 0.5; obj.ay = -0.4;
       moveObject(obj, 1.0); // should be at [ 8.25, 15.40 ]
-      // add asserts
+      assert.close(obj.x, 8.25, prec)
+      assert.close(obj.y, 15.40, prec)
 
-      // remove this one
-      assert.equal(true, 1 == 2, '1 is 2')
     })
 
     QUnit.test
