@@ -11,22 +11,30 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-route.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-route.min.js"></script>  
   
   <script src="app.js"></script>
-
+  
 </head>
-<body>
+<body ng-controller="MainCtrl as main">
 
-<header>
-  ... header ...
-</header>
+<nav>
+  <div class="btn-group">  
+    <a href="#/firstTab" class="btn btn-primary" btn-checkbox>First</a>
+    <a href="#/secondTab" class="btn btn-primary" btn-checkbox>Second</a>
+    <a href="#/thirdTab" class="btn btn-primary" btn-checkbox>Third</a> 
+  </div>
+</nav>
 
-Content
+<p>
+The main page is controlled by the "{{ main.name }}" controller.
+</p>
 
-<div ng-view></div>
+<p>Here is the imbedded view when navigating to {{ main.getLocation() }}</p>
+<div style="padding: 2em;">
+  <div ng-view></div>
+</div>
 
-Content 
 
 <hr>
 
