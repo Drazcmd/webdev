@@ -1,54 +1,52 @@
 ;(function() {
 'use strict'
 
-angular.module('tabApp', ['ngRoute'])
-	.controller('MainCtrl', MainCtrl)	
-	.controller('FirstCtrl', FirstCtrl)
-	.controller('SecondCtrl', SecondCtrl)
+angular.module('tabApp', ['ngRoute', 'ngResource'])
 	.config(config)
 	;
 
-function config($routeProvider) {
+function config($routeProvider, myProviderProvider) {
 	$routeProvider
 	.when('/firstTab', {
-		templateUrl: 'tabOne.html',
+		templateUrl: 'simple/tabOne.html',
 		controller: 'FirstCtrl',
 		controllerAs: 'vm'
 	})
 
 	.when('/secondTab', {
-		templateUrl: 'tabTwo.html',
+		templateUrl: 'simple/tabTwo.html',
 		controller: 'SecondCtrl',
+		controllerAs: 'vm'
+	})
+
+	.when('/service', {
+		templateUrl: 'service/service.html'
+	})
+
+	.when('/http', {
+		templateUrl: 'resource/http.html',
+		controller: 'HttpCtrl',
+		controllerAs: 'vm'
+	})
+
+	.when('/resource', {
+		templateUrl: 'resource/resource.html',
+		controller: 'ResourceCtrl',
+		controllerAs: 'vm'
+	})
+
+	.when('/directive', {
+		templateUrl: 'directive/page.html',
+		controller: 'PageCtrl',
 		controllerAs: 'vm'
 	})
 
 	.otherwise({
 		redirectTo: '/firstTab'
 	})
-}
 
-MainCtrl.$inject = ['$scope', '$location']
-function MainCtrl($scope, $location) {
-	var vm = this
-	vm.tab = { }
-	vm.name = 'Main Page'	
-
-	vm.getLocation = function() {
-		return $location.path()
-	}
-}
-
-function FirstCtrl() {
-	var vm = this
-	vm.name = 'First Tab'	
-}
-
-function SecondCtrl() {
-	var vm = this
-
-	vm.name = 'Second Tab'
-	vm.box = { 'third' : true  }
-}
-
+	myProviderProvider.thingFromConfig = 
+		'Only providers can appear in config'
+}	
 
 })()

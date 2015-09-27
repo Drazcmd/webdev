@@ -1,0 +1,23 @@
+<h3>$resource Service</h3>
+
+<p>User status message: {{ vm.userStatus }}<br>
+<input type="text" ng-model="vm.newUserStatus">
+<input type="button" ng-click="vm.saveStatus()" value="Save">
+</p>
+
+<p>User Location: { <span ng-click="vm.updateLocation('lat')">{{ vm.location.lat | number: 3 }}</span>, 
+					<span ng-click="vm.updateLocation('lng')">{{ vm.location.lng | number: 3 }}</span> }</p>
+
+<label class="btn"
+	ng-class="{ 'btn-warning': vm.stop, 'btn-success': !vm.stop }" 
+	ng-click="vm.toggleLoading()">
+	{{ vm.stop ? 'Stop' : 'Start' }} Refresh
+</label>
+
+<section ng-repeat="post in vm.posts">
+	<h3>{{post.title}}</h3>
+	<p>{{post.body}}</p>
+	<input type="button" class="btn btn-primary" value="Delete" ng-click="vm.removePost(post.id)">
+</section>
+
+</div>
