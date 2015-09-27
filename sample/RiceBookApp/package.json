@@ -1,0 +1,12 @@
+{
+  "name": "RiceBookApp",
+  "devDependencies": {
+    "angular": "^1.4.6",
+    "angular-mocks": "^1.4.6",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.10",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-coverage": "^0.5.2",
+    "karma-jasmine": "^0.3.6"
+  }
+}
