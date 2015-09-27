@@ -1,0 +1,13 @@
+
+<div ng-controller="PostCtrl as vm">
+
+  <section>
+    <label for="search">Search</label>
+    <input type="text" placeholder="search keyword" ng-model="vm.searchKeyword" id="search">
+  </section>
+
+  <section ng-repeat="post in vm.posts | filter: vm.searchKeyword">
+    <h3>{{post.title}}</h3>
+    <p>{{post.body}}</p>
+  </section>
+</div>

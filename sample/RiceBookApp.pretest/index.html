@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="riceBookApp">
+<head>
+  <meta charset="utf-8" />
+  <title>Rice Plus</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <!-- replace with cdn for deployment -->
+  <script src="lib/angular-1.4.6/angular.js"></script>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="app/app.module.js"></script>
+  <script src="app/posts/posts.js"></script> 
+  <script src="app/user/user.js"></script>
+
+</head>
+<body>
+
+<header>
+  ... header ...
+  <div ng-include="'app/user/user.html'"></div>
+</header>
+
+<div ng-include="'app/posts/posts.html'"></div>
+
+<hr>
+
+<footer>
+... footer ...
+</footer>
+
+</body>
+</html>
+

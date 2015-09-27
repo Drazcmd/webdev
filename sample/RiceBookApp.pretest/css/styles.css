@@ -1,0 +1,16 @@
+aside {
+	padding: 2em;
+	float: right;
+}
+
+section {
+	padding-left: 2em;
+}
+
+header {
+	text-align: center;
+}
+
+footer {
+	text-align: center;
+}
