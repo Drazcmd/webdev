@@ -1,6 +1,5 @@
-'use strict'
-
 describe('RiceBookApp', function() {
+	'use strict'
 
 	beforeEach(function() {
 		browser.get('/index.html')
