@@ -1,7 +1,7 @@
 ;(function() {
 
 angular.module('tabApp')
-	.constant('apiURL', 'http://localhost:5555')
+	.constant('apiURL', 'https://webdev-dummy.herokuapp.com')
 	.factory('api', apiService)
 	.factory('LocationService', LocationService)
 	.controller('ResourceCtrl', ResourceCtrl)
