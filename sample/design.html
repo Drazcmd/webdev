@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+     border: 2pt solid black;
+     border-collapse: collapse;
+     font-size: 80%;
+}
+
+td {
+     padding: 1em;
+     border: 1pt solid grey;
+}
+</style>
+</head>
+<body>
+<table>
+     <tr>
+          <th>endpoint</th><th>verb</th><th>payload</th><th>response</th><th>description</th>
+     </tr>
+     <tr>
+          <td>statuses/:users</td><td>GET</td><td>none<br>:users is a comma separated list</td>
+          <td>[ {user:Scott, status:Happy}, { ... } ]</td>
+          <td>Array of user statues.  Each user's status appears next to the user, e.g., in the actual user's status area as well as the status for each fo the followed users</td>
+     </tr>
+     <tr>
+          <td>statuses/:user</td><td>PUT</td><td>{ status: Happy }</td>
+          <td>{user: Scott, status: Happy }</td>
+          <td>Update the status for a user</td>
+     </tr>
+     <tr>
+          <td>posts</td><td>GET</td><td>optional: maxNumber, location, ...</td>
+          <td>[ { postId: 1, author: Scott, title: ... }, { ... } ]</td>
+          <td>Array of posts.  Optional payload parameters such as maxNumber will
+               limit the number of returned posts</td>
+     </tr>
+     <tr>
+          <td>locations/:user</td><td>GET</td><td>none</td>
+          <td>{ user: Scott, lat: 101, lng: 102 }</td>
+          <td>Returns the lat+lng of the requested user.  This is used
+               to query posts made by users near particular location.</td>
+     </tr>
+</table>
+</body>
+</html>
