@@ -21,6 +21,7 @@ function postFactory($http, hipsterURL) {
 	}
 
 	function getPosts(posts) {
+		$http.defaults.useXDomain = true
 		$http.get(hipsterURL).then(function(response) {
 			response.data.text.split('<p>')
 				.filter(function(t) { return t.length > 0 })
