@@ -11,6 +11,7 @@ casper.test.begin("Test Rice Website", 6, function(test) {
     function findPeopleEmail() {
          // find the email address of all people results
          // return as an array
+         return []
     }
 
     casper.then(function() {
@@ -23,6 +24,7 @@ casper.test.begin("Test Rice Website", 6, function(test) {
          // look in the search results for the article about compensation
          // then examine the summary of that article and find the dollar figures
          // finally get the largest one of those and return it
+         return 0
     }
 
     casper.then(function() {
