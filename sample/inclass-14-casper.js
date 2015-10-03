@@ -1,5 +1,5 @@
 
-casper.test.begin("Test Rice Website", 5, function(test) {
+casper.test.begin("Test Rice Website", 6, function(test) {
 
     casper.start('http://www.rice.edu', function() {
           // assert the title is correct
