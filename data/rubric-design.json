@@ -4,7 +4,7 @@
     {"item":"Landing Page 'looks' good", "pts":2},
     {"item":"Mechanism to Log In", "pts":3},
     {"item":"Mechanism to Register", "pts":3},
-    {"item":"At least 4 content cards exist on Landing page", "pts":3},
+    {"item":"At least 4 content cards exist on Landing page or alternative for non-logged in users to view sample content", "pts":3},
     {"item":"Registration fields: first, last, zip, email, password + confirmation (password type)", "pts":2},
     {"item":"Registration Validation (first & last present, zip is 5 digit numeric, email is valid, password=confirmation)", "pts":5},
     {"item":"Validation error is helpful to user (for every entry)", "pts":5},
