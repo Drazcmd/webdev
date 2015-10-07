@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+     border: 2pt solid black;
+     border-collapse: collapse;
+     font-size: 80%;
+}
+
+td {
+     padding: 1em;
+     border: 1pt solid grey;
+}
+</style>
+</head>
+<body>
+<h3>Dummy Server API</h3>
+<table>
+
+
+     <tr>
+          <th>endpoint</th><th>verb</th><th>payload</th><th>response</th><th>description</th>
+     </tr>
+  
+     <tr>
+          <td>/sample</td><td>GET</td><td>none</td>
+          <td>[ { id: 1, author: Scott, ... }, { ... } ]</td>
+          <td>Array of sample posts.</td>
+     </tr>
+
+     <tr>
+          <td>/login</td><td>POST</td><td>{username: username, password: password }</td>
+          <td>{ username: :user, result: "success"}</td>
+          <td>log in to server, resisters session id and hash</td>
+     </tr>
+     
+     <tr>
+          <td>/logout</td><td>PUT</td><td>none</td>
+          <td>OK</td>
+          <td>log out of server, clears session id</td>
+     </tr>
+
+     <tr>
+          <td>/register</td><td>POST</td><td>{ username: username,
+          email:email, zipcode:zipcode, password:password}</td>
+          <td>{ result: 'success', username: username}</td>
+          <td>Register a new user with the system.  This is not functional,
+          new users cannot log in.</td>
+     </tr>
+
+
+     <tr>
+          <td>/posts/:id</td><td>GET</td><td>:id is a user id
+          or a post id</td>
+          <td>[ { id: 1, author: Scott, ... }, { ... } ]</td>
+          <td>A requested post, osts by the requested user if :id is specified, or array of posts in the loggedInUsers feed</td>
+     </tr>
+
+     <tr>
+          <td>/posts/:id</td><td>PUT</td><td>:id is a post id<br/>
+          { body: message, commentId: optional }</td>
+          <td>[ { id: 1, author: Scott, ..., comments: [ ... ] } ]</td>
+          <td>Update the post :id with a new body.  Forbidden if the user
+          owning the post.  If commentId is supplied, then update the requested comment on the post.  If commentId is -1 or not found, then a new comment is posted with the body message.</td>
+     </tr>
+
+     <tr>
+          <td>/post</td><td>POST</td><td>
+          { body: message }</td>
+          <td>[ { id: 1, author: Scott, ..., comments: [] } ]</td>
+          <td>Add a new post for the loggedInUser, date and id are determined by server</td>
+     </tr>
+
+     <tr>
+          <td>/statuses/:users</td><td>GET</td><td>none<br>:users is a comma separated list of user names</td>
+          <td>[ {username:Scott, status:Happy}, { ... } ]</td>
+          <td>Get the statuses for multiple users</td>
+     </tr>
+
+     <tr>
+          <td>/status</td><td>PUT</td><td>{ status: Happy }</td>
+          <td>{username: Scott, status: Happy }</td>
+          <td>Update the status for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/following/:user</td><td>GET</td><td>:user is an optional user id.  Defaults to loggedInUser</td>
+          <td>{ username: :user, following: [ userids ]}</td>
+          <td>get the list of users being followed by the requested user</td>
+     </tr>
+
+     <tr>
+          <td>/following/:user</td><td>PUT</td><td>:user is a user id.</td>  
+          <td>{ username: :user, following: [ userids ]}</td>
+          <td>add :user to the following list for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/following/:user</td><td>DELETE</td><td>:user is a user id.</td>  
+          <td>{ username: :user, following: [ userids ]}</td>
+          <td>remove :user to the following list for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/email/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>{ username: :user, email: emailAddress }</td>
+          <td>get the email address for the requested user</td>
+     </tr>
+          <td>/email</td><td>PUT</td><td>{ email: newEmailAddress }</td>
+          <td>{ username: loggedInUser, email: newEmailAddress }</td>
+          <td>update the email addres for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/zipcode/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>{ username: :user, zipcode: emailAddress }</td>
+          <td>get the zipcode for the requested user</td>
+     </tr>
+          <td>/zipcode</td><td>PUT</td><td>{ zipcode: newZipCode }</td>
+          <td>{ username: loggedInUser, zipcode: newZipCode }</td>
+          <td>update the zipcode for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/locations/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>{ username: :user, location: locationObject }</td>
+          <td>Returns the { lat:, lng: } of the requested user.</td>
+     </tr>
+
+     <tr>
+          <td>/locations</td><td>PUT</td><td>{ lat: latitude, lng: longitude }</td>
+          <td>{ username: :user, location: locationObject }</td>
+          <td>Updates the lat+lng of the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/picture/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>{ username: :user, picture: pictureURL }</td>
+          <td>get the picture address for the requested user</td>
+     </tr>
+          <td>/picture</td><td>PUT</td>
+          <td>**** TODO ****</td>
+          <td>{ username: loggedInUser, picture: pictureURL }</td>
+          <td>*** TODO spec may change *** update the picture addres for the loggedInUser</td>
+     </tr>
+
+     </tr>
+          <td>/password</td><td>PUT</td><td>{ password: newPassword }</td>
+          <td>{ username: loggedInUser, status: 'will not change' }</td>
+          <td>would update the password for the loggedInUser.  But instead
+          just gives message that password will not change. I.e., you
+          can't change your password, sorry.</td>
+     </tr>
+
+
+
+
+</table>
+</body>
+</html>
