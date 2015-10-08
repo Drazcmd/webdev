@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+ <testsuite name="RiceBookApp" timestamp="2015-10-03T12:08:12" hostname="localhost" time="8.419" errors="0" tests="5" skipped="0" disabled="0" failures="0">
+  <testcase classname="RiceBookApp" name="should work and have header text" time="3.61" />
+  <testcase classname="RiceBookApp" name="should delete a post" time="1.375" />
+  <testcase classname="RiceBookApp" name="should filter to none" time="1.126" />
+  <testcase classname="RiceBookApp" name="should filter to two" time="0.862" />
+  <testcase classname="RiceBookApp" name="should add a post" time="1.445" />
+ </testsuite>
+</testsuites>
