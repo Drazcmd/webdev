@@ -3,10 +3,13 @@
 	{ "name": "Simple Page", "due": 4, "id": "simple", "duetime":"2:30PM" },	
 	{ "name": "Javascript Game", "due": 9, "id": "jsgame" },
 	{ "name": "App Design", "due": 13, "id":"design", "duetime":"2:30PM" },
-	{ "name": "Front-End App", "due": 18, "id": "frontend"},
+	{ "name": "Front-End App", "due": 18, "id": "frontend"},    
 	{ "name": "Hosted Draft Web App", "due": 22, "id": "backend"},
 	{ "name": "Integrated Web App", "due": 26, "id": "integrated"},
-	{ "name": "Final Full Web App", "due": 30, "id": "final" }
+	{ "name": "Final Full Web App", "due": 30, "id": "final" },
+	{ "name": "COMP531 Front-End Review", "due": 20, "id": "frontreview"},
+	{ "name": "COMP531 Web App Review", "due": 27, "id": "fullreview"},
+	{ "name": "COMP531 Paper and Presentation", "due":29, "id":"paper"}
 	],
 
 	"sessions": [

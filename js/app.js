@@ -155,18 +155,20 @@
             srv.sessions.length = 0;
             angular.forEach(data.sessions, function(row) {
                 srv.sessions.push(row);                
-                for (var i = 0; i < data.assignments.length; ++i) {
-                    var assignment = data.assignments[i];
+                var i = 1;
+                data.assignments.forEach(function(assignment) {
                     if (assignment.due == row.day) {
                         row.assignment = assignment;
-                        row.assignment.hwid = i + 1;                        
+                        row.assignment.hwid = 
+                            assignment.name.indexOf('COMP531') >= 0 ? '' : 
+                                data.assignments.indexOf(assignment) + 1
                         srv.assignments[assignment.id] = assignment;
                         $http.get('data/rubric-'+assignment.id+'.json')
                              .success(function(data) {
                                 row.assignment.rubric = data;
                             });
                     }
-                }
+                })
             });
         });
 
