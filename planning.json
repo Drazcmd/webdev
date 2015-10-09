@@ -6,7 +6,7 @@
 	{ "name": "Front-End App", "due": 18, "id": "frontend"},
 	{ "name": "Hosted Draft Web App", "due": 22, "id": "backend"},
 	{ "name": "Integrated Web App", "due": 26, "id": "integrated"},
-	{ "name": "Final Full Web App", "due": 29, "id": "final" }
+	{ "name": "Final Full Web App", "due": 30, "id": "final" }
 	],
 
 	"sessions": [
