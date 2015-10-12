@@ -7,6 +7,9 @@ angular.module('riceBookApp')
 function UserCtrl() {
 	var vm = this;
 	vm.status = "This is RiceBook"
+	vm.fun = function() {
+		console.log('hello world')
+	}
 }
 
 })();

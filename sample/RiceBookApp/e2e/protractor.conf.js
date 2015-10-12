@@ -22,6 +22,6 @@ exports.config = {
         jasmine.getEnv().addReporter(new jr.JUnitXmlReporter({
              savePath: 'e2e-results'
         }))
-        //jasmine.getEnv().addReporter(new jr.TapReporter())
+        jasmine.getEnv().addReporter(new jr.TapReporter())
     }
 }
