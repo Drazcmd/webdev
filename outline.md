@@ -243,15 +243,6 @@
 1. Limitations of REST
 1. **inclass** implement local app
 
-## Back End Unit Testing
-
-1. unittest
-1. mocking
-1. dev vs qa/staging vs production
-1. continuous integration
-1. Jenkins
-1. **inclass** add unit tests
-
 ## Web hosting
 
 1. Serving locally
@@ -263,6 +254,15 @@
 1. Amazon Web Services
 1. Heroku, DigitalOcean, etc
 1. **inclass** hosted app
+
+## Back End Unit Testing
+
+1. unittest
+1. mocking
+1. dev vs qa/staging vs production
+1. continuous integration
+1. Jenkins
+1. **inclass** add unit tests
 
 ## Databases
 
