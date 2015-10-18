@@ -1,0 +1,67 @@
+<div class="ui main container">
+  <div class="ui grid">
+
+    <div class="four wide column">
+      <div class="ui vertical fluid tabular menu">    
+        <a class="item" 
+        ng-class="{ active: vm.assignmentName === 'General Info' }" 
+        ng-click="vm.setAssignment()">
+        <div class="header">General Info</div>
+        </a>            
+        <a class="item" 
+        ng-class="{ active: a.name == vm.assignmentName }" 
+        ng-click="vm.setAssignment(a.id)" 
+        ng-repeat="a in vm.srv.assignments">
+        <div class="header">{{a.hwid}}. {{a.name}}</div>
+        (due {{ vm.srv.getDueDate(a.due) }})</a>
+      </div>
+    </div>
+
+    <div class="twelve wide stretched column">
+      <div class="ui segment">
+
+        <h2 class="ui header">{{ vm.assignmentName }}</h2>
+        <div class="ui transition right floated text item" ng-show="vm.assignmentId">
+          <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} {{ vm.getDueTime(vm.assignmentId) }}<br/>
+          <u>please note the due time</u><br/>
+          Turnin repo: <strong>COMP431-F15:hw-{{ vm.assignmentId }}</strong>
+        </div>
+
+        <div class="ui message transition" ng-show="!vm.assignmentId">
+          <ul>
+            <li>Assignments will be collected using Turnin.</li>
+            <li>Each assignment page has the associated repo, they are <em>case sensitive</em></li>
+            <li>Even if you are enrolled in COMP531 still use the COMP431 repository name for submission</li>
+            <li><a href="https://docs.rice.edu/confluence/display/ITDIY/Using+the+'turnin'+command+to+manage+homework">Turnin instructions</a></li>
+            <li>In-class exercises are also collected via Turnin with repo 
+                <strong>COMP431-F15:inclass-#</strong> with the class number for # (i.e., the numeric value in <em>Topic</em> on the <a href="#/schedule">Schedule page)</a></li>
+            <li>You can view your Turnin repo by going to your NetID path 
+            <a href="https://svn.rice.edu/r/COMP431/turnin/F15/&lt;netid&gt;">https://svn.rice.edu/r/COMP431/turnin/F15/&lt;netid&gt;</a></li>
+          </ul>
+        </div>
+
+        <div class="ui message transition" ng-include="vm.url"></div>
+
+        <button ng-show="vm.assignmentId" ng-click="vm.showRubric = !vm.showRubric">
+        {{ vm.showRubric ? 'Hide' : 'Show' }} Rubric</button>
+
+        <table class="ui selectable inverted celled unstackable striped table" ng-show='vm.showRubric'>
+          <thead>
+            <tr><th>&nbsp;&nbsp;&nbsp;&nbsp;item</th><th>pts</th></tr>
+          </thead>
+          <tbody ng-repeat="sec in vm.rubric">
+            <tr><th class="rubrichead">{{ sec.section }}</th><th class="right aligned rubrichead">&nbsp;[{{ vm.computeTotalPoints( sec.items )}}]</th></tr>
+            <tr ng-repeat="item in sec.items">
+               <td>&nbsp;&nbsp;&nbsp;&nbsp;{{item.item}}</td><td class="right aligned">{{item.pts}}</td>
+            </tr>
+          </tbody>
+          <tr><th class="right aligned rubrichead">Total&nbsp;&nbsp;</th>
+              <th class="right aligned rubrichead">&nbsp;[{{ vm.getTotalPoints() }}]</th></tr>
+        </table>
+       
+      </div><!-- end segment -->
+    </div><!-- end stretched column -->
+
+
+  </div>
+</div>

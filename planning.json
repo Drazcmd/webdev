@@ -1,0 +1,47 @@
+{
+	"assignments": [
+	{ "name": "Simple Page", "due": 4, "id": "simple", "duetime":"2:30PM" },	
+	{ "name": "Javascript Game", "due": 9, "id": "jsgame" },
+	{ "name": "App Design", "due": 13, "id":"design", "duetime":"2:30PM" },
+	{ "name": "Front-End App", "due": 18, "id": "frontend"},    
+	{ "name": "Hosted Draft Web App", "due": 22, "id": "backend"},
+	{ "name": "Integrated Web App", "due": 26, "id": "integrated"},
+	{ "name": "Final Full Web App", "due": 30, "id": "final" },
+	{ "name": "COMP531 Front-End Review", "due": 20, "id": "frontreview"},
+	{ "name": "COMP531 Web App Review", "due": 27, "id": "fullreview"},
+	{ "name": "COMP531 Paper and Presentation", "due":29, "id":"paper"}
+	],
+
+	"sessions": [
+	{ "day": 1, "topic": "HTML", "exercise": "hello world page"},
+	{ "day": 2, "topic": "Javascript", "exercise": "manipulate the DOM"},
+	{ "day": 3, "topic": "HTTP and Forms", "exercise": "exercise post and get to control output"},
+	{ "day": 4, "topic": "CSS", "exercise": "touch of style"},
+	{ "day": 5, "topic": "Events and DHTML", "exercise": "js controlled css, nav bars, menus, etc"},
+	{ "day": 6, "topic": "HTML5", "exercise": "canvas game"},
+	{ "day": 7, "topic": "more javascript", "exercise": "js game"},
+	{ "day": 8, "topic": "Extensions and Style Frameworks", "exercise": "beautification"},
+	{ "day": 9, "topic": "JS Libraries", "exercise": "more modern js"},
+	{ "day": 10, "topic": "MVC", "exercise": "design project"},
+	{ "day": 11, "topic": "AngularJS", "exercise": "implementation"},
+	{ "day": 12, "topic": "AngularJS", "exercise": "custom directives"},
+	{ "day": 13, "topic": "Front End Unit Testing", "exercise": "karma"},
+	{ "day": 14, "topic": "Headless Browsing", "exercise": "casper"},
+	{ "day": 15, "topic": "RECESS", "exercise": "<no class>"},
+	{ "day": 16, "topic": "Web Server Architectures", "exercise": "Local Webserver"},
+	{ "day": 17, "topic": "CGI, Python and WSGI", "exercise": "Python Webapp"},
+	{ "day": 18, "topic": "Frameworks the RESTful way", "exercise": "(Frameworked) Local App"},
+	{ "day": 19, "topic": "Web hosting", "exercise": "Hosted App"},
+	{ "day": 20, "topic": "Back End Unit Testing", "exercise": "Add Test Suite to App"},
+	{ "day": 21, "topic": "Databases", "exercise": "SQL Exercise"},
+	{ "day": 22, "topic": "Salted Authorization", "exercise": "Add Login to App"},
+	{ "day": 23, "topic": "security: SQL, XSS, CSRF, XSSI, HTTPS", "exercise": "security exercises"},
+	{ "day": 24, "topic": "Third Party Authorization", "exercise": "OAuth2 Login"},
+	{ "day": 25, "topic": "service APIs", "exercise": "connect"},
+	{ "day": 26, "topic": "scalability, server caching, AWS, GAE", "exercise": "migrate to PaaS"},
+	{ "day": 27, "topic": "integrating web services: S3, Hadoop, Spark, metrics", "exercise": "add metrics"},
+	{ "day": 28, "topic": "THANKSGIVING", "exercise": "<no class>"},
+	{ "day": 29, "topic": "presentations"}, 
+	{ "day": 30, "topic": "presentations"}
+	]
+}
