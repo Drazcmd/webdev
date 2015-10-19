@@ -40,10 +40,15 @@
           </ul>
         </div>
 
+        <div class="ui message transition" ng-show="vm.assignmentId">Remember to review the <span style="color: red;"><b>Rubric</b></span> before you submit!</div>
+
         <div class="ui message transition" ng-include="vm.url"></div>
 
+        <a id="rubric"></a>
+        <!--
         <button ng-show="vm.assignmentId" ng-click="vm.showRubric = !vm.showRubric">
         {{ vm.showRubric ? 'Hide' : 'Show' }} Rubric</button>
+        -->
 
         <table class="ui selectable inverted celled unstackable striped table" ng-show='vm.showRubric'>
           <thead>

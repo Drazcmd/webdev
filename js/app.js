@@ -44,8 +44,8 @@
     //$locationProvider.html5Mode(true);
     }
     
-    AssignmentCtrl.$inject = ['$routeParams', '$timeout', 'JsonDataService']
-    function AssignmentCtrl($routeParams, $timeout, JsonDataService) {
+    AssignmentCtrl.$inject = ['$location', '$routeParams', '$timeout', '$anchorScroll', '$scope', 'JsonDataService']
+    function AssignmentCtrl($location, $routeParams, $timeout, $anchorScroll, $scope, JsonDataService) {
         var vm = this;
         vm.name = "AssignmentCtrl";
         vm.params = $routeParams;
@@ -56,7 +56,8 @@
         vm.assignmentId = null;
         vm.rubric = null;
         vm.url = null;
-        vm.showRubric = false;
+        vm.showRubric = true;
+        vm.scrollToRubric = scrollToRubric
 
         vm.computeTotalPoints = function(items) {
             return items.map(function(item) { return item.pts })
@@ -85,6 +86,7 @@
                 vm.assignmentId = undefined;
                 vm.url = undefined;
                 vm.rubric = undefined;
+                vm.showRubric = (vm.assignmentName != 'General Info')
                 return;
             }
             var a = vm.srv.getAssignment(id);
@@ -98,7 +100,8 @@
                 vm.assignmentId = id;
                 vm.url = 'views/assignments/' + id + '.html';
                 vm.rubric = a.rubric;
-                vm.showRubric = false;
+                //vm.showRubric = false;
+                vm.showRubric = (vm.assignmentName != 'General Info')
             }
         }
         $timeout(function() {
@@ -106,8 +109,20 @@
         }, 200);
 
         vm.getDueTime = function(id) {
-            var duetime = vm.srv.getAssignment(id).duetime
+            var duetime = undefined
+            if (vm.srv && vm.srv.getAssignment(id)) {
+                duetime = vm.srv.getAssignment(id).duetime
+            }
             return duetime ? "before class at 2:30 PM" : "after class by midnight"
+        }
+
+        function scrollToRubric() {
+            vm.showRubric = true
+            $scope.$apply()
+            $timeout(function() {
+                $location.hash('rubric')
+                $anchorScroll()
+            }, 200)
         }
 
     }
@@ -116,7 +131,7 @@
     function MainCtrl($route, $routeParams, $location) {
         var vm = this;
         vm.$route = $route;
-        vm.$location = $location;
+        vm.$location = $location;        
         vm.$routeParams = $routeParams;
         vm.lastUpdated = "7/3/2015"
         vm.term = "Fall 2015"
