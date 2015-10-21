@@ -19,23 +19,27 @@ Update your web application to use the server as your data source.  If there are
 </p>
 <p>You have been pre-provided a user on the dummy server.</p>
 
+<span style='text-decoration: line-through;'>
 <h3>Unit Testing</h3>
 <p>
 Write Jasmine unit tests for your JavaScript functionality.  We want to test as much code as possible.
 Write a Karma configuration to test your site using Chrome.  Try to maximize your testing code coverage.
 </p>
+</span>
 
+<span style='text-decoration: line-through;'>
 <h3>End-to-End Testing</h3>
 <p>
 Use Protractor and write an end-to-end test for your web application.  Use the python SimpleHTTPServer / http.server to host your web page locally and have Protractor run against it.  The required tasks for your end-to-end test are listed in the requirements below.
 </p>
+</span>
 
 <h1>Requirements</h1>
 
 <p>Use Chrome as your standard supported browser.  (Whereas you can use any browser you like for development, your assignment will be accessed using Chrome by the grading staff and therefore it behooves you that it works.)  Host your webpage locally using the python server.</p>
 
 <p>
-We have an Angular application and therefore want to refactor our web app into a Single Page Application.  Merge together two two pages from the previous assignment into a single <code>index.html</code> with Angular views and routing.  The structure of your web app should follow that of the <a target="_blank" href="sample/RiceBookApp">RiceBookApp</a> example where we have a top level index page, an app directory, and then subdirectories for each component such as posts or users, etc.  Each subdirectory would have at least a view html file, a controller js file, and a spec js file.  You also might have separate services or directives directories which contain those definitions; one factory, service, or directive per file.  As inspired from an in class exercise, you should have a directive representing a post.
+We have an Angular application and therefore want to refactor our web app into a Single Page Application.  Merge together two two pages from the previous assignment into a single <code>index.html</code> with Angular views and routing.  The structure of your web app should follow that of the <a target="_blank" href="sample/RiceBookApp">RiceBookApp</a> example where we have a top level index page, an app directory, and then subdirectories for each component such as posts or users, etc.  Each subdirectory would have at least a view html file, a controller js file, <span style='text-decoration: line-through'>and a spec js file</span>.  You also might have separate services or directives directories which contain those definitions; one factory, service, or directive per file.  As inspired from an in class exercise, you should have a directive representing a post.
 </p>
 <p>Remember separation of concerns and write DRY modularized code.</p>
 
@@ -68,6 +72,7 @@ We have an Angular application and therefore want to refactor our web app into a
 	<li>upload profile picture</li>
 </ul>
 
+<span style='text-decoration: line-through;'>
 <h3>Unit Test</h3>
 <p>Use Jasmine and Karma to test your application.</p>
 <ul>
@@ -96,5 +101,5 @@ We have an Angular application and therefore want to refactor our web app into a
 	<li>Update the user's password, verify a "will not change" message</li>
 </ol>
 <p>Include a JUnitXML report of your end-to-end test.</p>
-
+</span>
 <hr>
