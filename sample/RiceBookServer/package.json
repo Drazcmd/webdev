@@ -7,9 +7,10 @@
   "repository": "https://github.com/skotep/webdev",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "express": "^4.13.3"
   },
   "scripts": {
-       "start": "node index.js"
+    "start": "node index.js"
   }
 }
