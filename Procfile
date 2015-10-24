@@ -1,1 +1,1 @@
-web: bin/start-nginx -f
+web: bin/start-nginx -f 
