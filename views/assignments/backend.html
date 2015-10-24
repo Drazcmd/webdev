@@ -1,1 +1,106 @@
-          In this assignment you will deploy your web application.
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
+
+<div onload="prettyPrint()">
+
+<p>
+In this assignment you will implement unit tests and deploy your web application.
+</p>
+<p>In the previous assignment we integrated our front-end web application with a back-end server. 
+But our application only runs on our local host.  Now we want to deploy our application to the cloud.
+We will be using <a href="https://www.heroku.com" target="_blank">Heroku</a> because of their free tier
+and overall simplicity in usage.
+</p>
+<h2>Getting Started with Heroku</h2>
+<p>First you will need to sign up for an account.  They require a credit card, but so long 
+as you stay in the free tier they will not charge you.  After you have an account and
+are signed in you need to download the Heroku Toolbelt.  If you do not already have a Git client
+installed, they bundle one for you.  We use Git to talk to Heroku.
+</p>
+<p>In class we had created a fresh node project.  Separations of concerns instructs us to
+divide our application into separate front and back end processes.  In this way our application
+is modular, can be selectively scaled, and we have indepdence to change each at their own pace.
+In this assignment we will separately host our front-end and back-end applications on Heroku.
+</p>
+<p>You will need to be logged in to Heroku to proceed: </p>
+<pre class="prettyprint lang-bash">
+heroku login
+</pre>
+
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+
+<h3>Deploying your Front-End</h3>
+<p>To deploy your front-end start by navigating to your app directory.  I called mine RiceBookApp.
+If you have been using git already, then you can ignore the first command.  Do the following, and note
+that the application name, <code>ricebookapp</code>, should be omitted or you can supply a name for your app upfront</p>
+<pre class="prettyprint lang-bash">
+cd RiceBookApp
+git init
+heroku create ricebookapp
+echo "web: bin/start-nginx -f" > Procfile
+git add Procfile index.html app lib css
+git commit -m 'initial commit'
+heroku buildpacks:set https://github.com/skotep/nginx-buildpack.git
+git push heroku master
+</pre>
+<p>Now your app is hosted and running on Heroku.  
+Navigate to <a href="https://ricebookapp.herokuapp.com" target="_blank">https://&lt;yourappname&gt;.herokuapp.com</a> to see it.</p>
+
+<p>What did these steps do?  We started by creating a new git repository.  We then created a new Heroku application that was tied to it.  (The order of these operations matters because if you create the Heroku app first then it will not be attached to the git repo.  If you did this, then to fix it execute <code>heroku git:remote -a &lt;yourappname&gt;</code>)  Next we defined the command that Heroku will execute to start our application.  Notice that it executes "start-nginx" which implies we have an Nginx server running that will surface
+our (static) front-end application.  Next we add all of the importat files to the git repo (I assume your app is laid out like mine.  If it isn't, then you'll need to adjust this execution accordingly).  We commit the changes.  We then tell Heroku that we'll be using Nginx for our application (as opposed to node, ruby, python, etc).  Finally we push to the remote Heroku git master.  Heroku builds our application and spins up the Nginx server.</p>
+
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+
+<h2>Creating your Back-End</h2>
+<p>In class we began creating a NodeJS server.  In case you missed it or did not get it completed, here are the commands again to set it up.  We will have the front-end and back-end separated therefore we have a new directory and a new project.  If you already have completed the following you can skip to the next part
+<pre class="prettyprint lang-bash">
+mkdir RiceBookServer
+cd RiceBookServer
+npm init
+# The defaults are in general fine, i.e., just press enter a lot
+# init creates for us a packages.json file which will be the 
+# configuration for our node application
+npm install express body-parser --save
+wget https://www.clear.rice.edu/comp431/sample/RiceBookServer/index.js
+</pre>
+<p>We can now run our Node application</p>
+<pre class="prettyprint lang-bash">
+node index.js
+</pre>
+<p>Test it out by navigating to <a href="http://localhost:8080" target="_blank">http://localhost:8080</a> it should say "Hello World!".  In the sample from the course site there is also the <code>POST /post</code> endpoint.  To test this you can either use a browser extension such as Advanced REST Client or Postman, or use curl on the commandline:
+<pre class="prettyprint lang-bash">
+curl -H 'Content-Type: application/json' -d '{"Hello": "World" }' http://localhost:8080/post
+</pre>
+<p>The -H sets a header field.  It tells the server we are going to send a JSON payload.  The -d flag is the payload.  Notice that we have formatted it as JSON.  If you don't do this correctly then it won't work correctly.  If you look at the <code>index.js</code> you'll notice we use the middleware <code>bodyParser.json()</code> which parses the JSON input and places the payload in the <code>body</code> attribute of the request (normally called <code>req</code>).</p>
+
+<p>Everything in Node is middleware.  Middleware is a function that has two or three arguments.  In <code>index.js</code> we see examples with two arguments request and response.  Therefore these are really endpoints as they do not have a <code>next</code> function to pass on to.  A middleware function might look like this:</p>
+<pre class="prettyprint lang-javascript">
+function isLoggedIn(req, res, next) {   
+    var id = req.cookies['sessionId']
+    var hash = req.cookies['hash']
+    ...
+    return next()
+}
+</pre>
+<p>To use this middleware we can either <code>app.use(isLoggedIn)</code> &quot;globally&quot; on all of our endpoints (bearing in mind that <code>app.use()</code> is applied in order) or on individual endpoints like this:</p>
+<pre class="prettyprint lang-javascript">
+    app.put('/logout', isLoggedIn, logout)
+</pre>
+<p>we can chain together as many pieces of middleware as we want.</p>
+
+<h3>Deploying your Back-End</h3>
+<p>Follow a similar perscription to create a git repo and a Heroku application.  Before you add and commit your files, we want to tell git not to add our <code>node_modules</code> directory to the repo (Heroku will automatically install these libraries for us because they are in our packages.json file):</p>
+<pre class="prettyprint lang-bash">
+echo node_modules > .gitignore
+echo npm-debug.log >> .gitignore
+git add .gitignore Procfile package.json index.js
+</pre>
+
+
+
+
+</div>
