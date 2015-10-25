@@ -41,6 +41,7 @@
     {"item":"bad datastructure choice or usage", "pts": 5},
     {"item":"inappropriate use of new", "pts": 5},
     {"item":"improper use of comments", "pts": 5},
+    {"item":"no comments at all (you should have describing comments to explain why you are doing things the way you are doing them)", "pts": 5},
     {"item":"dead code, e.g., commented or unreachable code", "pts": 5},
     {"item":"code makes unchecked assumption", "pts": 5},
     {"item":"non-CSS styling", "pts": 5},
