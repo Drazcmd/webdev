@@ -62,8 +62,9 @@ td {
           <td>/posts/:id</td><td>PUT</td><td>:id is a post id<br/>
           { body: message, commentId: optional }</td>
           <td>[ { id: 1, author: Scott, ..., comments: [ ... ] } ]</td>
-          <td>Update the post :id with a new body.  Forbidden if the user
-          owning the post.  If commentId is supplied, then update the requested comment on the post.  If commentId is -1 or not found, then a new comment is posted with the body message.</td>
+          <td>Update the post :id with a new body if commentId is not supplied.  
+               Forbidden if the user does not own the post.
+          If commentId is supplied, then update the requested comment on the post, if owned.  If commentId is -1 or not found, then a new comment is posted with the body message.</td>
      </tr>
 
      <tr>
