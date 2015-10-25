@@ -17,13 +17,15 @@
     {"item":"End-to-End Test: Update user password and verify", "pts":3},
     {"item":"End-to-End Test: JUnitXML report included in submission", "pts":3},
     {"item":"README.txt file with netid, frontend and backend URLs", "pts":3},
-    {"item":"Frontend: Site is hosted on Heroku", "pts":4},
+    {"item":"Frontend: Site is hosted on Heroku", "pts":3},
     {"item":"Frontend: Site is fully functional as per hw-frontend", "pts":5},
-    {"item":"Backend: Site is hosted on Heroku", "pts":4},
-    {"item":"Backend: GET /posts returns at least three posts", "pts":5},
+    {"item":"Backend: Site is hosted on Heroku", "pts":3},
+    {"item":"Backend: GET /posts returns at least three posts", "pts":4},
     {"item":"Backend: POST /post returns a newly added post, and adds post to results for GET /posts", "pts":10},
-    {"item":"Backend: GET /posts/:id returns the desired post", "pts":5},
-    {"item":"Backend: source GET /posts and GET /posts/:id is one endpoint not two", "pts": 5}    
+    {"item":"Backend: GET /posts/:id returns the desired post", "pts":4},
+    {"item":"Backend: implement GET /posts and GET /posts/:id as one endpoint not two", "pts": 3},
+    {"item":"Backend: At least four unit tests to validate endpoint functionality", "pts": 4},
+    {"item":"Backend: XML test results for backend", "pts":2}
 ]},
 {"section":"Demerits", "items": [
 

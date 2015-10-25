@@ -198,6 +198,24 @@ curl https://ricebookserver.herokuapp.com/posts
 </pre>
 <p>We will use an automated test similiar to these commands to check the functionality of your backend.</p>
 
+<!-- ******************************************************************** -->
+<h3>Unit Test the Back End</h3>
+<p>We'll use <code>jasmine-node</code> for running our unit tests.
+Write unit tests for the two endpoints.  There will be at least four unit tests:</p>
+<table>
+	<tr><td style="width: 30%;"><code>GET /posts</code></td><td>Confirm at least 3 posts returned</td></tr>
+	<tr><td><code>GET /posts/id</code></td><td>where id is a valid post id, confirm that only one post is returned and that it has the correct post id</td></tr>
+	<tr><td><code>GET /posts/id</code></td><td>where is it not a valid post id, confirm that no posts are returned</td></tr>
+	<tr><td><code>POST /post</code></td><td>assure that adding two posts will increment the post id accordingly.  Validate the contents of each post</td></tr>
+</table>
+<p>To get XML test results, use the following command</p>
+<pre class="prettyprint lang-bash">
+./node_modules/.bin/jasmine-node --output test-results --junitreport app_server
+</pre>
+
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
 <h1>Requirements</h1>
 
 <p>Create a file <code>README.json</code> that has contents similar to this (we will read this programmatically so please make sure you follow this style)</p>
@@ -250,6 +268,8 @@ Here are the tasks for your end-to-end test</p>
 	<li><code>GET /posts/</code> returns all posts, 3 hardcoded and any additional that are added</li>
 	<li><code>GET /posts/:id</code> returns the post with matching id if it exists, none otherwise</li>
 	<li><code>POST /post</code> adds a new post to the list of all posts.  Returns the newly added post</li>
+	<li>Unit tests for the endpoints</li>
+	<li>Unit test results, e.g., <code>test-results/TEST-ValidatePostFunctionality.xml</code></li>
 </ul>
 
 <h2>What to submit</h2>
@@ -353,6 +373,23 @@ Here are the tasks for your end-to-end test</p>
 				<div class="content">
 					<div class="header">RiceBookServer</div>
 					<div class="list">
+						<div class="item">
+							<i class="folder icon"></i>
+							<div class="content">
+								<div class="header">app_server</div>
+								<div class="list">
+
+									<div class="item">
+										<i class="file text outline icon"></i>
+										<div class="content"><div class="description">posts.js</div></div>
+							 		</div>	
+									<div class="item">
+										<i class="file text outline icon"></i>
+										<div class="content"><div class="description">posts.spec.js</div></div>
+							 		</div>	
+								</div>
+							</div>
+				 		</div>		
 
 						<div class="item">
 							<i class="file text outline icon"></i>
@@ -365,7 +402,18 @@ Here are the tasks for your end-to-end test</p>
 						<div class="item">
 							<i class="file outline icon"></i>
 							<div class="content"><div class="description">Procfile</div></div>
-				 		</div>					 		
+				 		</div>
+						<div class="item">
+							<i class="folder icon"></i>
+							<div class="content"><div class="header">test-results</div>
+								<div class="list">
+									<div class="item">
+										<i class="file outline icon"></i>
+										<div class="content"><div class="description">TEST-ValidatePostFunctionality.xml</div></div>
+							 		</div>
+						 		</div>
+							</div>
+				 		</div>	
 					</div>					
 				</div>
 			</div>		

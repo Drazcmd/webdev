@@ -1,1 +1,29 @@
           In this assignment you will integrate your web application with external services.
+
+<H1>This is in progress...</H1>
+
+<p>Next connect your frontend to your backend for these two endpoints.  If you are using Angular's <code>$resource</code> then you can supplement with a <code>url</code> parameter:</p>
+<pre class="prettyprint lang-javascript">
+// apiURL = https://webdev-dummy.herokuapp.com
+// myURL  = https://ricebookserver.herokuapp.com
+...
+return $resource(apiURL + '/:endpoint', { },
+    {
+    	login: { method: 'POST', params: { endpoint: 'login'} },
+    	posts: { method: 'GET', params: { }, url: myURL + '/:endpoint' },
+    	...
+    })
+</pre>
+<p>
+Note that your backend server has no persistence of the posts that are being sent to it, i.e., when you reboot your backend server added posts will disappear.  But so long as your server remains alive, new posts will be added to the inmemory collection of posts that are then returned by <code>GET /posts</code>.  
+</p>
+<p style="
+	background-color: orange;
+    padding: 0.5em;
+    border-radius: 1em;
+    border: 1px solid black;
+"><b>IMPORTANT:</b> Your end-to-end tests must run against the dummy server, <em>not</em> your new backend server, because
+the later does not have fully functional post capabilities.  
+Therefore you'll need to take special case in using either <code>myURL</code> or <code>apiURL</code> in the above while
+you are developing and running your tests.</p>
+
