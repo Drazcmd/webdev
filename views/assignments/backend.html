@@ -104,7 +104,7 @@ curl -H 'Content-Type: application/json' -d '{"Hello": "World" }' http://localho
 
 <!-- ******************************************************************** -->
 <h4>Aside on Middleware</h4>
-<p>Everything in Node is middleware.  Middleware is a function that has two or three arguments.  In <code>index.js</code> we see examples with two arguments request and response.  Therefore these are really endpoints as they do not have a <code>next</code> function to pass on to.  A true middleware function might look like this:</p>
+<p>Node is all about middleware.  Middleware are functions inserted between the server and the endpoint handler that have three arguments, request, response, and a "pointer" to the next piece of middleware or endpoint.  In <code>index.js</code> we see examples of functions in the request-reponse pipeline with two arguments request and response.  These are endpoints -- they do not have a <code>next</code> function to pass on to.  A middleware function might look like this:</p>
 <pre class="prettyprint lang-javascript">
 function isLoggedIn(req, res, next) {   
     var id = req.cookies['sessionId']
