@@ -69,7 +69,7 @@ td {
 
      <tr>
           <td>/post</td><td>POST</td><td>
-          { body: message, image: &lt;file&gt; }</td>
+          { body: message, img: &lt;file&gt; }</td>
           <td>[ { id: 1, author: Scott, ..., comments: [] } ]</td>
           <td>Add a new post for the loggedInUser, date and id are determined by server.  Optional image upload -- <a href="#upload"><b>see below</b></a>.</td>
      </tr>
@@ -148,7 +148,7 @@ td {
           <td>get the picture address for the requested user</td>
      </tr>
           <td>/picture</td><td>PUT</td>
-          <td>{ image: &lt;file&gt; }*</td>
+          <td>{ img: &lt;file&gt; }</td>
           <td>{ username: loggedInUser, picture: pictureURL }</td>
           <td>Update the picture address for the loggedInUser. <a href="#upload"><b>See below</b></a></td>
      </tr>
