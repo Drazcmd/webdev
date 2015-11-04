@@ -1,5 +1,8 @@
 var mongoose = require('mongoose')
 var url = 'mongodb://localhost:27017/webdev'
+if (process.env.MONGOLAB_URI) {
+	url = process.env.MONGOLAB_URI;
+}
 mongoose.connect(url)
 function done() {
 	mongoose.connection.close()

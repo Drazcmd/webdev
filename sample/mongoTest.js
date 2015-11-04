@@ -1,6 +1,9 @@
 var request = require('request')
 var MongoClient = require('mongodb').MongoClient
 var url = 'mongodb://localhost:27017/webdev'
+if (process.env.MONGOLAB_URI) {
+	url = process.env.MONGOLAB_URI;
+}
 function mc(execute) {
 	var args = Array.prototype.slice.call(arguments, 1)
 	MongoClient.connect(url, function(err, db) {
