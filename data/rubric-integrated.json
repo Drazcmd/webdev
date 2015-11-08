@@ -1,15 +1,15 @@
 [
 {"section":"Merits", "items": [
-    {"item":"README.txt file with netid, frontend and backend URLs", "pts":3},
+    {"item":"README.txt file with netid, frontend and backend URLs", "pts":2},
     {"item":"sample content is accessible from landing page for non-logged in users", "pts": 3},
-    {"item":"Can register a new user", "pts": 4},
-    {"item":"Can log in as the new user", "pts": 4},
+    {"item":"Can register a new user", "pts": 3 },
+    {"item":"Can log in as the new user", "pts": 3 },
     {"item":"At least 10 preloaded posts exist", "pts": 3},
     {"item":"At least 3 preloaded comments exist", "pts": 3},
     {"item":"Can update status message", "pts":3},
-    {"item":"Profile edit page: update and persist email", "pts":3},
-    {"item":"Profile edit page: update and persist zipode", "pts":3},
-    {"item":"Profile edit page: upload and persist new profile picture", "pts":3},    
+    {"item":"Profile edit page: update and persist email", "pts":2},
+    {"item":"Profile edit page: update and persist zipode", "pts":2},
+    {"item":"Profile edit page: upload and persist new profile picture", "pts":2},
     {"item":"New Posts appear at top of feed with submission timestamp", "pts":3},
     {"item":"Post can be text only", "pts":3},
     {"item":"Post can be text with image", "pts":3},
@@ -19,15 +19,17 @@
     {"item":"Can update a post", "pts":3},
     {"item":"Can update a comment", "pts":3},
     {"item":"updates to posts and comments are persistent", "pts":3},
-    {"item":"Add and remove followed users", "pts":4},
-    {"item":"Suitable message when trying to add user that does not exist", "pts":4},
+    {"item":"Add and remove followed users", "pts":3},
+    {"item":"Suitable message when trying to add user that does not exist", "pts":3},
     {"item":"Backend implements all APIs except /locations", "pts": 5 },
     {"item":"MongoDB has at least three collections: users, posts, profiles", "pts": 5},
     {"item":"Sample data posted to website on submission date exists days later", "pts": 5},
-    {"item":"User passwords are salted and hashed using md5 or encrypted with bcrypt", "pts":  5},    
+    {"item":"User passwords are salted and hashed using md5 or encrypted with bcrypt", "pts":  5},
+    {"item":"Algorithm to construct user's feed is efficient and only returns a limited number of posts", "pts": 5 },
+    {"item":"Session is stored as a client cookie, httpOnly", "pts": 4 },
     {"item":"End-to-End configuration file shows tests run against live frontend", "pts": 5},
     {"item":"End-to-End JUnitXML report included in submission", "pts": 5},  
-    {"item":"JavaScript source is appropriately divided into separate files by component", "pts":3}
+    {"item":"JavaScript source is appropriately divided into separate files by component", "pts":2}
 ]},
 {"section":"Demerits", "items": [
 

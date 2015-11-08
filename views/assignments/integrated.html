@@ -229,6 +229,34 @@ res.cookie('sid', sessionKey, { maxAge: 3600*1000, httpOnly: true})
 map really should be a least recently used map, otherwise it is a potential memory hog.</p>
 <p>When a user logs out, remove their sessionKey form the sessionUser map and clear the cookie.</p>
 
+<h3>A User's Feed</h3>
+
+<p>Each logged in user has a feed which is the collection of their posts and their followers posts.  
+When the user requests <code>GET /posts</code> we therefore need to return this joined set.  A bad 
+algorithm would be the following</p>
+<pre class="prettyprint lang-javascript">
+var userObj = getUser(req.user)
+var posts = []
+posts.addAll(getPostsByAuthor(userObj.username))
+userObj.following.forEach(function(user) {
+    posts.addAll(getPostsByAuthor(user))
+})
+</pre>
+<p>(Note there is no addAll() function.)  This is bad because it adds all posts for all time
+to the result set (posts) and additionally makes multiple requests to the database.
+Instead we want one query to the database that retrieves posts for all users and only those
+posts that are recent.  I.e., we would prefer something like</p>
+<pre class="prettyprint lang-javascript">
+var userObj = getUser(req.user)
+var usersToQuery = [ userObj.username ]
+usersToQuery.addAll(userObj.following)
+var posts = getPostsByAuthors({ authors: usersToQuery, limit: 10 })
+</pre>
+<p>where the query will preferentially grab the 10 most recent posts by any of the users in the array.
+In this way the client will make one request to get the user's feed and it will be relatively small in size.
+To retrieve the next set of posts after the initial 10, we would implement pagination on the query.
+</p>
+
 <h3>Uploading Pictures</h3>
 
 <p>After you have all other endpoints functional, it is time to implement
