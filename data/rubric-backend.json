@@ -1,6 +1,6 @@
 [
 {"section":"Merits", "items": [    
-    {"item":"Frontend: Every functional JavaScript file has an associated Jasmine spec file", "pts":5},
+    {"item":"Frontend: Every application logic JavaScript file has an associated Jasmine spec file", "pts":5},
     {"item":"Frontend: Jasmine coverage results page included in submission", "pts": 3},
     {"item":"Frontend: Code coverage is close to or greater than 70%", "pts":10},
     {"item":"Frontend: Unit tests are small tests of individual units of functionality", "pts":5},
