@@ -9,8 +9,26 @@ code, pre {
 <div onload="prettyPrint()">
 
 <p>
-In this assignment you will integrate your frontend and backend web applications.
+In this assignment you will integrate your frontend and backend web applications.  
 </p>
+
+<h2>Cross-Origin Resource Sharing</h2>
+
+<p>The browser has a same-origin policy.  Which means it will only allow javascript to transfer
+data from the same origin.  I.e., I visit site A and can run javascript that access data from site A, but it cannot access data from site B.  By access data I mean make an AJAX request.  The browser will only allow cross-origin resource sharing if the other origin (site B) allows for it.  See slide 12 in lec 23 to visualize what it going on.  As you can see, it's your backend that needs to supply the headers in it's response to the client.  See slide 11 for what these response headers should look like.</p>
+
+<p>The frontend and backend have different origins.  When running locally you might have the 
+frontend running through the python server on port 8080 and the backend served up on port 8000 or 3333 or whatever you like.
+Therefore we need to enable CORS for the AJAX calls to complete.  You'll want to create a middleware function that adds these response headers to every request.  If you were to only use it on some requests, then you could put the middleware in the middle of an endpoint call:</p>
+<pre class="prettyprint lang-javascript">
+app.get('/posts', enableCORS, getPosts)
+</pre>
+if you want to add middleware to all calls, then instead have 
+<pre class="prettyprint lang-javascript">
+app.use(enableCORS)
+</pre>
+<p>where <em>enableCORS</em> is a middleware function.  See the section <strong>Aside on Middleware</strong> in the <a href="#/assignments/backend">previous assignment</a> to see what middleware should look like.
+See lecture 23 for the inclass exercise enabling CORS, additionally slides 11 and 12 in that lecture.</p>
 
 <h2>Stubbing the Backend</h2>
 <p>
@@ -20,14 +38,21 @@ endpoints implemented, which means the other endpoints will be broken.  Therefor
 stage includes implementation of these endpoints with stubs.  A stub returns dummy data
 </p>
 <pre class="prettyprint lang-javascript">
-// this is user.js which contains all user profile information except passwords
+// this is user.js which contains all user profile 
+// information except passwords which is in auth.js
 exports.setup = function(app) {
     app.get('/statuses/:users*?', isLoggedIn, getStatuses)
 }
 
 function getStatuses(req, res) {
+    
+    // this isn't correct, but gives you a start
+    // for the stub this is fine.
+    var username = req.params.users.split(',')[0]
+    // but what if users is not specified in the request?
+
     res.send({ statuses: [ 
-        { username: 'user', status: 'the status of the user' } 
+        { username: username, status: 'the status of the user' } 
     ] })
 }
 </pre>
@@ -45,279 +70,100 @@ which can serve us well in testing our backend functionality.  (But again, unit 
 backend is the preferred approach.)
 </p>
 
-<h3>Cross-Origin Resource Sharing</h3>
-<p>The frontend and backend have different origins.  When running locally you might have the 
-frontend running through the python server on port 8080 and the backend served up on port 8000 or 3333 or whatever you like.
-Therefore we need to enable CORS for the AJAX calls to complete.  See lecture 23 for the inclass exercise for enabling CORS.
-</p>
-
 <h2>Implementing the Backend</h2>
+
+<p>You should create stubs for all endpoints, but we will implement only 
+a portion of the backend in this assignment, and the rest in the final assignment.
+The endpoints to implement in this assignment are:</p>
+<ul>
+  <li><code>GET  /sample</code></li>
+  <li><code>POST /login</code></li>
+  <li><code>PUT  /logout</code></li>
+  <li><code>POST /register</code></li>
+  <li><code>GET  /posts/:id</code></li>
+  <li><code>POST /post</code></li>
+</ul>
+
+<h3>Authentication</h3>
 
 <p>Users must be authenticated to use the backend.  They authenticate by suppling their
 username and password in a payload to <code>POST /login</code> which if successfully
 authenticated will return a cookie.  The cookie will be passed on all subsequent requests
 until the cookie expires or the user <code>PUT /logout</code> which deletes the cookie.</p>
 
-<h3>Database Setup</h3>
-
-<p>We need a database to store user information.  Because we are developing a MEAN stack,
-we will use MongoDB for our document store.  Heroku provides an easy prescription for 
-setting up a mongolab mongoDB for your backend app.  See a 
-<a href="https://piazza.com/class/ibpbmkjtg5e3m8?cid=219" target="_blank">piazza post</a>
-for instructions on setting up a mongolab mongoDB directly.  To connect to your mongoDB
-from your locally running application, you will need the mongodb url.  If you setup 
-your db from Heroku you can get the url from the Heroku configuration
-</p>
-<pre class="prettyprint lang-bash">
-heroku config | grep MONGO
-</pre>
-<p>if you setup through mongolab, then they provided you a URL.  You can if you want
-to hardcode the URL in your code.  However, this breaks separations of concerns: configuration should not be in code.
-Instead we want to use environment variables.  To set it on heroku
-<pre class="prettyprint lang-bash">
-heroku config:set MONGOLAB_URI=&lt;the url from mongolab&gt;
-</pre>
-<p>When running locally you can store your environment variables in a local file and then load them in node.
-Here are two different ways of doing it.</p>
-<pre class="prettyprint lang-javascript">
-// this is .env
-MONGO_URL="mongodb://ian:sekret@widmore.mongohq.com:27017/dev_local"
-REDIS_KEY="1234"
-
-// runs these in terminal
-# npm install dotenv --save-dev
-# echo .env >> .gitignore
-
-// add this to index.js
-if (process.env.NODE_ENV !== "production") {
-    require('dotenv').load()
-}
-</pre>
-or
-<pre class="prettyprint lang-javascript">
-// this is .env.json
-{
-  "MONGO_URL": "mongodb://ian:sekret@widmore.mongohq.com:27017/dev_local",
-  "REDIS_KEY": "1234"
-}
-
-// runs these in terminal
-# npm install dot-env --save-dev
-# echo .env.json >> .gitignore
-
-// add this to index.js
-if (process.env.NODE_ENV !== "production") {
-    require('dot-env')
-}
-</pre>
-<p>So either store your environment in a shell file or in a json file -- your pick.
-In both cases we save the loading module in our dev dependencies (so they don't show up on Heroku)
-and ignore the environment file (so it doesn't show up on Heroku).  Put the loading logic
-in your <code>index.js</code> file so it will be loaded first on startup.
-</p>
-
-<h3>Database Collections</h3>
-
-<p>In the databse we will have at least three collections: users, posts, profiles. 
-If we were using a RDBMS or ODM (e.g., mongoose) then these are what the schemas might look like
-</p>
-<pre class="prettyprint lang-javascript">
-users {
-    username: String,
-    salt: String,
-    hash: String
-}
-
-profiles {
-    username: String,
-    status: String,
-    following: [ String ],
-    email: String,
-    zipcode: String,
-    picture: String
-}
-
-posts {
-    id: Number,
-    author: String,
-    body: String,
-    date: Date,
-    img: String, 
-    comments: [{
-        commentId: Number,
-        author: String,
-        body: String,
-        date: Date
-    }]
-}
-</pre>
-<p>If you use mongoose, then you would call these schemas by their singular name: user, profile, post. 
-I would therefore have in my <code>model.js</code> file</p>
-<pre class="prettyprint lang-javascript">
-// this is model.js
-var mongoose = require('mongoose')
-
-var userSchema = new mongoose.Schema({
-    ...
-})
-
-exports.User = mongoose.model('users', userSchema)
-</pre>
-<p>and then in auth.js I would have</p>
+<p>In <code>auth.js</code> create an array for users.  To identify the array, I would prefix 
+it with an underscore -- this makes it look like a "member" variable: <code>var _users = []</code> -- the
+idea now is that this is an array of user login information.  We likely want a function like this to traverse
+it</p>
 <pre class="prettyprint lang-javascript">
 // this is in auth.js
-var models = require('./model.js')
+var _users = []
 
-models.User.find({ username: "sep1" }).exec(function(err, users) {
-    ...
-})
+function getUser(username) {
+    // short circuiting would be more efficient
+    // but this is a functional way to do it instead
+    var foundUsers = _users.filter(function(user) {
+        return user.username == username
+    })
+    // foundUsers should have zero or one element
+    // return the found user or null if not found
+}
 </pre>
-<p>If you're not using mongoose (which is 100% okay) then you'd have something like this</p>
-<pre class="prettyprint lang-javascript">
-// this is in auth.js
-db.collection('users').find({ username: "sep1" }).toArray(function(err, users) {
-    ...
-})
-</pre>
-<p>and there may or may not be a <code>model.js</code> file depending on where you put your logic (remember divide and conquer).</p>
-
-<p>Implement the logic to query the database for the <code>GET</code> endpoints, and write to the database for the <code>PUT</code> and <code>POST</code> endpoints.
-The default implementation of mongoDB collections have an <code>_id</code> field.  The _id is <u>automatically</u> populated
-for you during inserts.  
-<pre>
-_id: ObjectId("5099803df3f4948bd2f98391")
-</pre>
-<p>you can use this instead of a numeric id supplied by your server.  I.e., just omit "id" from your schema and perform
-queries on _id instead.  That means a request for a specific post might be</p>
-<pre>
-GET /posts/5099803df3f4948bd2f98391
-</pre>
-<p>instead of <code>GET /posts/1234</code> which is perfectly fine.  </p>
-<p>
-For the commentId you get to choose what to do.  A "global" value probably is not a good idea because
-it may collide across different servers.  Instead you might consider something unique, such as the hash of the author &amp; timestamp which assumes that an individual user will only be connected to one server and making one post at a time -- which I think is a reasonable assumption to make.  The commentId therefore is a String not a number.  Again, it doesn't matter what it is, it is just for us to use when looking up and identifying a particular comment.</p>
-
-<h3>Authentication</h3>
 
 <p>We will use salted passwords for our authentication.  For this assignment we will
 implement the salting and hashing ourselves.  In class #22 we added the <code>POST /login</code>
 and <code>POST /register</code> endpoints.</p>
 <p>
-Register will add to the database a new document
+The register endpoint will add to the <code>_users</code> array a new object
 with a username, a randomly created salt, and the hash of the user's salted password.
-The salt is a random string, perhaps a combination of the user's username and the current time.
+We could make the object with behavior in which case <code>new User()</code> would create a user
+and then it could have a function <code>getHash()</code> but this is not necessary.  <em>Remember
+we will move this to the MongoDB in the next assignment.</em>
+The salt is a random string, perhaps a combination of the user's username and the current time, all hashed even.
 We can use <code>md5</code> hashing here or if you prefer you can use <code>bcrypt</code> which
-is a popular encryption library.  (For either use npm install --save).
+is a popular encryption library.  (For either use <code>npm install ... --save</code>).
 </p><p>
-A new user will have a blank profile picture (you could supply some default pic if you like) and should have some default status message.
+The <em>user</em> entry will have username, salt, and hash, but nothing else.  User information that 
+would be accessible by others will be stored separately, i.e., status message, profile picture, zipcode, and email.
+You don't need to worry about these for this assignment.
 </p><p>
-Login will accept from the user their username and password.  Get the user document from the database
-for the username which contains the salt and hash.  Salt the password and compare the hashes.  If they
-match then create a session for the user.  Store the session in a map from session key to user document.
+The login endpoint will accept from the user their username and password.  Find the user object from the array
+given the username, the user object has the salt and hash.  Salt the user supplied password and compare the hashes.  If they
+match then create a session for the user.  Store the session in a map from session key to user object.
 Here is an example that attempts to create unique session keys for users
 </p>
 <pre class="prettyprint lang-javascript">
-// this is in auth.js
-var sessionUser = {}
+// this is also in auth.js
+var _sessionUser = {}
+var _cookieKey = 'sid'
 
-// security by obscurity we don't want people guessing a sessionkey
-var sessionKey = md5(mySecretMessage + new Date().getTime() + userObj.username)
-sessionUser[sessionKey] = userObj
-res.cookie('sid', sessionKey, { maxAge: 3600*1000, httpOnly: true})
+function login(...) {
+
+    var userObj = getUser(...)
+
+    // "security by obscurity" we don't want people guessing a sessionkey
+    var sessionKey = md5(mySecretMessage + new Date().getTime() + userObj.username)
+    _sessionUser[sessionKey] = userObj
+
+    // this sets a cookie
+    res.cookie(_cookieKey, sessionKey, { maxAge: 3600*1000, httpOnly: true})
 </pre>
 <p>we store the session key in a cookie for the user.  Note that the sessionUser
-map really should be a least recently used map, otherwise it is a potential memory hog.</p>
-<p>When a user logs out, remove their sessionKey form the sessionUser map and clear the cookie.</p>
-
-<h3>A User's Feed</h3>
-
-<p>Each logged in user has a feed which is the collection of their posts and their followers posts.  
-When the user requests <code>GET /posts</code> we therefore need to return this joined set.  A bad 
-algorithm would be the following</p>
-<pre class="prettyprint lang-javascript">
-var userObj = getUser(req.user)
-var posts = []
-posts.addAll(getPostsByAuthor(userObj.username))
-userObj.following.forEach(function(user) {
-    posts.addAll(getPostsByAuthor(user))
-})
-</pre>
-<p>(Note there is no addAll() function.)  This is bad because it adds all posts for all time
-to the result set (posts) and additionally makes multiple requests to the database.
-Instead we want one query to the database that retrieves posts for all users and only those
-posts that are recent.  I.e., we would prefer something like</p>
-<pre class="prettyprint lang-javascript">
-var userObj = getUser(req.user)
-var usersToQuery = [ userObj.username ]
-usersToQuery.addAll(userObj.following)
-var posts = getPostsByAuthors({ authors: usersToQuery, limit: 10 })
-</pre>
-<p>where the query will preferentially grab the 10 most recent posts by any of the users in the array.
-In this way the client will make one request to get the user's feed and it will be relatively small in size.
-To retrieve the next set of posts after the initial 10, we would implement pagination on the query.
-</p>
-
-<h3>Uploading Pictures</h3>
-
-<p>After you have all other endpoints functional, it is time to implement
-the uploading of images.  The profile.picture and post.img fields are both urls to images stored
-on our backend.  Note that we can potentially consume a lot of disk space if we're not careful
-about limiting user uploads etc.  Additionally, local storage is not persistent to dyno reboots, i.e., 
-after you repush your code, your Heroku dyno will reboot and any locally uplaoded files 
-will not be available on the new dyno.  Later we'll push storage off of our Heroku app.</p>
-
-<p>Multer is a node.js middleware for handling <code>multipart/form-data</code>, which is exactly what we have for uploading files: <code>npm install multer --save</code>.  Here is
-the work horse already implemented for you.  Download <code>upload.js</code> and use it in your app.</p>
-
-<center><a target="_blank" href="data/upload.js">Get upload.js here</a></center>
-
-<p>Upload.js provides us one export <code>uploadFile</code> which provides to us middleware for use in our routes to upload the profile picture and upload a post.</p>
-<pre class="prettyprint lang-javascript">
-app.post('/post'   , isLoggedIn, uploadFile('post')  , addPost)
-app.put ('/picture', isLoggedIn, uploadFile('avatar'), setProfilePicture)
-
-// the middleware consumes the file (if it exists) and sets
-//   req.filepath = local path to file
-//   req.fileurl  = full url to file
-
-function setProfilePicture(req, res) {
-    var userObj = getUser(req.username)
-    userObj.picture = req.fileurl
-    res.send({ 
-        'status': 'OK', 
-        'username': userObj.username, 
-        'picture': userObj.picture 
-    })
-})
-</pre>
-<p>Test locally before uploading to Heroku so you can see where the files are being uploaded and moved to. 
-Again, each time your Heroku app reboots, it will start with a fresh installation which means none of the uploads
-will be persistent.</p>
+map really should be a <em>least recently used</em> (LRU) map, otherwise it is a potential memory hog!</p>
+<p>When a user logs out, remove their sessionKey form the sessionUser map and clear/delete the cookie.</p>
 
 <h3>Initialization</h3>
 
-<p>We start with an empty database!  But to visualize your site we would like some sample 
-data and users.  Add your dummy server test user to your site.  This is the one with a username like "sep1test" -- use the 
-same password as well.  Next add some sample content.  For example, you can pull posts from the dummy server and
-post them to your server.  I wrote a script to do this for you.  Download <a target="_blank" href="data/initDatabase.js">initDatabase.js</a>
-and place in a node package that has <code>request</code> already installed (e.g., your backend!).
-Create a file <code>cred.json</code> with something like the following:
-</p>
+<p>We start with empty arrays of users and posts.  But to visualize your site we would like some sample 
+data and users.  Add your <em>dummy server test user</em> to your site.  This is the one with a username like "sep1test" -- use the 
+same password as well.  (You'll need to generate a salt and then store the salt and the hash of the salted password in your hard coded array of users.)  </p>
+<p>Next add some sample content.  
+One way to do this is to ceate a file of dummy posts and load them.  For example, you can log into the dummy server and 
+make a request to get posts, i.e., <code>GET /posts</code> which returns a json payload.  Save this to disk, perhaps named <code>samplePosts.json</code> then in your <code>posts.js</code> you can initialize with that data by doing the following:</p>
 <pre class="prettyprint lang-javascript">
-{
-     "dummy_username": "sep1test",
-     "dummy_password": "native-web-tester",
-     "dummy_url": "https://webdev-dummy.herokuapp.com",
-     "site_username": "sep1test",
-     "site_password": "native-web-tester",
-     "site_url": "https://ricebookserver.herokuapp.com"
-}
+var _posts = require('./samplePosts.json')
 </pre>
-<p>make sure you use double-quotes everywhere.  Then run the program:</p>
-<pre>
-node initDatabase.js 
-</pre>
-<p>It will login to the dummy server, pull posts and push them to your server.  You can run this for your user, your test user, and for my test user (credentials above).  Note that it does not do comments -- so add some of your own manually or modify the script to do it.  The script literally pushes what it reads, so if your post schema is different then it may not behave well.  You are encouraged to examine the code.</p>
+<p>yes, it's that easy!  Now your server will always start with some predefined data.</p>
 
 <!-- *********************************************************** -->
 <!-- *********************************************************** -->
@@ -334,23 +180,23 @@ node initDatabase.js
 </pre>
 <p>replace "ricebookapp" and "ricebookserver" with the names of your frontend and backend applications, and replace "sep1" with your netID.</p>
 
-<p>Verify that your deployed frontend application works 100% with your backend server.  
-Students will use your frontend app and it's interoperability with the backend server when writing user feedback for you.
+<p>Verify that your deployed frontend application works with your backend server.  
+Graders and Students will use your deployed frontend app and it's interoperability with the backend server when grading and writing user feedback for you respectively.
 </p>
 
 <h3>Integrated Web Application</h3>
 <ul>
     <li>A file <code>README.json</code> that has your frontend and backend URLs along with netid</li>
-    <li>Your backend implements all endpoints, except the <code>/locations</code> endpoints, in the 
-<a target="_blank" href="data/api.html">API list</a>.</li>
+    <li>Your backend implements /sample, /login, /logout, /register, /posts/:id, /post from the <a target="_blank" href="data/api.html">API list</a>.</li>
+    <li>There are stubs for <em>all</em> other endpoints in the API list.</li>
     <li>Register new users and provide each user a unique salt</li>
-    <li>There are at least three collections in the database as described above</li>
-    <li>All data (except uploads) is persistent to server reboot</li>
-    <li>Users can update their profile picture and create posts with images</li>
-    <li>At least 10 preloaded posts exist in the database</li>    
-    <li>At least 3 comments preloaded into the database, two comments on one post, and one comment on a different post</li>
+    <li>New users can login, invalid users can not</li>
+    <li>Users can logout but then must login again</li>
+    <li>Posts are persistent, but perhaps not to server reboots.</li>
+    <li>We can query an individual post by postId</li>    
+    <li>At least 10 preloaded posts exist on the server which display on front end when logged in</li>    
+    <li>At least 3 comments preloaded on the server, at least two comments on one post and one comment on a different post</li>
     <li>Your test user account can log in with the three-word dummy server password previously supplied</li>
-    <li>Run your Protractor end-to-end tests against your live Heroku-hosted webapp.  It should hit your live Heroku-hosted backend.  Include the updated protractor.conf.js and junitresults.xml in your submission.</li>
 </ul>
 
 <h2>What to submit</h2>
@@ -370,22 +216,6 @@ Students will use your frontend app and it's interoperability with the backend s
 
             <div class="item">
                 <i class="folder icon"></i>
-                <div class="content"><div class="header">e2e</div>
-                    <div class="list">
-                        <div class="item">
-                            <i class="file outline icon"></i>
-                            <div class="content"><div class="description">junitresults.xml</div></div>
-                        </div>  
-                        <div class="item">
-                            <i class="file outline icon"></i>
-                            <div class="content"><div class="description">protractor.conf.js</div></div>
-                        </div>  
-                    </div>
-                </div>                          
-            </div>  
-
-            <div class="item">
-                <i class="folder icon"></i>
                 <div class="content">
                     <div class="header">RiceBookServer</div>
                     <div class="list">
@@ -401,27 +231,11 @@ Students will use your frontend app and it's interoperability with the backend s
                                     </div>  
                                     <div class="item">
                                         <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">db.js</div></div>
-                                    </div>  
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">following.js</div></div>
-                                    </div> 
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">model.js  [optional]</div></div>
-                                    </div> 
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
                                         <div class="content"><div class="description">posts.js</div></div>
                                     </div>  
                                     <div class="item">
                                         <i class="file text outline icon"></i>
                                         <div class="content"><div class="description">posts.spec.js</div></div>
-                                    </div>  
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">users.js</div></div>
                                     </div>  
 
                                 </div>
@@ -440,17 +254,7 @@ Students will use your frontend app and it's interoperability with the backend s
                             <i class="file outline icon"></i>
                             <div class="content"><div class="description">Procfile</div></div>
                         </div>
-                        <div class="item">
-                            <i class="folder icon"></i>
-                            <div class="content"><div class="header">test-results</div>
-                                <div class="list">
-                                    <div class="item">
-                                        <i class="file outline icon"></i>
-                                        <div class="content"><div class="description">TEST-ValidatePostFunctionality.xml</div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
+
                     </div>                  
                 </div>
             </div>      
