@@ -47,7 +47,7 @@ function putImage(req, res) {
 		})
 		// create a response to the user's upload
 		res.send('Done:<br/> <a href="' + result.url + '">' + image + '</a>');
-	}, { public_id: publicName= })	
+	}, { public_id: publicName })	
 
 	// multer can save the file locally if we want
 	// this is done in upload.js (see final assignment page)
