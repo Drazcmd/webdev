@@ -7,7 +7,8 @@ describe('Validate PostCtrl functionality', function () {
   beforeEach(module('riceBookApp'))
   
   beforeEach(inject(function($controller) {  
-    ctrl = $controller('PostCtrl')    
+    ctrl = $controller('PostCtrl')   
+    jasmine.foobar()
   }))
 
   it('there are initially 3 posts', function() {

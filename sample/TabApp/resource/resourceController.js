@@ -81,7 +81,7 @@ function ResourceCtrl($http, $interval, api, LocationService) {
 		api.getStatus({user:vm.user}).$promise.
 		then(function(result) {
 			vm.userStatus = result.status
-			vm.newUserStatus = result.status
+			vm.newUserStatus = result.status			
 		})
 	}
 
