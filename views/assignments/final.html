@@ -1,9 +1,24 @@
-<H1>This is in progress...</H1>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
+<style>
+code, pre {
+    font-size: 0.85em;
+}
+</style>
+
+<div onload="prettyPrint()">
+
+<h1>This is in progress...</h1>
 
 <p>
 In this assignment you will deliver your multi-user web application.
 </p>
 
+<strong>
+TODO:
+  finalize hw7 (update lec26), rubric for hw7, 
+  write up 12/1 and 12/3 tasks
+</strong>
 
 
 <h2>Implementing the Backend Part II</h2>
@@ -11,7 +26,7 @@ In this assignment you will deliver your multi-user web application.
 <p>We now implement the remaining endpoints in the backend:</p>
 
 <ul>
-<li><code>PUT /posts/:id</code></li>
+  <li><code>PUT /posts/:id</code></li>
   <li><code>GET /statuses/:users</code></li>
   <li><code>GET /status</code></li>
   <li><code>PUT /status</code></li>
@@ -190,12 +205,18 @@ about limiting user uploads etc.  Additionally, local storage is not persistent 
 after you repush your code, your Heroku dyno will reboot and any locally uplaoded files 
 will not be available on the new dyno.  Later we'll push storage off of our Heroku app.</p>
 
-<p>Multer is a node.js middleware for handling <code>multipart/form-data</code>, which is exactly what we have for uploading files: <code>npm install multer --save</code>.  Here is
-the work horse already implemented for you.  Download <code>upload.js</code> and use it in your app.</p>
+<p>Multer is a node.js middleware for handling <code>multipart/form-data</code>, which is exactly what we have for uploading files.
+
+Here is the work horse already implemented for you.  
+Download <code>upload.js</code> and use it in your app.</p>
 
 <center><a target="_blank" href="data/upload.js">Get upload.js here</a></center>
 
-<p>Upload.js provides us one export <code>uploadFile</code> which provides to us middleware for use in our routes to upload the profile picture and upload a post.</p>
+<p>Upload.js provides us one export <code>uploadFile</code> which provides to us middleware for use in our routes to upload the profile 
+picture and upload a post.  Upload.js additionally requires node-fs which is an extension to node's js module.</p>
+<pre class="prettyprint lang-bash">
+npm install multer node-fs --save
+</pre>
 <pre class="prettyprint lang-javascript">
 app.post('/post'   , isLoggedIn, uploadFile('post')  , addPost)
 app.put ('/picture', isLoggedIn, uploadFile('avatar'), setProfilePicture)
