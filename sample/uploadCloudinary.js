@@ -1,7 +1,6 @@
 ////////////////////////////////
 // Upload files to Cloudinary //
 ////////////////////////////////
-var fs = require('fs')
 var multer = require('multer')
 var stream = require('stream')
 var cloudinary = require('cloudinary')
