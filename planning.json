@@ -39,7 +39,7 @@
 	{ "day": 24, "topic": "Third Party Authorization", "exercise": "OAuth Login"},
 	{ "day": 25, "topic": "scalability, server caching, AWS, GAE", "exercise": "Adding Redis"},
 	{ "day": 26, "topic": "service APIs", "exercise": "storage"},
-	{ "day": 27, "topic": "integrating web services: S3, Hadoop, Spark, metrics", "exercise": "reflections"},
+	{ "day": 27, "topic": "integrating", "exercise": "reflections"},
 	{ "day": 28, "topic": "THANKSGIVING", "exercise": "<no class>"},
 	{ "day": 29, "topic": "presentations"}, 
 	{ "day": 30, "topic": "presentations"}
