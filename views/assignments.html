@@ -1,3 +1,13 @@
+<style>
+
+.rubriclink {
+  color: red;
+  cursor: pointer;
+}
+
+</style>
+
+
 <div class="ui main container">
   <div class="ui grid">
 
@@ -40,11 +50,12 @@
           </ul>
         </div>
 
-        <div class="ui message transition" ng-show="vm.assignmentId">Remember to review the <span style="color: red;"><b>Rubric</b></span> before you submit!</div>
+        <div class="ui message transition" ng-show="vm.assignmentId">Remember to review the 
+        <span ng-click="vm.scrollTo()" class="rubriclink"><b>Rubric</b></span> before you submit!</div>
 
         <div class="ui message transition" ng-include="vm.url"></div>
 
-        <a id="rubric"></a>
+        <a id="rubric"></a>        
         <!--
         <button ng-show="vm.assignmentId" ng-click="vm.showRubric = !vm.showRubric">
         {{ vm.showRubric ? 'Hide' : 'Show' }} Rubric</button>

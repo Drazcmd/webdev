@@ -57,7 +57,7 @@
         vm.rubric = null;
         vm.url = null;
         vm.showRubric = true;
-        vm.scrollToRubric = scrollToRubric
+        vm.scrollTo = scrollTo
 
         vm.computeTotalPoints = function(items) {
             return items.map(function(item) { return item.pts })
@@ -116,13 +116,9 @@
             return duetime ? "before class at 2:30 PM" : "after class by midnight"
         }
 
-        function scrollToRubric() {
-            vm.showRubric = true
-            $scope.$apply()
-            $timeout(function() {
-                $location.hash('rubric')
-                $anchorScroll()
-            }, 200)
+        function scrollTo(anchor) {
+            $anchorScroll.yOffset=80 // for the nav
+            $anchorScroll(anchor ? anchor : 'rubric')
         }
 
     }
