@@ -67,12 +67,12 @@ we would write tests for each function before we even write the stubs.  Given th
 got a good experience in writing tests, I recommend you do this, but it will not be a requirement
 for this assignment.  Additionally, we already have a working frontend with end-to-end tests 
 which can serve us well in testing our backend functionality.  (But again, unit testing the 
-backend is the preferred approach.)
+backend is the preferred approach.)  You do not need to make stubs for the <code>/location</code> endpoints.
 </p>
 
 <h2>Implementing the Backend</h2>
 
-<p>You should create stubs for all endpoints, but we will implement only 
+<p>You should create stubs for all endpoints (except <code>/location</code>), but we will implement only 
 a portion of the backend in this assignment, and the rest in the final assignment.
 The endpoints to implement in this assignment are:</p>
 <ul>
@@ -188,7 +188,7 @@ Graders and Students will use your deployed frontend app and it's interoperabili
 <ul>
     <li>A file <code>README.json</code> that has your frontend and backend URLs along with netid</li>
     <li>Your backend implements /sample, /login, /logout, /register, /posts/:id, /post from the <a target="_blank" href="data/api.html">API list</a>.</li>
-    <li>There are stubs for <em>all</em> other endpoints in the API list.</li>
+    <li>There are stubs for <em>all</em> other endpoints in the API list (except <code>/location</code>).</li>
     <li>Register new users and provide each user a unique salt</li>
     <li>New users can login, invalid users can not</li>
     <li>Users can logout but then must login again</li>

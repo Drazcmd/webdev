@@ -13,7 +13,7 @@
     {"item":"User passwords are salted and hashed using md5 or encrypted with bcrypt", "pts": 10},
     {"item":"Session handling is manually implemented, session id is stored as a httpOnly lient cookie", "pts":  7 },
     {"item":"Enabled CORS correctly", "pts": 7 },
-    {"item":"Stubs exist for all endpoints", "pts": 10},
+    {"item":"Stubs exist for all endpoints (except /location)", "pts": 10},
     {"item":"JavaScript source is appropriately divided into separate files by component", "pts": 5}
 ]},
 {"section":"Demerits", "items": [
