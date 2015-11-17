@@ -1,17 +1,17 @@
 [
 {"section":"Merits", "items": [
     {"item":"README.txt file with netid, frontend and backend URLs", "pts": 5 },
-    {"item":"sample content (different than logged-in content) is accessible from landing page for non-logged in users", "pts": 5},
+    {"item":"sample content (different than logged-in content) is accessible from landing page for non-logged in users, at least 3 posts", "pts": 5},
     {"item":"Can register a new user", "pts": 5 },
     {"item":"Can log in as the new user", "pts": 7 },
     {"item":"Can logout but then required to login again to view non-sample content", "pts": 5},
-    {"item":"At least 10 preloaded posts exist", "pts": 5},
-    {"item":"At least 3 preloaded comments exist", "pts": 5},
+    {"item":"At least 10 preloaded posts exist, as seen from your test user", "pts": 5},
+    {"item":"At least 3 preloaded comments exist, as seen from your test user", "pts": 5},
     {"item":"New posts appear at top of feed with submission timestamp", "pts": 7 },
     {"item":"New posts are persistent to log off and refresh", "pts": 7 },
     {"item":"One post is returned by GET /posts/:id if a valid id is supplied", "pts": 10 },
     {"item":"User passwords are salted and hashed using md5 or encrypted with bcrypt", "pts": 10},
-    {"item":"Session is stored as a client cookie, httpOnly", "pts":  7 },
+    {"item":"Session handling is manually implemented, session id is stored as a httpOnly lient cookie", "pts":  7 },
     {"item":"Enabled CORS correctly", "pts": 7 },
     {"item":"Stubs exist for all endpoints", "pts": 10},
     {"item":"JavaScript source is appropriately divided into separate files by component", "pts": 5}
