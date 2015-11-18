@@ -84,6 +84,22 @@ The endpoints to implement in this assignment are:</p>
   <li><code>POST /post</code></li>
 </ul>
 
+<p>Note that our <code>POST /post</code> endpoint will only be accepting
+text at the current moment.  I.e., no picture uploads.  Therefore the frontend
+application needs to be modified to not send formData.  For example,
+if I already had a method <code>addPost</code> in my <code>$resource</code>
+then I would rename it <code>addPostFull</code> and make a new <code>addPost</code></p>
+<pre class="prettyprint lang-javascript">
+  addPostFull  : { method: 'POST', 
+     headers:{'Content-Type': undefined},
+     transformRequest: resourceUploadFile, 
+     params: {endpoint: 'post'    } 
+  },
+  addPost  : { method: 'POST', params: {endpoint: 'post'    } },
+</pre>
+<p>this way I can easily switch back to the formData upload for the final assignment
+when image uploading is enabled on the backend.</p>
+
 <h3>Authentication</h3>
 
 <p>Users must be authenticated to use the backend.  They authenticate by suppling their
