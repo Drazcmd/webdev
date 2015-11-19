@@ -10,7 +10,7 @@
     {"item":"New posts appear at top of feed with submission timestamp", "pts": 7 },
     {"item":"New posts are persistent to log off and refresh", "pts": 7 },
     {"item":"One post is returned by GET /posts/:id if a valid id is supplied", "pts": 10 },
-    {"item":"User passwords are salted and hashed using md5 or encrypted with bcrypt", "pts": 10},
+    {"item":"User passwords are salted (unique salt per user) and hashed using md5 or encrypted with bcrypt", "pts": 10},
     {"item":"Session handling is manually implemented, session id is stored as a httpOnly lient cookie", "pts":  7 },
     {"item":"Enabled CORS correctly", "pts": 7 },
     {"item":"Stubs exist for all endpoints (except /location)", "pts": 10},
