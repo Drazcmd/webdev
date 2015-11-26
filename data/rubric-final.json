@@ -1,11 +1,9 @@
 [
 {"section":"Merits", "items": [
     {"item":"README.txt file with netid, frontend and backend URLs", "pts":2},
-    {"item":"sample content (different than logged-in content) is accessible from landing page for non-logged in users", "pts": 3},
-    {"item":"Can register a new user and log in", "pts": 3 },    
-    {"item":"Can logout but then required to login again to view non-sample content", "pts": 3 },
-    {"item":"At least 10 preloaded posts exist", "pts": 3 },
-    {"item":"At least 3 preloaded comments exist", "pts": 3 },
+    {"item":"Backend: implemented all APIs except /locations", "pts": 10 },
+    {"item":"Frontend site is live with sample content displayed", "pts": 5 },
+    {"item":"Frontend site can register new user and login", "pts": 10 },
     {"item":"New posts are persistent to log off and refresh, appear at top of feed", "pts":3 },
     {"item":"Post can be text only or text with image", "pts":3 },
     {"item":"Can comment on a post, comments are persistent", "pts":3},    
@@ -13,7 +11,6 @@
     {"item":"Can update a comment, is persistent", "pts":3},    
     {"item":"Add and remove followed users", "pts":3 },
     {"item":"Suitable message when trying to add user that does not exist", "pts":3 },
-    {"item":"Backend implements all APIs except /locations", "pts": 10 },
     {"item":"MongoDB has at least three collections: users, posts, profiles", "pts": 10 },
     {"item":"No in memory data for posts, users, or profiles.  Always query database or redis session store.", "pts" : 10 }, 
     {"item":"User's feed is provided by an efficient to MongoDB and only returns the 10 most recent posts", "pts": 5 },
@@ -27,6 +24,7 @@
 ]},
 {"section":"Demerits", "items": [
 
+    {"item":"unapproved third party module", "pts": 13},
     {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
     {"item":"variable not appropriately scoped (i.e., missing var, or var in wrong scope)", "pts": 10},

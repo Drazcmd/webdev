@@ -18,10 +18,12 @@
 ]},
 {"section":"Demerits", "items": [
 
+    {"item":"unapproved third party module", "pts": 13},
     {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
     {"item":"variable not appropriately scoped (i.e., missing var, or var in wrong scope)", "pts": 10},
     {"item":"fat Angular Controller", "pts":10},
+
     {"item":"did not properly separate concerns", "pts": 10},
     {"item":"user interface not obvious to use", "pts": 10},
     {"item":"a non-server error is thrown", "pts": 8},
