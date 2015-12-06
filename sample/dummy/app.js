@@ -74,8 +74,7 @@ function DummyCtrl(api, $scope, apiURL, $window) {
     function getStatus() {
     	api.getStatus().$promise.then(function(result) {
     		vm.status = result.statuses[0].status
-			vm.iam = result.statuses[0].username
-			vm.profilePicture = api.getPicture({user:vm.iam})
+			vm.iam = result.statuses[0].username			
     	})
     }
 
