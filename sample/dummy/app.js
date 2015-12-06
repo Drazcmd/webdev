@@ -65,7 +65,7 @@ function DummyCtrl(api, $scope, apiURL) {
     vm.status = "?"
     vm.facebookLogin = facebookLogin
     vm.googleLogin = googleLogin
-    vm.message = null
+    vm.message = null    
 
    getStatus()    
 
