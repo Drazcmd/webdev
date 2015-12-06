@@ -42,53 +42,9 @@
 Logged in as: {{ vm.iam }}
 </div>
 
-<div>
- <img style="max-width: 100px; max-height: 100px" ng-src="{{ vm.profilePicture.picture }}">
-</div>
-
-<br>
-<input type="file" accept="image/*" ng-model-instant
-  onchange="angular.element(this).scope().vm.setFile('file', this)">
-
-<div ng-show="vm.file">
-  <span>
-    {{vm.file.webkitRelativePath || vm.file.name}}
-    ({{ vm.file.size / 1024 | number: 2}} kB)
-  </span>
-  <input type="button" ng-click="vm.uploadFile()" value="Upload">
-</div>
-<br>
-
-<section>
-  <span>Make a post</span>
-  <div>
-  <textarea ng-model="vm.postBody"
-    style="border: 1pt solid black; max-width: 60%; min-width: '250px';"
-    cols="50" rows="3"    
-    placehold="share what's new...">
-  </textarea>
-  </div>
-  <input type="file" accept="image/*"
-    onchange="angular.element(this).scope().vm.setFile('postImage', this)"> 
-    <div ng-show="vm.postImage">
-    <span>
-      {{vm.postImage.webkitRelativePath || vm.postImage.name}}
-      ({{ vm.postImage.size / 1024 | number: 2}} kB)
-    </span>
-    </div>
-    <input type="button" ng-click="vm.makePost()" value="Post">
-</section>
-
-<section>
-     <input type="text" ng-model="vmPostId" placeholder="postId">
-     <input type="button" ng-click="vm.getOnePost(vmPostId)" value="GetIt">
-</section>
-
 <section>
      <input type="text" ng-model="vm.status" placeholder="status">
-     <input type="button" ng-click="vm.updateStatus()" value="Update">
 </section>
-
 
 <br>
 <label class="btn"
@@ -98,6 +54,7 @@ Logged in as: {{ vm.iam }}
 </label>
 
 <div ng-show="vm.message">
+<br/>
 {{vm.message}}
 </div>
 
