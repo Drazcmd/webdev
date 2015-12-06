@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html ng-app="DummyApp">
+<head>
+  <meta charset="utf-8" />
+  <title>Dummy Test</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-route.min.js"></script>  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-resource.min.js"></script>  
+
+  <script src="app.js"></script>
+</head>
+<body ng-controller="DummyCtrl as vm">
+
+<div>
+<input type="text" ng-model="vm.username">
+<input type="password" ng-model="vm.password">
+<input type="button" value="LogIn" ng-click="vm.login()">
+<input type="button" value="LogOut" ng-click="vm.logout()">
+
+<br/><br/>
+
+<span ng-click="vm.facebookLogin()" class="btn btn-primary">
+<span class="fa fa-facebook"></span> Facebook</span>
+
+
+<span ng-click="vm.googleLogin()" class="btn btn-danger">
+<span class="fa fa-google-plus"></span> Google+</a>
+
+</div>
+
+<div>
+ <img style="max-width: 100px; max-height: 100px" ng-src="{{ vm.profilePicture.picture }}">
+</div>
+
+<br>
+<input type="file" accept="image/*" ng-model-instant
+  onchange="angular.element(this).scope().vm.setFile('file', this)">
+
+<div ng-show="vm.file">
+  <span>
+    {{vm.file.webkitRelativePath || vm.file.name}}
+    ({{ vm.file.size / 1024 | number: 2}} kB)
+  </span>
+  <input type="button" ng-click="vm.uploadFile()" value="Upload">
+</div>
+<br>
+
+<section>
+  <span>Make a post</span>
+  <div>
+  <textarea ng-model="vm.postBody"
+    style="border: 1pt solid black; max-width: 60%; min-width: '250px';"
+    cols="50" rows="3"    
+    placehold="share what's new...">
+  </textarea>
+  </div>
+  <input type="file" accept="image/*"
+    onchange="angular.element(this).scope().vm.setFile('postImage', this)"> 
+    <div ng-show="vm.postImage">
+    <span>
+      {{vm.postImage.webkitRelativePath || vm.postImage.name}}
+      ({{ vm.postImage.size / 1024 | number: 2}} kB)
+    </span>
+    </div>
+    <input type="button" ng-click="vm.makePost()" value="Post">
+</section>
+
+<section>
+     <input type="text" ng-model="vmPostId" placeholder="postId">
+     <input type="button" ng-click="vm.getOnePost(vmPostId)" value="GetIt">
+</section>
+
+<section>
+     <input type="text" ng-model="vm.status" placeholder="status">
+     <input type="button" ng-click="vm.updateStatus()" value="Update">
+</section>
+
+
+<br>
+<label class="btn"
+  ng-class="{ 'btn-warning': vm.stop, 'btn-success': !vm.stop }" 
+  ng-click="vm.loadPosts()">
+  Load Post ({{ vm.posts.length }})
+</label>
+
+<div ng-show="vm.message">
+{{vm.message}}
+</div>
+
+<section ng-repeat="post in vm.posts">
+	<h3>{{post.author}} at {{post.date}}</h3>
+  <img style="max-width: 100px; max-height: 100px" ng-src="{{post.img}}">
+	<p>{{post.body}}</p>
+	<input type="button" class="btn btn-primary" value="Delete" ng-click="vm.removePost(post.id)">
+  <label class="bte btn-warning"  ng-click="show=!show">
+    Comments ({{ post.comments.length }})
+  </label>
+  <div ng-show="show" style="margin-left: 3em" ng-repeat="comment in post.comments">
+    <h4>{{comment.author}} at {{comment.date}}</h3>
+    <p>{{comment.body}}</p>
+  </div>
+</section>
+
+</body>
+</html>
