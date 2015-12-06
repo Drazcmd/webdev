@@ -46,8 +46,8 @@ function resourceUploadFile(data) {
 	return fd;
 }
 
-DummyCtrl.$inject = ['api', '$scope', 'apiURL']
-function DummyCtrl(api, $scope, apiURL) {
+DummyCtrl.$inject = ['api', '$scope', 'apiURL', '$window']
+function DummyCtrl(api, $scope, apiURL, $window) {
 	var vm = this;
 	vm.iam = null;
 	vm.posts = []
@@ -70,7 +70,9 @@ function DummyCtrl(api, $scope, apiURL) {
    getStatus()    
 
 	function logout() {
-		api.logout()
+		api.logout().$promise.then(function(result) {
+			$window.location.reload();
+		})
 	}
 
 	function login() {
