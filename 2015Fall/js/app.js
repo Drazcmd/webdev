@@ -5,11 +5,6 @@
     .module('CoursePageApp', ['ngRoute', 'ngAnimate'])
     .config(config)
     .service('JsonDataService', JsonDataService)
-    .constant('appValues', { 
-        syy: 'S16', 
-        long: 'Spring 2016',
-        lastUpdated: '1/1/2016'
-    })
     
     .controller('MainCtrl', MainCtrl)
     .controller('AssignmentCtrl', AssignmentCtrl)
@@ -49,8 +44,8 @@
     //$locationProvider.html5Mode(true);
     }
     
-    AssignmentCtrl.$inject = ['$location', '$routeParams', '$timeout', '$anchorScroll', '$scope', 'JsonDataService', 'appValues']
-    function AssignmentCtrl($location, $routeParams, $timeout, $anchorScroll, $scope, JsonDataService, appValues) {
+    AssignmentCtrl.$inject = ['$location', '$routeParams', '$timeout', '$anchorScroll', '$scope', 'JsonDataService']
+    function AssignmentCtrl($location, $routeParams, $timeout, $anchorScroll, $scope, JsonDataService) {
         var vm = this;
         vm.name = "AssignmentCtrl";
         vm.params = $routeParams;
@@ -63,7 +58,6 @@
         vm.url = null;
         vm.showRubric = true;
         vm.scrollTo = scrollTo
-        vm.repoSYY = appValues.syy
 
         vm.computeTotalPoints = function(items) {
             return items.map(function(item) { return item.pts })
@@ -129,14 +123,14 @@
 
     }
     
-    MainCtrl.$inject = ['$route', '$routeParams', '$location', 'appValues']
-    function MainCtrl($route, $routeParams, $location, appValues) {
+    MainCtrl.$inject = ['$route', '$routeParams', '$location']
+    function MainCtrl($route, $routeParams, $location) {
         var vm = this;
         vm.$route = $route;
         vm.$location = $location;        
         vm.$routeParams = $routeParams;
-        vm.lastUpdated = appValues.lastUpdated
-        vm.term = appValues.long
+        vm.lastUpdated = "7/3/2015"
+        vm.term = "Fall 2015"
     }
     
     ScheduleCtrl.$inject = ['$route', '$routeParams', '$location', 'JsonDataService']
@@ -149,11 +143,11 @@
     function JsonDataService($http) {
         
         var srv = this;
-        srv.firstDayOfClass = moment("2016-01-12")
+        srv.firstDayOfClass = moment("2015-08-25")
         srv.sessions = []
         srv.assignments = {}
         
-        srv.getDueDate = function(sessionDay) {            
+        srv.getDueDate = function(sessionDay) {
             var week = Math.floor((sessionDay - 1) / 2);
             var dow = (sessionDay - 1) - 2 * week;
             return moment(srv.firstDayOfClass)

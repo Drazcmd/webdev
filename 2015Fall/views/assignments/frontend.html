@@ -1,0 +1,105 @@
+<p>
+In this assignment you will implement and test the frontend of your web application.  The final product will be a fully functioning and tested front-end for a web application.
+</p>
+<p>In the previous assignment we created two pages for our web application: the Landing page and the Main page.  
+The Landing page welcomes users and asks them to register or log in.  
+Additionally, visitors are invited to browse sample content from the site.
+The Main page is focused on the user's feed where they can add new posts, or comment on posts.  The feed is comprised of posts by the user and the users being followed.  These followed users appear in a list on the sidebar accompanied by their status headline.  We have mechanisms to add users and remove users from the followed list.  We have a mechanism to log out.  The user's status headline is shown and we have a way to edit it.  Finally there is a search box that allows us to filter posts by content (e.g., post author or body).
+</p>
+
+<h3>New Functionality</h3>
+<p>
+Each user has a profile.  The profile contains their name, their email, their password, their status, their profile picture, and their zip code.
+Create a view to allow the user to edit this information (the status they can already edit on the Main page, perhaps they can edit in this new view too).  In particular, a user needs to be able to upload their profile picture.
+</p>
+
+<h3>Dummy Server</h3>
+<p>Here is a <a target="_blank" href="data/api.html">list of endpoints</a> which is your API to a dummy data server.  
+Update your web application to use the server as your data source.  If there are additional endpoints that you desire which are not currently implemented by the server contact the instructor, we probably can add them for you.
+</p>
+<p>You have been pre-provided a user on the dummy server.</p>
+
+<span style='text-decoration: line-through;'>
+<h3>Unit Testing</h3>
+<p>
+Write Jasmine unit tests for your JavaScript functionality.  We want to test as much code as possible.
+Write a Karma configuration to test your site using Chrome.  Try to maximize your testing code coverage.
+</p>
+</span>
+
+<span style='text-decoration: line-through;'>
+<h3>End-to-End Testing</h3>
+<p>
+Use Protractor and write an end-to-end test for your web application.  Use the python SimpleHTTPServer / http.server to host your web page locally and have Protractor run against it.  The required tasks for your end-to-end test are listed in the requirements below.
+</p>
+</span>
+
+<h1>Requirements</h1>
+
+<p>Use Chrome as your standard supported browser.  (Whereas you can use any browser you like for development, your assignment will be accessed using Chrome by the grading staff and therefore it behooves you that it works.)  Host your webpage locally using the python server.</p>
+
+<p>
+We have an Angular application and therefore want to refactor our web app into a Single Page Application.  Merge together two two pages from the previous assignment into a single <code>index.html</code> with Angular views and routing.  The structure of your web app should follow that of the <a target="_blank" href="sample/RiceBookApp">RiceBookApp</a> example where we have a top level index page, an app directory, and then subdirectories for each component such as posts or users, etc.  Each subdirectory would have at least a view html file, a controller js file, <span style='text-decoration: line-through'>and a spec js file</span>.  You also might have separate services or directives directories which contain those definitions; one factory, service, or directive per file.  As inspired from an in class exercise, you should have a directive representing a post.
+</p>
+<p>Remember separation of concerns and write DRY modularized code.</p>
+
+<h3>Functionality</h3>
+<p>For all of the line items below, send requests to the dummy server and retrieve responses from it.  There should be no hardcoded data in your web application, everything should come from the dummy server.</p>
+<ul>
+	<li>Log in user, if successful then redirect to Main page</li>
+	<li>Register a new user</li>
+	<li>landing view has sample content (ala <a href="#/assignments/design">design</a> requirements), pulled from the server as a visitor user</li>
+	<li>If sample content is on Landing view, then navigating to Main view when not logged in will redirect to Landing view.  Otherwise Main view needs to be appropriate for non-logged-in users.</li>
+	<li>Log out user from Main view, redirect to Landing view</li>
+	<li>Create a new post, the server will return it with an id and timestamp, put it first in the feed</li>
+	<li>Feed shows posts as returned from server</li>
+	<li>status headline for user is displayed</li>
+	<li>update status headline for user</li>
+	<li>display user's profile picture</li>
+	<li>sidebar shows followed users with their profile pictures and statuses</li>
+	<li>add user to followed users list</li>
+	<li>remove user from followed users list</li>	
+	<li>search bar searches for posts</li>
+    <li>A post is implemented as an Angular directive</li>
+</ul>
+
+<h4>User Profile</h4>
+<p>The user profile view allows the user to update their information</p>
+<ul>
+	<li>update user's email</li>	
+	<li>update user's zipcode</li>
+	<li>update user's password (you should have password confirmation here)</li>
+	<li>upload profile picture</li>
+</ul>
+
+<span style='text-decoration: line-through;'>
+<h3>Unit Test</h3>
+<p>Use Jasmine and Karma to test your application.</p>
+<ul>
+	<li>Every JavaScript file has an associated spec file</li>
+	<li>Each unit test validates the functionality of one unit of your application</li>
+	<li>Every unit of the application is tested</li>
+	<li>Code coverage should be 70% or more</li>
+	<li>Include your Jasmine coverage results page</li>
+</ul>
+
+<h3>End-to-End Tests</h3>
+<p>Your end-to-end tests will run against your web app running on your local python server.  Here are the tasks for your end-to-end test</p>
+<ol>
+	<li>Register a new user</li>
+	<li>Browse sample content, validate the number of posts</li>
+	<li>Log in as your test user</li>
+	<li>Create a new post and validate the post appears in the feed</li>
+	<li>Update the status headline and verify the change</li>
+	<li>Count the number of followed users</li>
+	<li>Add the user "Follower" to the list of followed users and verify the count increases by one</li>
+	<li>Remove the user "Follower" from the list of followed users and verify the count decreases by one</li>
+	<li>Search for "Only One Post Like This" and verify only one post shows, and verify the author</li>
+	<li>Navigate to the profile view and verify the page is loaded</li>
+	<li>Update the user's email and verify</li>
+	<li>Update the user's zipcode and verify</li>
+	<li>Update the user's password, verify a "will not change" message</li>
+</ol>
+<p>Include a JUnitXML report of your end-to-end test.</p>
+</span>
+<hr>

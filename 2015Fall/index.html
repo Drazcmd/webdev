@@ -35,14 +35,14 @@
 			<div class="header item">
 				<img id="riceLogo" src="images/RiceLogo-transparentBlack.png" title="Rice" />
 			</div>
-			<div class="header item">
-				COMP 431/531 Web Development
+			<div class="header item"><a href="https://www.clear.rice.edu/comp431/">
+				COMP 431/531 Web Development</a>
 			</div>
 			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/') }" href="#/"> <i class="dashboard icon"></i>Syllabus</a>
 			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/schedule') }"href="#/schedule"><i class="calendar icon"></i>Schedule</a>
 			<a class="item" ng-class="{ 'active' : (main.$location.path().split('/')[1] == 'assignments') }"href="#/assignments">Assignments</a>
 			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/resources') }"href="#/resources"><i class="calendar icon"></i>Resources</a>
-			<a class="item" href="#/">{{ main.term }}</a>			
+			<a class="item" href="#/">{{ main.term }}</a>
 		</div>
 	</div>
 

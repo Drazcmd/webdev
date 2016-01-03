@@ -1,0 +1,75 @@
+[
+     {"section":"Review 1", "items": [
+          {"item":"Multiple choice questions", "pts":0.5},
+          {"item":"What didn't work so well", "pts":2},
+          {"item":"What did you like best", "pts":2},
+          {"item":"What do you find most frustrating", "pts":2},
+          {"item":"Comparison of the site", "pts":2},
+          {"item":"Something unique", "pts":2},
+          {"item":"Code review", "pts":2}
+     ]},
+     {"section":"Review 2", "items": [
+          {"item":"Multiple choice questions", "pts":0.5},
+          {"item":"What didn't work so well", "pts":2},
+          {"item":"What did you like best", "pts":2},
+          {"item":"What do you find most frustrating", "pts":2},
+          {"item":"Comparison of the site", "pts":2},
+          {"item":"Something unique", "pts":2},
+          {"item":"Code review", "pts":2}
+     ]},
+     {"section":"Review 3", "items": [
+          {"item":"Multiple choice questions", "pts":0.5},
+          {"item":"What didn't work so well", "pts":2},
+          {"item":"What did you like best", "pts":2},
+          {"item":"What do you find most frustrating", "pts":2},
+          {"item":"Comparison of the site", "pts":2},
+          {"item":"Something unique", "pts":2},
+          {"item":"Code review", "pts":2}
+     ]},
+     {"section":"Review 4", "items": [
+          {"item":"Multiple choice questions", "pts":0.5},
+          {"item":"What didn't work so well", "pts":2},
+          {"item":"What did you like best", "pts":2},
+          {"item":"What do you find most frustrating", "pts":2},
+          {"item":"Comparison of the site", "pts":2},
+          {"item":"Something unique", "pts":2},
+          {"item":"Code review", "pts":2}
+     ]},
+     {"section":"Review 5", "items": [
+          {"item":"Multiple choice questions", "pts":0.5},
+          {"item":"What didn't work so well", "pts":2},
+          {"item":"What did you like best", "pts":2},
+          {"item":"What do you find most frustrating", "pts":2},
+          {"item":"Comparison of the site", "pts":2},
+          {"item":"Something unique", "pts":2},
+          {"item":"Code review", "pts":2}
+     ]},
+     {"section":"Review 6", "items": [
+          {"item":"Multiple choice questions", "pts":0.5},
+          {"item":"What didn't work so well", "pts":2},
+          {"item":"What did you like best", "pts":2},
+          {"item":"What do you find most frustrating", "pts":2},
+          {"item":"Comparison of the site", "pts":2},
+          {"item":"Something unique", "pts":2},
+          {"item":"Code review", "pts":2}
+     ]},
+     {"section":"Review 7", "items": [
+          {"item":"Multiple choice questions", "pts":0.5},
+          {"item":"What didn't work so well", "pts":2},
+          {"item":"What did you like best", "pts":2},
+          {"item":"What do you find most frustrating", "pts":2},
+          {"item":"Comparison of the site", "pts":2},
+          {"item":"Something unique", "pts":2},
+          {"item":"Code review", "pts":2}
+     ]},
+     {"section":"Review 8", "items": [
+          {"item":"Multiple choice questions", "pts":0.5},
+          {"item":"What didn't work so well", "pts":2},
+          {"item":"What did you like best", "pts":2},
+          {"item":"What do you find most frustrating", "pts":2},
+          {"item":"Comparison of the site", "pts":2},
+          {"item":"Something unique", "pts":2},
+          {"item":"Code review", "pts":2}
+     ]}
+] 
+

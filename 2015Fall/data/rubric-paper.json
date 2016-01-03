@@ -1,0 +1,24 @@
+[
+{"section":"Paper", "items": [	
+	{"item":"Length is between 1000 and 2000 words", "pts": 5 },
+	{"item":"There is a clear statement of the focus of the paper including opinion (see description)", "pts": 5 },
+	{"item":"Format follows generic essay style: thesis, development, conclusion", "pts": 5 },	
+	{"item":"Organization is focused, demonstrating coherence and progression of ideas", "pts": 5 },	
+	{"item":"Paper demonstrates understanding of the topic", "pts": 5},
+	{"item":"Writing style contains a variety of sentence sturucture showing control of word choice and a clear, concise style", "pts": 5},	
+	{"item":"Paper closes summarizing main points", "pts": 5},
+	{"item":"Documented reference sources, i.e. URLs (at least 2)", "pts": 5 },
+	{"item":"Is free of most errors in grammar, usage, and mechanics", "pts": 10 }
+]},
+{"section":"Presentation", "items": [
+	{"item":"Topic was pre-approved", "pts": 10},
+	{"item":"Talk is about 6 minutes in length", "pts": 5},
+	{"item":"Opening of presentation clearly describes topic premise including opinion", "pts": 5}, 
+	{"item":"Demonstrates enthusiasm about topic", "pts": 5},
+	{"item":"Demonstrates understanding of the topic", "pts": 5}, 
+	{"item":"Presentation materials are legible", "pts": 5}, 
+	{"item":"Presentation materials are additive to content delivery", "pts": 5},
+	{"item":"Closing of presentation summarizes main points", "pts": 5},
+	{"item":"Provides references for additional information", "pts": 5}
+]}
+]

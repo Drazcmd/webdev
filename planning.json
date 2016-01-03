@@ -1,15 +1,15 @@
 {
 	"assignments": [
-	{ "name": "Simple Page", "due": 4, "id": "simple", "duetime":"2:30PM" },	
-	{ "name": "Javascript Game", "due": 9, "id": "jsgame" },
-	{ "name": "App Design", "due": 13, "id":"design", "duetime":"2:30PM" },
-	{ "name": "Front-End App", "due": 19, "id": "frontend"},    
-	{ "name": "Hosted Draft Web App", "due": 23, "id": "backend"},
-	{ "name": "Integrated Web App", "due": 26, "id": "integrated"},
-	{ "name": "Final Full Web App", "due": 30, "id": "final" },
-	{ "name": "COMP531 Front-End Review", "due": 21, "id": "frontreview"},
-	{ "name": "COMP531 Web App Review", "due": 27, "id": "fullreview"},
-	{ "name": "COMP531 Paper and Presentation", "due":29, "id":"paper"}
+	{ "name": "Simple Page", "due": 3, "id": "simple", "duetime":"2:30PM" },	
+	{ "name": "Javascript Game", "due": 8, "id": "jsgame" },
+	{ "name": "App Design", "due": 12, "id":"design", "duetime":"2:30PM" },
+	{ "name": "Front-End App", "due": 16, "id": "frontend"},    
+	{ "name": "Hosted Draft Web App", "due": 21, "id": "backend"},
+	{ "name": "Integrated Web App", "due": 24, "id": "integrated"},
+	{ "name": "Final Full Web App", "due": 26, "id": "final" },
+	{ "name": "COMP531 Front-End Review", "due": 14, "id": "frontreview"},
+	{ "name": "COMP531 Web App Review", "due": 22, "id": "fullreview"},
+	{ "name": "COMP531 Paper and Presentation", "due":27, "id":"paper"}
 	],
 
 	"sessions": [
@@ -27,21 +27,21 @@
 	{ "day": 12, "topic": "AngularJS", "exercise": "custom directives"},
 	{ "day": 13, "topic": "Front End Unit Testing", "exercise": "Karma"},
 	{ "day": 14, "topic": "Headless Browsing", "exercise": "Casper"},
-	{ "day": 15, "topic": "RECESS", "exercise": "<no class>"},
-	{ "day": 16, "topic": "Web Server Architectures", "exercise": "Nginx server"},
-	{ "day": 17, "topic": "CGI, Python and WSGI", "exercise": "Flask server"},
-	{ "day": 18, "topic": "Frameworks the RESTful way", "exercise": "Node server"},
-	{ "day": 19, "topic": "Web hosting", "exercise": "Hosted App"},
-	{ "day": 20, "topic": "Back End Unit Testing", "exercise": "Backend Unit Tests"},
-	{ "day": 21, "topic": "Databases", "exercise": "Adding MongoDB"},
-	{ "day": 22, "topic": "Salted Authorization", "exercise": "Add Login to App"},
-	{ "day": 23, "topic": "security: SQL, XSS, CSRF, XSSI, HTTPS", "exercise": "Integrate Front and Back"},
-	{ "day": 24, "topic": "Third Party Authorization", "exercise": "OAuth Login"},
-	{ "day": 25, "topic": "scalability, server caching, AWS, GAE", "exercise": "Adding Redis"},
-	{ "day": 26, "topic": "service APIs", "exercise": "storage"},
-	{ "day": 27, "topic": "integrating", "exercise": "reflections"},
-	{ "day": 28, "topic": "THANKSGIVING", "exercise": "<no class>"},
-	{ "day": 29, "topic": "presentations"}, 
-	{ "day": 30, "topic": "presentations"}
+	{ "day": null, "topic": "SPRING BREAK", "exercise": "<no class>", "offset": 15 },
+	{ "day": null, "topic": "SPRING BREAK", "exercise": "<no class>", "offset": 16 },
+	{ "day": 15, "topic": "Web Server Architectures", "exercise": "Nginx server", "offset": 2 },
+	{ "day": 16, "topic": "CGI, Python and WSGI", "exercise": "Flask server", "offset": 2 },
+	{ "day": 17, "topic": "Frameworks the RESTful way", "exercise": "Node server", "offset": 2 },
+	{ "day": 18, "topic": "Web hosting", "exercise": "Hosted App", "offset": 2 },
+	{ "day": 19, "topic": "Back End Unit Testing", "exercise": "Backend Unit Tests", "offset": 2 },
+	{ "day": 20, "topic": "Databases", "exercise": "Adding MongoDB", "offset": 2 },
+	{ "day": 21, "topic": "Salted Authorization", "exercise": "Add Login to App", "offset": 2 },
+	{ "day": null, "topic": "RECESS", "exercise": "<no class>", "offset": 24 },
+	{ "day": 22, "topic": "security: SQL, XSS, CSRF, XSSI, HTTPS", "exercise": "Integrate Front and Back", "offset": 3 },
+	{ "day": 23, "topic": "Third Party Authorization", "exercise": "OAuth Login", "offset": 3 },
+	{ "day": 24, "topic": "scalability, server caching, AWS, GAE", "exercise": "Adding Redis", "offset": 3 },
+	{ "day": 25, "topic": "service APIs", "exercise": "storage", "offset": 3 },
+	{ "day": 26, "topic": "integrating", "exercise": "reflections", "offset": 3 },
+	{ "day": 27, "topic": "presentations", "offset": 3 }
 	]
 }

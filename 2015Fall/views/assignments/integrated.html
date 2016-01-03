@@ -1,0 +1,288 @@
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
+<style>
+code, pre {
+    font-size: 0.85em;
+}
+</style>
+
+<div onload="prettyPrint()">
+
+<p>
+In this assignment you will integrate your frontend and backend web applications.  
+</p>
+
+<h2>Cross-Origin Resource Sharing</h2>
+
+<p>The browser has a same-origin policy.  Which means it will only allow javascript to transfer
+data from the same origin.  I.e., I visit site A and can run javascript that access data from site A, but it cannot access data from site B.  By access data I mean make an AJAX request.  The browser will only allow cross-origin resource sharing if the other origin (site B) allows for it.  See slide 12 in lec 23 to visualize what it going on.  As you can see, it's your backend that needs to supply the headers in it's response to the client.  See slide 11 for what these response headers should look like.</p>
+
+<p>The frontend and backend have different origins.  When running locally you might have the 
+frontend running through the python server on port 8080 and the backend served up on port 8000 or 3333 or whatever you like.
+Therefore we need to enable CORS for the AJAX calls to complete.  You'll want to create a middleware function that adds these response headers to every request.  If you were to only use it on some requests, then you could put the middleware in the middle of an endpoint call:</p>
+<pre class="prettyprint lang-javascript">
+app.get('/posts', enableCORS, getPosts)
+</pre>
+if you want to add middleware to all calls, then instead have 
+<pre class="prettyprint lang-javascript">
+app.use(enableCORS)
+</pre>
+<p>where <em>enableCORS</em> is a middleware function that <em>you</em> write (do not use third party middleware for this part of the assignment).  See the section <strong>Aside on Middleware</strong> in the <a href="#/assignments/backend">previous assignment</a> to see what middleware should look like.
+See lecture 23 for the inclass exercise enabling CORS, additionally slides 11 and 12 in that lecture.</p>
+
+<h2>Stubbing the Backend</h2>
+<p>
+There are technically two stages in the integration process.  The first stage is to point the
+frontend at the backend instead of the dummy server.  The backend currently has only two
+endpoints implemented, which means the other endpoints will be broken.  Therefore the first
+stage includes implementation of these endpoints with stubs.  A stub returns dummy data
+</p>
+<pre class="prettyprint lang-javascript">
+// this is user.js which contains all user profile 
+// information except passwords which is in auth.js
+exports.setup = function(app) {
+    app.get('/statuses/:users*?', isLoggedIn, getStatuses)
+}
+
+function getStatuses(req, res) {
+    
+    // this isn't correct, but gives you a start
+    // for the stub this is fine.
+    var username = req.params.users.split(',')[0]
+    // but what if users is not specified in the request?
+
+    res.send({ statuses: [ 
+        { username: username, status: 'the status of the user' } 
+    ] })
+}
+</pre>
+<p>Note that we're using the <code>isLoggedIn</code> middleware to assure that all requests 
+are made by authenticated clients.  The API for the endpoints is the same as for the dummy
+server (i.e., this way we don't need to change any of the frontend code).  That api is found here
+</p>
+<center><a target="_blank" href="data/api.html">Backend API list of endpoints</a></center>
+<p>
+Making stubs for all of the endpoints should not take too long.  If we were doing TDD then
+we would write tests for each function before we even write the stubs.  Given that you just
+got a good experience in writing tests, I recommend you do this, but it will not be a requirement
+for this assignment.  Additionally, we already have a working frontend with end-to-end tests 
+which can serve us well in testing our backend functionality.  (But again, unit testing the 
+backend is the preferred approach.)  You do not need to make stubs for the <code>/location</code> endpoints.
+</p>
+
+<h2>Implementing the Backend</h2>
+
+<p>You should create stubs for all endpoints (except <code>/location</code>), but we will implement only 
+a portion of the backend in this assignment, and the rest in the final assignment.
+The endpoints to implement in this assignment are:</p>
+<ul>
+  <li><code>GET  /sample</code></li>
+  <li><code>POST /login</code></li>
+  <li><code>PUT  /logout</code></li>
+  <li><code>POST /register</code></li>
+  <li><code>GET  /posts/:id</code></li>
+  <li><code>POST /post</code></li>
+</ul>
+
+<p>Note that our <code>POST /post</code> endpoint will only be accepting
+text at the current moment.  I.e., no picture uploads.  Therefore the frontend
+application needs to be modified to not send formData.  For example,
+if I already had a method <code>addPost</code> in my <code>$resource</code>
+then I would rename it <code>addPostFull</code> and make a new <code>addPost</code></p>
+<pre class="prettyprint lang-javascript">
+  addPostFull  : { method: 'POST', 
+     headers:{'Content-Type': undefined},
+     transformRequest: resourceUploadFile, 
+     params: {endpoint: 'post'    } 
+  },
+  addPost  : { method: 'POST', params: {endpoint: 'post'    } },
+</pre>
+<p>this way I can easily switch back to the formData upload for the final assignment
+when image uploading is enabled on the backend.</p>
+
+<h3>Authentication</h3>
+
+<p>Users must be authenticated to use the backend.  They authenticate by suppling their
+username and password in a payload to <code>POST /login</code> which if successfully
+authenticated will return a cookie.  The cookie will be passed on all subsequent requests
+until the cookie expires or the user <code>PUT /logout</code> which deletes the cookie.</p>
+
+<p>In <code>auth.js</code> create an array for users.  To identify the array, I would prefix 
+it with an underscore -- this makes it look like a "member" variable: <code>var _users = []</code> -- the
+idea now is that this is an array of user login information.  We likely want a function like this to traverse
+it</p>
+<pre class="prettyprint lang-javascript">
+// this is in auth.js
+var _users = []
+
+function getUser(username) {
+    // short circuiting would be more efficient
+    // but this is a functional way to do it instead
+    var foundUsers = _users.filter(function(user) {
+        return user.username == username
+    })
+    // foundUsers should have zero or one element
+    // return the found user or null if not found
+}
+</pre>
+
+<p>We will use salted passwords for our authentication.  For this assignment we will
+implement the salting and hashing ourselves.  In class #22 we added the <code>POST /login</code>
+and <code>POST /register</code> endpoints.</p>
+<p>
+The register endpoint will add to the <code>_users</code> array a new object
+with a username, a randomly created salt, and the hash of the user's salted password.
+We could make the object with behavior in which case <code>new User()</code> would create a user
+and then it could have a function <code>getHash()</code> but this is not necessary.  <em>Remember
+we will move this to the MongoDB in the next assignment.</em>
+The salt is a random string, perhaps a combination of the user's username and the current time, all hashed even.
+We can use <code>md5</code> hashing here or if you prefer you can use <code>bcrypt</code> which
+is a popular encryption library.  (For either use <code>npm install ... --save</code>).
+</p><p>
+The <em>user</em> entry will have username, salt, and hash, but nothing else.  User information that 
+would be accessible by others will be stored separately, i.e., status message, profile picture, zipcode, and email.
+You don't need to worry about these for this assignment.
+</p><p>
+The login endpoint will accept from the user their username and password.  Find the user object from the array
+given the username, the user object has the salt and hash.  Salt the user supplied password and compare the hashes.  If they
+match then create a session for the user.  Store the session in a map from session key to user object.
+Here is an example that attempts to create unique session keys for users
+</p>
+<pre class="prettyprint lang-javascript">
+// this is also in auth.js
+var _sessionUser = {}
+var _cookieKey = 'sid'
+
+function login(...) {
+
+    var userObj = getUser(...)
+
+    // "security by obscurity" we don't want people guessing a sessionkey
+    var sessionKey = md5(mySecretMessage + new Date().getTime() + userObj.username)
+    _sessionUser[sessionKey] = userObj
+
+    // this sets a cookie
+    res.cookie(_cookieKey, sessionKey, { maxAge: 3600*1000, httpOnly: true})
+</pre>
+<p>we store the session key in a cookie for the user.  Note that the sessionUser
+map really should be a <em>least recently used</em> (LRU) map, otherwise it is a potential memory hog!</p>
+<p>When a user logs out, remove their sessionKey form the sessionUser map and clear/delete the cookie.</p>
+
+<h3>Initialization</h3>
+
+<p>We start with empty arrays of users and posts.  But to visualize your site we would like some sample 
+data and users.  Add your <em>dummy server test user</em> to your site.  This is the one with a username like "sep1test" -- use the 
+same password as well.  (You'll need to generate a salt and then store the salt and the hash of the salted password in your hard coded array of users.)  </p>
+<p>Next add some sample content.  
+One way to do this is to ceate a file of dummy posts and load them.  For example, you can log into the dummy server and 
+make a request to get posts, i.e., <code>GET /posts</code> which returns a json payload.  Save this to disk, perhaps named <code>samplePosts.json</code> then in your <code>posts.js</code> you can initialize with that data by doing the following:</p>
+<pre class="prettyprint lang-javascript">
+var _posts = require('./samplePosts.json')
+</pre>
+<p>yes, it's that easy!  Now your server will always start with some predefined data.</p>
+
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<h1>Requirements</h1>
+
+<p>Submit again your <code>README.json</code> that has contents similar to this</p>
+<pre style="border: 1px solid black; padding: 0.5em;">
+{ 
+     "netid": "sep1",
+  "frontend": "https://ricebookapp.herokuapp.com",
+   "backend": "https://ricebookserver.herokuapp.com"
+}
+</pre>
+<p>replace "ricebookapp" and "ricebookserver" with the names of your frontend and backend applications, and replace "sep1" with your netID.</p>
+
+<p>Verify that your deployed frontend application works with your backend server.  
+Graders and Students will use your deployed frontend app and it's interoperability with the backend server when grading and writing user feedback for you respectively.
+</p>
+
+<h3>Integrated Web Application</h3>
+<ul>
+    <li>A file <code>README.json</code> that has your frontend and backend URLs along with netid</li>
+    <li>Your backend implements /sample, /login, /logout, /register, /posts/:id, /post from the <a target="_blank" href="data/api.html">API list</a>.</li>
+    <li>There are stubs for <em>all</em> other endpoints in the API list (except <code>/location</code>).</li>
+    <li>Register new users and provide each user a unique salt</li>
+    <li>New users can login, invalid users can not</li>
+    <li>Users can logout but then must login again</li>
+    <li>Posts are persistent, but perhaps not to server reboots.</li>
+    <li>We can query an individual post by postId</li>    
+    <li>At least 10 preloaded posts exist on the server which display on front end when logged in</li>    
+    <li>At least 3 comments preloaded on the server, at least two comments on one post and one comment on a different post</li>
+    <li>Your test user account can log in with the three-word dummy server password previously supplied</li>
+</ul>
+
+<h2>What to submit</h2>
+
+<p>Your submission directory should look something like this</p>
+
+<div class="ui list"><div class="item">
+    <i class="folder icon"></i>
+    <div class="content">
+        <div class="header">hw-integrated</div>
+        <div class="list">
+
+            <div class="item">
+                <i class="file text outline icon"></i>
+                <div class="content"><div class="description">README.json</div></div>
+            </div>
+
+            <div class="item">
+                <i class="folder icon"></i>
+                <div class="content">
+                    <div class="header">RiceBookServer</div>
+                    <div class="list">
+                        <div class="item">
+                            <i class="folder icon"></i>
+                            <div class="content">
+                                <div class="header">app_server</div>
+                                <div class="list">
+
+                                    <div class="item">
+                                        <i class="file text outline icon"></i>
+                                        <div class="content"><div class="description">auth.js</div></div>
+                                    </div>  
+                                    <div class="item">
+                                        <i class="file text outline icon"></i>
+                                        <div class="content"><div class="description">posts.js</div></div>
+                                    </div>  
+                                    <div class="item">
+                                        <i class="file text outline icon"></i>
+                                        <div class="content"><div class="description">posts.spec.js</div></div>
+                                    </div>  
+
+                                </div>
+                            </div>
+                        </div>      
+
+                        <div class="item">
+                            <i class="file text outline icon"></i>
+                            <div class="content"><div class="description">index.js</div></div>
+                        </div>  
+                        <div class="item">
+                            <i class="file text outline icon"></i>
+                            <div class="content"><div class="description">package.json</div></div>
+                        </div>  
+                        <div class="item">
+                            <i class="file outline icon"></i>
+                            <div class="content"><div class="description">Procfile</div></div>
+                        </div>
+
+                    </div>                  
+                </div>
+            </div>      
+        </div>
+    </div>
+</div>
+
+<!-- ******************************** -->
+
+
+
+<hr>
+</div>
+
+

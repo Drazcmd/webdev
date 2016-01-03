@@ -34,7 +34,7 @@
         <div class="ui transition right floated text item" ng-show="vm.assignmentId">
           <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} {{ vm.getDueTime(vm.assignmentId) }}<br/>
           <u>please note the due time</u><br/>
-          Turnin repo: <strong>COMP431-{{ vm.repoSYY }}:hw-{{ vm.assignmentId }}</strong>
+          Turnin repo: <strong>COMP431-F15:hw-{{ vm.assignmentId }}</strong>
         </div>
 
         <div class="ui message transition" ng-show="!vm.assignmentId">
@@ -44,9 +44,9 @@
             <li>Even if you are enrolled in COMP531 still use the COMP431 repository name for submission</li>
             <li><a href="https://docs.rice.edu/confluence/display/ITDIY/Using+the+'turnin'+command+to+manage+homework">Turnin instructions</a></li>
             <li>In-class exercises are also collected via Turnin with repo 
-                <strong>COMP431-{{ vm.repoSYY }}:inclass-#</strong> with the class number for # (i.e., the numeric value in <em>Topic</em> on the <a href="#/schedule">Schedule page)</a></li>
+                <strong>COMP431-F15:inclass-#</strong> with the class number for # (i.e., the numeric value in <em>Topic</em> on the <a href="#/schedule">Schedule page)</a></li>
             <li>You can view your Turnin repo by going to your NetID path 
-            <a href="https://svn.rice.edu/r/COMP431/turnin/{{ vm.repoSYY }}/&lt;netid&gt;">https://svn.rice.edu/r/COMP431/turnin/{{ vm.repoSYY }}/&lt;netid&gt;</a></li>
+            <a href="https://svn.rice.edu/r/COMP431/turnin/F15/&lt;netid&gt;">https://svn.rice.edu/r/COMP431/turnin/F15/&lt;netid&gt;</a></li>
           </ul>
         </div>
 

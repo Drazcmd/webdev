@@ -1,0 +1,433 @@
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
+<style>
+code, pre {
+	font-size: 0.85em;
+}
+</style>
+
+<div onload="prettyPrint()">
+
+<p>
+In this assignment you will implement unit tests and deploy your web application.
+</p>
+
+<h3>Unit Testing</h3>
+<p>
+Write Jasmine unit tests for your JavaScript functionality.  We want to test as much code as possible.
+Write a Karma configuration to test your site using Chrome.  Try to maximize your testing code coverage.
+</p>
+
+<h3>End-to-End Testing</h3>
+<p>
+Use Protractor and write an end-to-end test for your web application.  Use the python SimpleHTTPServer / http.server to host your web page locally and have Protractor run against it.  The required tasks for your end-to-end test are listed in the requirements below.
+</p>
+
+<h2>Getting Started with Heroku</h2>
+<p>In the previous assignment we integrated our front-end web application with a back-end server. 
+But our application only runs on our local host.  Now we want to deploy our application to the cloud.
+We will be using <a href="https://www.heroku.com" target="_blank">Heroku</a> because of their free tier
+and overall simplicity in usage.
+</p>
+<p>First you will need to sign up for an account.  They require a credit card, but so long 
+as you stay in the free tier they will not charge you.  After you have an account and
+are signed in you need to download the Heroku Toolbelt.  If you do not already have a Git client
+installed, they bundle one for you.  We use Git to talk to Heroku.
+</p>
+<p>In class we had created a fresh node project.  Separations of concerns instructs us to
+divide our application into separate front and back end processes.  In this way our application
+is modular, can be selectively scaled, and we have indepdence to change each at their own pace.
+In this assignment we will separately host our front-end and back-end applications on Heroku.
+</p>
+<p>You will need to be logged in to Heroku to proceed: </p>
+<pre class="prettyprint lang-bash">
+heroku login
+</pre>
+
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+
+<h3>Deploying your Front-End</h3>
+<p>To deploy your front-end start by navigating to your app directory.  I called mine RiceBookApp.
+If you have been using git already, then you can ignore the first command.  Do the following, and note
+that the application name, <code>ricebookapp</code>, should be omitted or you can supply a name for your app upfront</p>
+<pre class="prettyprint lang-bash">
+cd RiceBookApp
+git init
+heroku create ricebookapp
+echo "web: bin/start-nginx -f" > Procfile
+git add Procfile index.html app lib css
+git commit -m 'initial commit'
+heroku buildpacks:set https://github.com/skotep/nginx-buildpack.git
+git push heroku master
+</pre>
+<p>Now your app is hosted and running on Heroku.  
+Navigate to, e.g., <a href="https://ricebookapp.herokuapp.com" target="_blank">https://ricebookapp.herokuapp.com</a> to see it.</p>
+
+<p>What did these steps do?  We started by creating a new git repository.  We then created a new Heroku application that was tied to it.  (The order of these operations matters because if you create the Heroku app first then it will not be attached to the git repo.  If you did this, then to fix it execute <code>heroku git:remote -a ricebookapp</code>)  Next we defined the command that Heroku will execute to start our application.  Notice that it executes "start-nginx" which implies we have an Nginx server running that will surface
+our (static) front-end application.  Next we add all of the importat files to the git repo (I assume your app is laid out like mine.  If it isn't, then you'll need to adjust this execution accordingly).  We commit the changes.  We then tell Heroku that we'll be using Nginx for our application (as opposed to node, ruby, python, etc).  Finally we push to the remote Heroku git master.  Heroku builds our application and spins up the Nginx server.</p>
+
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+
+<h2>Creating your Back-End</h2>
+<p>In class #18 we began creating a NodeJS server.  In case you missed it or did not get it completed, here are the commands again to set it up.  We will have the front-end and back-end separated therefore we have a new directory and a new project.  If you already have completed the following you can skip to the next part.  </p>
+<p>For the "npm init" call below, 
+the defaults are in general fine, i.e., just press enter a lot
+init creates for us a packages.json file which will be the 
+configuration for our node application.  Given that we want a 
+<a href="https://en.wikipedia.org/wiki/MEAN_(software_bundle)" target="_blank">MEAN application</a>, 
+we install express and we'll use body-parse middleware to make things easier for us.
+The --save flag in "npm install" adds these dependencies to our package.json file so when Heroku
+builds our app it will grab these dependencies for us.
+The final step below is to pull the example <code>index.js</code> from the class website.  Again,
+if you already completed the in class exercise and have a working Node server, you can skip these steps.
+<pre class="prettyprint lang-bash">
+mkdir RiceBookServer
+cd RiceBookServer
+npm init
+npm install express body-parser --save
+wget https://www.clear.rice.edu/comp431/sample/RiceBookServer/index.js
+</pre>
+<p>
+<p>We can now run our Node application</p>
+<pre class="prettyprint lang-bash">
+node index.js
+</pre>
+<p>Test it out by navigating to <a href="http://localhost:8080" target="_blank">http://localhost:8080</a> it should say "Hello World!".  In the sample from the course site there is also the <code>POST /post</code> endpoint.  To test this you can either use a browser extension such as Advanced REST Client or Postman, or use curl on the commandline:
+<pre class="prettyprint lang-bash">
+curl -H 'Content-Type: application/json' -d '{"Hello": "World" }' http://localhost:8080/post
+</pre>
+<p>The -H sets a header field: It tells the server we are going to send a JSON payload.  The -d flag is the payload: Notice that we have formatted it as JSON because that's what we told the server we were going to do.  <em>If you don't do this correctly then it won't work correctly!</em>  If you look at <code>index.js</code> you'll notice we use the middleware <code>bodyParser.json()</code> which parses the JSON input and places the payload in the <code>body</code> attribute of the request object (normally called <code>req</code>).</p>
+
+<!-- ******************************************************************** -->
+<h4>Aside on Middleware</h4>
+<p>Node is all about middleware.  Middleware are functions inserted between the server and the endpoint handler that have three arguments, request, response, and a "pointer" to the next piece of middleware or endpoint.  In <code>index.js</code> we see examples of functions in the request-reponse pipeline with two arguments request and response.  These are endpoints -- they do not have a <code>next</code> function to pass on to.  A middleware function might look like this:</p>
+<pre class="prettyprint lang-javascript">
+function isLoggedIn(req, res, next) {   
+    var id = req.cookies['sessionId']
+    var hash = req.cookies['hash']
+    ...
+    return next()
+}
+</pre>
+<p>To use this middleware we can either <code>app.use(isLoggedIn)</code> &quot;globally&quot; on all of our endpoints (bearing in mind that <code>app.use()</code> is applied in order) or on individual endpoints like this:</p>
+<pre class="prettyprint lang-javascript">
+    app.put('/logout', isLoggedIn, logout)
+</pre>
+<p>we can chain together as many pieces of middleware as we want.</p>
+
+<!-- ******************************************************************** -->
+<h3>Deploying your Back-End</h3>
+<p>In class #19 we deployed our back-end application.  If you didn't do this yet, then follow the prescription below to create a git repo and a Heroku application.  Note that we tell git not to add our <code>node_modules</code> directory to the repo by adding it to the gitignore file (Heroku will automatically install these libraries for us because they are in our packages.json file).</p>
+<pre class="prettyprint lang-bash">
+git init
+heroku create ricebookserver
+echo "web: node index.js" > Procfile
+echo node_modules > .gitignore
+echo npm-debug.log >> .gitignore
+git add .gitignore Procfile package.json index.js
+git commit -m 'initial commit'
+git push heroku master
+</pre>
+<p>No need to set a buildpack this time, Heroku should automatically recognize that we have a NodeJS application.</p>
+
+<!-- ******************************************************************** -->
+<h3>Initial Functionality: Posts</h3>
+<p>We now have separate frontend and backend applications.  Your frontend app is currently talking to my dummy server.
+Eventually we want it talking to your server.  But there's a lot of work to get that done.  We'll start simple with only post functionality.
+</p>
+<p>In your server add a variable <code>var posts = []</code> and add at least three hardcoded posts to the array.  A post has the following schema:</p>
+<pre class="prettyprint lang-javascript">
+var post = {
+	id: int,
+	author: string,
+	body: string,
+	date: new Date(),
+	comments: []
+}
+</pre>
+<p>Implement the following endpoints:</p>
+
+<style>
+table {
+     border: 2pt solid black;
+     border-collapse: collapse;     
+}
+
+td {
+     padding: 1em;
+     border: 1pt solid grey;     
+}
+</style>
+
+<table>
+	 <tr>
+	      <th>endpoint</th><th>verb</th><th>request payload / response</th><th style="width: 40%; font-size: 80%;">description</th>
+	 </tr>
+
+     <tr>
+          <td>/posts/:id</td><td>GET</td>
+          <td>res: { posts: [ { id: 1, author: Scott, ... }, { ... } ]}</td>
+          <td>If :id is set, then return the post that has id=:id -- if there is none, then return <code>{ posts: [] }</code>, i.e., an empty array.  
+          <br/>If :id is not set, then return an array of hardcoded posts.</td>
+     </tr>
+
+	 <tr>
+          <td>/post</td><td>POST</td>
+          <td>
+	          req: { body: message }<br><br>
+	          res: { posts: [{ id: 5, author: "sep1", body: message, date: ..., comments: [] }] }
+          </td>
+          <td>The payload is JSON with a single field, <code>body</code>.
+          Given the supplied payload, add the author (yourself), an empty array for comments, the datetime the server received the request, and an id (which needs to increment with each additionally added post).  Add this post to the array of hardcoded posts that are returned by <code>GET /posts</code>.  Return this one new post (as the only element of the array posts) as the response.</td>
+     </tr>
+</table>
+<p>Check that your backend works by performming the following commands (either using curl as shown here or Advanced Rest Client or similar)</p>
+<pre class="prettyprint lang-bash">
+curl https://ricebookserver.herokuapp.com/posts
+# you should receieve 3 posts
+curl -H 'Content-Type: application/json' -d '{ "body": "My first post!" }' https://ricebookserver.herokuapp.com/posts
+# you should get a complete post back with id.  I assume the value is 12345, let's verify getById works:
+curl https://ricebookserver.herokuapp.com/posts/12345
+# you should get your new post again
+curl https://ricebookserver.herokuapp.com/posts
+# you should get 4 posts now
+</pre>
+<p>We will use an automated test similiar to these commands to check the functionality of your backend.</p>
+
+<!-- ******************************************************************** -->
+<h3>Unit Test the Back End</h3>
+<p>We'll use <code>jasmine-node</code> for running our unit tests.
+Write unit tests for the two endpoints.  There will be at least four unit tests:</p>
+<table>
+	<tr><td style="width: 30%;"><code>GET /posts</code></td><td>Confirm at least 3 posts returned</td></tr>
+	<tr><td><code>GET /posts/id</code></td><td>where id is a valid post id, confirm that only one post is returned and that it has the correct post id</td></tr>
+	<tr><td><code>GET /posts/id</code></td><td>where is it not a valid post id, confirm that no posts are returned</td></tr>
+	<tr><td><code>POST /post</code></td><td>assure that adding two posts will increment the post id accordingly.  Validate the contents of each post</td></tr>
+</table>
+<p>To get XML test results, use the following command</p>
+<pre class="prettyprint lang-bash">
+./node_modules/.bin/jasmine-node --output test-results --junitreport app_server
+</pre>
+
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<h1>Requirements</h1>
+
+<p>Create a file <code>README.json</code> that has contents similar to this (we will read this programmatically so please make sure you follow this style)</p>
+<pre style="border: 1px solid black; padding: 0.5em;">
+{ 
+     "netid": "sep1",
+  "frontend": "https://ricebookapp.herokuapp.com",
+   "backend": "https://ricebookserver.herokuapp.com"
+}
+</pre>
+<p>replace "ricebookapp" and "ricebookserver" with the names of your frontend and backend applications, and replace "sep1" with your netID.</p>
+
+<h3>Unit Test</h3>
+<p>Use Jasmine and Karma to test your frontend application.</p>
+<ul>
+	<li>Every JavaScript file has an associated spec file</li>
+	<li>Each unit test validates the functionality of one unit of your application</li>
+	<li>Every unit of the application is tested</li>
+	<li>Code coverage should be 70% or more</li>
+	<li>Include your Jasmine coverage results page</li>
+</ul>
+
+<h3>End-to-End Tests</h3>
+<p>Your end-to-end tests will run against your frontend web app running on your local python server.  
+Here are the tasks for your end-to-end test</p>
+<ol>
+	<li>Register a new user</li>
+	<li>Browse sample content, validate the number of posts</li>
+	<li>Log in as your test user</li>
+	<li>Create a new post and validate the post appears in the feed</li>
+	<li>Update the status headline and verify the change</li>
+	<li>Count the number of followed users</li>
+	<li>Add the user "Follower" to the list of followed users and verify the count increases by one</li>
+	<li>Remove the user "Follower" from the list of followed users and verify the count decreases by one</li>
+    <li>Search for "Only One Post Like This" and verify only one post shows, and verify the author</li>
+	<li>Navigate to the profile view and verify the page is loaded</li>
+	<li>Update the user's email and verify</li>
+	<li>Update the user's zipcode and verify</li>
+	<li>Update the user's password, verify a "will not change" message</li>
+</ol>
+<p>Include a JUnitXML report of your end-to-end test, i.e., 
+<code>e2e-results/junitresults.xml</code>
+</p>
+
+<h3>Frontend and Backend Web Applications</h3>
+<ul>
+	<li>Your frontend web application (HW4) hosted on Heroku.</li>
+	<li>Your backend web application hosted on Heroku.</li>
+	<li>A file <code>README.json</code> that has your frontend and backend URLs along with netid</li>
+	<li><code>GET /posts/</code> returns all posts, 3 hardcoded and any additional that are added</li>
+	<li><code>GET /posts/:id</code> returns the post with matching id if it exists, none otherwise</li>
+	<li><code>POST /post</code> adds a new post to the list of all posts.  Returns the newly added post</li>
+	<li>Unit tests for the endpoints</li>
+	<li>Unit test results, e.g., <code>test-results/TEST-ValidatePostFunctionality.xml</code></li>
+</ul>
+
+<h2>What to submit</h2>
+
+<p>Your submission directory should look something like this</p>
+
+<div class="ui list"><div class="item">
+	<i class="folder icon"></i>
+	<div class="content">
+		<div class="header">hw-backend</div>
+		<div class="list">
+
+			<div class="item">
+				<i class="file text outline icon"></i>
+				<div class="content"><div class="description">README.json</div></div>
+	 		</div>
+
+			<div class="item">
+				<i class="folder icon"></i>
+				<div class="content">
+					<div class="header">RiceBookApp</div>
+					<div class="list">
+						<div class="item">
+							<i class="folder icon"></i>
+							<div class="content">
+								<div class="header">app</div>
+								<div class="list">
+
+									<div class="item">
+										<i class="file text outline icon"></i>
+										<div class="content"><div class="description">app.module.js</div></div>
+							 		</div>	
+									<div class="item">
+										<i class="folder outline icon"></i>
+										<div class="content"><div class="description">posts</div></div>
+							 		</div>	
+									<div class="item">
+										<i class="folder outline icon"></i>
+										<div class="content"><div class="description">user</div></div>
+							 		</div>	
+
+								</div>
+							</div>
+				 		</div>		
+
+						<div class="item">
+							<i class="folder outline icon"></i>
+							<div class="content"><div class="description">coverage</div></div>
+				 		</div>	
+						<div class="item">
+							<i class="folder icon"></i>
+							<div class="content"><div class="header">e2e</div>
+								<div class="list">
+									<div class="item">
+										<i class="file text outline icon"></i>
+										<div class="content"><div class="description">protractor.conf.js</div></div>
+							 		</div>	
+									<div class="item">
+										<i class="file text outline icon"></i>
+										<div class="content"><div class="description">scenarios.js</div></div>
+							 		</div>	
+								</div>
+							</div>							
+				 		</div>	
+						<div class="item">
+							<i class="folder icon"></i>
+							<div class="content"><div class="header">e2e-results</div>
+								<div class="list">
+									<div class="item">
+										<i class="file outline icon"></i>
+										<div class="content"><div class="description">junitresults.xml</div></div>
+							 		</div>	
+								</div>
+							</div>							
+				 		</div>	
+			
+						<div class="item">
+							<i class="file text outline icon"></i>
+							<div class="content"><div class="description">index.html</div></div>
+				 		</div>	
+						<div class="item">
+							<i class="file text outline icon"></i>
+							<div class="content"><div class="description">jasmine.html</div></div>
+				 		</div>	
+						<div class="item">
+							<i class="file text outline icon"></i>
+							<div class="content"><div class="description">karma.conf.js</div></div>
+				 		</div>	
+						<div class="item">
+							<i class="file text outline icon"></i>
+							<div class="content"><div class="description">package.json</div></div>
+				 		</div>	
+						<div class="item">
+							<i class="file outline icon"></i>
+							<div class="content"><div class="description">Procfile</div></div>
+				 		</div>	
+
+					</div>
+
+				</div>
+			</div>
+
+			<div class="item">
+				<i class="folder icon"></i>
+				<div class="content">
+					<div class="header">RiceBookServer</div>
+					<div class="list">
+						<div class="item">
+							<i class="folder icon"></i>
+							<div class="content">
+								<div class="header">app_server</div>
+								<div class="list">
+
+									<div class="item">
+										<i class="file text outline icon"></i>
+										<div class="content"><div class="description">posts.js</div></div>
+							 		</div>	
+									<div class="item">
+										<i class="file text outline icon"></i>
+										<div class="content"><div class="description">posts.spec.js</div></div>
+							 		</div>	
+								</div>
+							</div>
+				 		</div>		
+
+						<div class="item">
+							<i class="file text outline icon"></i>
+							<div class="content"><div class="description">index.js</div></div>
+				 		</div>	
+						<div class="item">
+							<i class="file text outline icon"></i>
+							<div class="content"><div class="description">package.json</div></div>
+				 		</div>	
+						<div class="item">
+							<i class="file outline icon"></i>
+							<div class="content"><div class="description">Procfile</div></div>
+				 		</div>
+						<div class="item">
+							<i class="folder icon"></i>
+							<div class="content"><div class="header">test-results</div>
+								<div class="list">
+									<div class="item">
+										<i class="file outline icon"></i>
+										<div class="content"><div class="description">TEST-ValidatePostFunctionality.xml</div></div>
+							 		</div>
+						 		</div>
+							</div>
+				 		</div>	
+					</div>					
+				</div>
+			</div>		
+ 		</div>
+ 	</div>
+</div>
+
+<!-- ******************************** -->
+
+
+
+<hr>
+</div>

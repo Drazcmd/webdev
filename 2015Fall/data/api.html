@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<style>
+table {
+     border: 2pt solid black;
+     border-collapse: collapse;
+     font-size: 80%;
+}
+
+td {
+     padding: 1em;
+     border: 1pt solid grey;
+}
+</style>
+</head>
+<body>
+
+<h3>Dummy Server API</h3>
+<table>
+
+     <tr>
+          <th>endpoint</th><th>verb</th><th>payload</th><th>response</th><th>description</th>
+     </tr>
+  
+     <tr>
+          <td>/sample</td><td>GET</td><td>none</td>
+          <td>[ { id: 1, author: Scott, ... }, { ... } ]</td>
+          <td>Array of sample posts.</td>
+     </tr>
+
+     <tr>
+          <td>/login</td><td>POST</td><td>{username: username, password: password }</td>
+          <td>{ username: :user, result: "success"}</td>
+          <td>log in to server, resisters session id and hash</td>
+     </tr>
+     
+     <tr>
+          <td>/logout</td><td>PUT</td><td>none</td>
+          <td>OK</td>
+          <td>log out of server, clears session id</td>
+     </tr>
+
+     <tr>
+          <td>/register</td><td>POST</td><td>{ username: username,
+          email:email, zipcode:zipcode, password:password}</td>
+          <td>{ result: 'success', username: username}</td>
+          <td>Register a new user with the system.  This is not functional,
+          new users cannot log in.</td>
+     </tr>
+
+
+     <tr>
+          <td>/posts/:id</td><td>GET</td><td>:id is a user id
+          or a post id</td>
+          <td>[ { id: 1, author: Scott, ... }, { ... } ]</td>
+          <td>A requested post, osts by the requested user if :id is specified, or array of posts in the loggedInUsers feed</td>
+     </tr>
+
+     <tr>
+          <td>/posts/:id</td><td>PUT</td><td>:id is a post id<br/>
+          { body: message, commentId: optional }</td>
+          <td>[ { id: 1, author: Scott, ..., comments: [ ... ] } ]</td>
+          <td>Update the post :id with a new body if commentId is not supplied.  
+               Forbidden if the user does not own the post.
+          If commentId is supplied, then update the requested comment on the post, if owned.  If commentId is -1, then a new comment is posted with the body message.</td>
+     </tr>
+
+     <tr>
+          <td>/post</td><td>POST</td><td>
+          { body: message, img: &lt;file&gt; }</td>
+          <td>[ { id: 1, author: Scott, ..., comments: [] } ]</td>
+          <td>Add a new post for the loggedInUser, date and id are determined by server.  Optional image upload -- <a href="#upload"><b>see below</b></a>.</td>
+     </tr>
+
+     <tr>
+          <td>/statuses/:users</td><td>GET</td><td>none<br>:users is a comma separated list of user names</td>
+          <td>[ {username:Scott, status:Happy}, { ... } ]</td>
+          <td>Get the statuses for multiple users</td>
+     </tr>
+
+     <tr>
+          <td>/status</td><td>GET</td><td>none<br></td>
+          <td>[ {username:Scott, status:Happy}, { ... } ]</td>
+          <td>Get the status for the currently logged in user</td>
+     </tr>
+
+     <tr>
+          <td>/status</td><td>PUT</td><td>{ status: Happy }</td>
+          <td>{username: Scott, status: Happy }</td>
+          <td>Update the status for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/following/:user</td><td>GET</td><td>:user is an optional user id.  Defaults to loggedInUser</td>
+          <td>{ username: :user, following: [ userids ]}</td>
+          <td>get the list of users being followed by the requested user</td>
+     </tr>
+
+     <tr>
+          <td>/following/:user</td><td>PUT</td><td>:user is a user id.</td>  
+          <td>{ username: :user, following: [ userids ]}</td>
+          <td>add :user to the following list for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/following/:user</td><td>DELETE</td><td>:user is a user id.</td>  
+          <td>{ username: :user, following: [ userids ]}</td>
+          <td>remove :user to the following list for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/email/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>{ username: :user, email: emailAddress }</td>
+          <td>get the email address for the requested user</td>
+     </tr>
+          <td>/email</td><td>PUT</td><td>{ email: newEmailAddress }</td>
+          <td>{ username: loggedInUser, email: newEmailAddress }</td>
+          <td>update the email addres for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/zipcode/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>{ username: :user, zipcode: emailAddress }</td>
+          <td>get the zipcode for the requested user</td>
+     </tr>
+          <td>/zipcode</td><td>PUT</td><td>{ zipcode: newZipCode }</td>
+          <td>{ username: loggedInUser, zipcode: newZipCode }</td>
+          <td>update the zipcode for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/locations/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>{ username: :user, location: locationObject }</td>
+          <td>Returns the { lat:, lng: } of the requested user.</td>
+     </tr>
+
+     <tr>
+          <td>/locations</td><td>PUT</td><td>{ lat: latitude, lng: longitude }</td>
+          <td>{ username: :user, location: locationObject }</td>
+          <td>Updates the lat+lng of the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/picture/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>{ username: :user, picture: pictureURL }</td>
+          <td>get the picture address for the requested user</td>
+     </tr>
+          <td>/picture</td><td>PUT</td>
+          <td>{ img: &lt;file&gt; }</td>
+          <td>{ username: loggedInUser, picture: pictureURL }</td>
+          <td>Update the picture address for the loggedInUser. <a href="#upload"><b>See below</b></a></td>
+     </tr>
+
+     </tr>
+          <td>/password</td><td>PUT</td><td>{ password: newPassword }</td>
+          <td>{ username: loggedInUser, status: 'will not change' }</td>
+          <td>would update the password for the loggedInUser.  But instead
+          just gives message that password will not change. I.e., you
+          can't change your password, sorry.</td>
+     </tr>
+
+</table>
+
+<a name="upload">
+<h3>Picture Uploading</h3>
+</a>
+<p>
+To upload a picture we first need to have the user select a file.
+For example we could have a file input on our page:
+</p>
+<pre class="prettyprint">
+  &lt;input type="file" accept="image/*" 
+         onchange="angular.element(this).scope().vm.setFile(this)" &gt;
+</pre>
+<p>
+Note that the file input doesn't play well with Angular.  So we include an onchange directive to execute the <code>setFile()</code> method of our controller.  That method takes in the element.  Look at the member variables of that element, you'll find the file there.  
+In fact it's a complete file object with size and other useful information.
+</p>
+<p>
+Now we need to do the upload.  We're using <code>$resource</code> and need to make a small modification for the uploading of the file.  The server expects json, so we need to make our request with a different content-type.  In fact, we want it to be auto generated based on the payload.  In our api declaration have this:
+</p>
+<pre class="prettyprint">
+$resource(...     
+     upload: { 
+          method: 'POST', 
+          headers: { 'Content-Type': undefined },
+          transformRequest: resourceUploadFile,
+          params: { ... }
+     }
+})
+</pre>
+<p>What does this do?  This sets the header to be automatically
+determined by the payload.  The transformRequest does some processing for us.  When we call <code>api.upload()</code> we will supply it with our payload.  Perhaps that looks like:
+</p>
+<pre class="prettyprint">
+     api.upload({ body: postBody, img: postImage })
+</pre>
+<p>See we'll be using the same "style" of upload for both the picture (avatar) upload as well as the post upload.  In one case body is empty.  We transform this json into form data to send to the server.
+</p>
+<pre class="prettyprint">
+function resourceUploadFile(data) {
+     var fd = new FormData()  
+     fd.append('image', data.img)
+     fd.append('body', data.body)
+     return fd;
+}
+</pre>
+<p>The keys in the form data are very important: they are what the sever is looking for.  So whereas you can change the names "data.img" and "data.body" you need the form to have "image" and "body" in order for your post or for your avatar upload to succeed.  You'll get an error message from the server otherwise.
+</p>
+<p>With this you should be able to upload your avatar images and make posts with imbedded images</p>
+<hr/>
+
+</body>
+</html>
