@@ -64,6 +64,7 @@
         vm.showRubric = true;
         vm.scrollTo = scrollTo
         vm.repoSYY = appValues.syy
+        vm.hwid = null;
 
         vm.computeTotalPoints = function(items) {
             return items.map(function(item) { return item.pts })
@@ -92,7 +93,7 @@
                 vm.assignmentId = undefined;
                 vm.url = undefined;
                 vm.rubric = undefined;
-                vm.showRubric = (vm.assignmentName != 'General Info')
+                vm.showRubric = (vm.assignmentName != 'General Info')                
                 return;
             }
             var a = vm.srv.getAssignment(id);
@@ -104,6 +105,7 @@
                 vm.assignmentName = a.name;
                 vm.assignmentDue = a.due;
                 vm.assignmentId = id;
+                vm.hwid = a.hwid
                 vm.url = 'views/assignments/' + id + '.html';
                 vm.rubric = a.rubric;
                 //vm.showRubric = false;

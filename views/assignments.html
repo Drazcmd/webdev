@@ -22,7 +22,7 @@
         ng-class="{ active: a.name == vm.assignmentName }" 
         ng-click="vm.setAssignment(a.id)" 
         ng-repeat="a in vm.srv.assignments">
-        <div class="header">{{a.hwid}}. {{a.name}}</div>
+        <div class="header">{{a.hwid ? a.hwid + ". " : ""}}{{a.name}}</div>
         (due {{ vm.srv.getDueDate(a.due) }})</a>
       </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="ui transition right floated text item" ng-show="vm.assignmentId">
           <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} {{ vm.getDueTime(vm.assignmentId) }}<br/>
           <u>please note the due time</u><br/>
-          Turnin repo: <strong>COMP431-{{ vm.repoSYY }}:hw-{{ vm.assignmentId }}</strong>
+          Turnin repo: <strong>COMP431-{{ vm.repoSYY }}:hw{{vm.hwid}}-{{ vm.assignmentId }}</strong>
         </div>
 
         <div class="ui message transition" ng-show="!vm.assignmentId">
