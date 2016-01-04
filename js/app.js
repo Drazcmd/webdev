@@ -121,7 +121,7 @@
             if (vm.srv && vm.srv.getAssignment(id)) {
                 duetime = vm.srv.getAssignment(id).duetime
             }
-            return duetime ? "before class at 2:30 PM" : "after class by midnight"
+            return duetime ? "before class at 2:30 PM" : "after class by 2 AM"
         }
 
         function scrollTo(anchor) {

@@ -32,8 +32,7 @@
 
         <h2 class="ui header">{{ vm.assignmentName }}</h2>
         <div class="ui transition right floated text item" ng-show="vm.assignmentId">
-          <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} {{ vm.getDueTime(vm.assignmentId) }}<br/>
-          <u>please note the due time</u><br/>
+          <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} {{ vm.getDueTime(vm.assignmentId) }}<br/>          
           Turnin repo: <strong>COMP431-{{ vm.repoSYY }}:hw{{vm.hwid}}-{{ vm.assignmentId }}</strong>
         </div>
 
