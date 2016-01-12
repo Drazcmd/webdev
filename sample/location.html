@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<style>
+	html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    div { 
+    	height: 100%;
+    	width: 100%;
+    }
+    </style>
+</head>
+<body>
+
+<div id="it"></div>
+
+<script>
+
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function(position) {
+		var pos = {
+               "lat" : position.coords.latitude,
+               "lng" : position.coords.longitude
+        }
+		var pos = {
+               "lat" : 29.7541078,
+               "lng" : -95.35945679999999
+        }
+        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?latlng='
+			+ pos.lat + ',' + pos.lng + '&key=AIzaSyBsoFpMG-IcmLpzjiFzIzJvmAYhhMrQFk8')
+        .success(function(data) {
+        	console.log('latlng', data)
+			document.getElementById('it').innerHTML = "You are at "
+				+ "lat:" + pos.lat + ", lng:" + pos.lng
+				+ "<br>Which resolves to : " + data.results[0].formatted_address
+		})
+	})
+} else {
+	document.getElementById('it').innerHTML = "Location not found or unsupported."
+}
+
+$.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBsoFpMG-IcmLpzjiFzIzJvmAYhhMrQFk8')
+	.success(function(data) {
+		console.log(data)	
+	})
+
+</script>
+</body>
+</html>
