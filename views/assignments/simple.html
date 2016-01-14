@@ -23,15 +23,12 @@ will contain a registration form for users to create an account.  Additionally w
 </ul>
 <li>Clear button that empties all fields</li>
 <li>Submit button that performs validation on the form</li>
-<li>There should also be a hidden field that contains the current timestamp in millis (i.e., since epoch) when the submit button is pressed.</li>
-<ul>
-  <li>All fields are required except those that are optional.</li>
-  <li>Fields should be validated for proper content, i.e., valid phone number, valid email address.  [These do not need to be exhaustive, e.g., a@b.co is a "valid" email]</li>
-  <li>Account name can only be upper or lower case letters and numbers, but may not start with a number</li>
-  <li>validate password equality with confirmation field.</li>
-  <li>leave a stub to check if the account name is available</li>
-</ul>
-<li>If the form is not valid then use an alert or some other mechanism to inform the user what specifically is wrong</li>
+<li>There should also be a hidden field named timestamp which will contain the current timestamp in millis (i.e., since epoch) hen the submit button is pressed.</li>
+<li>All fields are required except the display name which is optional.</li>
+<li>Fields should be validated for proper content, i.e., valid phone number, valid email address.  [These do not need to be exhaustive, e.g., a@b.co is a "valid" email, but 123-123 is not a valid phone number.]</li>
+<li>Account name can only be upper or lower case letters and numbers, but may not start with a number</li>
+<li>Validate password equality with confirmation field.</li>
+<li>If the form is not valid then use an alert to inform the user what specifically is wrong so they know what to fix</li>
 <li>The submit button makes a GET request to the form processor page (see below) with the form contents</li>
 </ul>
 
