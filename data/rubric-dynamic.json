@@ -1,44 +1,74 @@
 [
 {"section":"Main Page", "items":[
-	{"item":"header including doctype, html, head with at least one meta", "pts":1 },
-	{"item":"author in meta or comment", "pts":1 },
-	{"item":"table with grid of cards", "pts":3 },
-	{"item":"sufficient number of cards to require scrolling (minimum of 3 rows and 2 columns)", "pts":3 },
-	{"item":"each card has image or text, about half of cards are image cards", "pts":3 },
-	{"item":"at least one card has both text and image", "pts":3 },
-	{"item":"at least one card has a link to external site, opens in new window", "pts":3 },
-	{"item":"each image card updates image at random interval", "pts":5 },
-	{"item":"each image card contains a button to stop the interval", "pts":5 },
-	{"item":"each image card contains a button to start the interval", "pts":5 },
-	{"item":"timeout after 3 seconds to inform user to login or register", "pts":3},
-	{"item":"login button with informative popup", "pts":3 },
-	{"item":"register link navigates to registration page", "pts":3 }
+	{"item":"correct doctype element", "pts":1 },
+	{"item":"html and head elements", "pts":1 },
+	{"item":"author meta tag", "pts":1 },
+	{"item":"table with grid of cards", "pts":5 },
+	{"item":"table is styled with non-trivial CSS", "pts": 10},
+	{"item":"sufficient number of cards to require scrolling (minimum of 3 rows and 2 columns)", "pts":5 },
+	{"item":"each card has image, text, or both.  Half of cards have images.", "pts":5 },
+	{"item":"each image card updates image at random interval, time is different for each card", "pts": 10 },
+	{"item":"each image card contains a single button to start/stop the interval", "pts": 15 },
+	{"item":"Link to navigate to the Profile page", "pts":2 }
 ]},
-{"section":"Registration Page", "items":[
-	{"item":"header including doctype, html, head with at least one meta", "pts":1 },
-	{"item":"author in meta or comment", "pts":1 },
-	{"item":"page contains a form", "pts":1 },
-	{"item":"There are input text areas for the following: account name, first name, last name, address, city, state, phone number, date of birth, email, password, password confirmation", "pts":3 },
-	{"item":"password and password confirmation should be password type", "pts":1 },
-	{"item":"Hidden field containing current timestamp in millis", "pts":3 },
-	{"item":"clear button to empty fields", "pts":3 },
-	{"item":"submit button executes JavaScript validation function", "pts":3 },
-	{"item":"each field is validated for correctness, i.e., valid phone number, email, etc", "pts":5 },
-	{"item":"alert user of invalid form contents", "pts":5 },
-	{"item":"submit button makes GET request to form processor page", "pts":3 }
+{"section":"Profile Page", "items":[
+	{"item":"correct doctype element", "pts":1 },
+	{"item":"html and head elements", "pts":1},
+	{"item":"author meta tag", "pts":1 },
+	{"item":"input fields to change display name, email, phone, zipcode, password (and confirmation)", "pts":6 },
+	{"item":"current (hard coded) values are displayed", "pts":5},
+	{"item":"Update button validates each non-empty input field", "pts": 10 },
+	{"item":"Alert message for invalid entries", "pts":5 },
+	{"item":"Alert message informing which entries are changing (from what to what)", "pts": 7},
+	{"item":"Update chnages the current values that are displayed", "pts":7 },
+	{"item":"Link to return to the Main page", "pts":2 }
 ]},
-{"section":"Form Processor Page", "items":[
-	{"item":"header including doctype, html, head with at least one meta", "pts":1 },
-	{"item":"author in meta or comment", "pts":1 },
-	{"item":"extract query parameter from location and display key-value pairs in a table", "pts":5 },
-	{"item":"hidden timestamp is rendered as human readable datetime", "pts":3 }
-]},
-{"section":"Style", "items":[
-	{"item":"Code is properly formatted (indentation, spacing)", "pts": 2 },
-	{"item":"function and variable names are descriptive", "pts":2 },
-	{"item":"attribute values are quoted", "pts":2 },
-	{"item":"appropriate use of whitespace", "pts": 2 },
-	{"item":"code is not complex", "pts": 2 },
-	{"item":"code 'smells' right", "pts": 10 }
+
+{"section":"Demerits", "items": [
+
+    {"item":"code smells bad or has some issue", "pts": 10},
+    {"item":"sections of code repeated more than twice", "pts": 10},
+    
+    {"item":"lingering console message", "pts": 5},
+    {"item":"bad variable name", "pts": 5},
+
+    {"item":"bad datastructure choice or usage", "pts": 5},
+    {"item":"inappropriate use of new", "pts": 5},
+    {"item":"improper use of comments", "pts": 5},
+    {"item":"no comments at all (you should have describing comments to explain why you are doing things the way you are doing them)", "pts": 5},
+    {"item":"dead code, e.g., commented or unreachable code", "pts": 5},
+    {"item":"code makes unchecked assumption", "pts": 5},
+    {"item":"non-CSS styling", "pts": 5},
+
+    {"item":"function length is too long (more than about 60 lines)", "pts": 5},
+    {"item":"function performs too many functions", "pts": 5},
+    {"item":"complex code statement (should be broken up or is missing appropriate comment)", "pts": 5},
+
+    {"item":"unnecessary intermixing of content (HTML) and style (CSS)", "pts": 5},
+    {"item":"unnecessary intermixing of content (HTML) and logic (JavaScript)", "pts": 5},
+
+    {"item":"inappropriate magic value", "pts": 3},
+    {"item":"missing braces for blocks, e.g., if, for, while", "pts": 3},
+    {"item":"bad indentation", "pts": 3},
+
+    {"item":"poorly named function", "pts": 3},
+    {"item":"missing cached variable, e.g., not caching DOM lookup", "pts": 3},
+    {"item":"reassigning or multiply assigning variables", "pts": 3},
+    {"item":"code line length too long (more than about 80 characters)", "pts": 3},
+    {"item":"too much white space (use white space for logical separations and promote grouping)", "pts": 3},
+    {"item":"excessive use of DOM ids", "pts": 3},
+    {"item":"missing clear abstraction usage opportunity", "pts": 3},
+
+    {"item":"for loop used instead of more appropriate functional style", "pts": 3},
+    {"item":"variable not appropriately initialized", "pts": 3},
+    {"item":"variable missing var", "pts": 3},
+    {"item":"did not use shortcut for boolean, i.e., if (bool == true) should be if (bool)", "pts": 3},
+    {"item":"inappropriate character in filename, e.g., space", "pts": 3},
+    {"item":"a 'what' comment, e.g., // set var to 0", "pts": 3},
+
+    {"item":"multi-line comment where // should be used instead", "pts": 1},
+    {"item":"long comment at end of line instead of on separate line", "pts": 1}
+
 ]}
+
 ]
