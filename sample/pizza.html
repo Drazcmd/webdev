@@ -100,27 +100,32 @@ window.onload = function() {
 	
 	var form = document.forms[0]
 
-	// prepopulate the form from the query string	
-	location.search.substring(1).split('&')
+	var values = location.search.substring(1).split('&')
 		.filter(function(e) { return (e.length) })
-		.forEach(function(tuple) {
-			console.log(kv)
-			var kv = tuple.split('=')
-			
-			var el = form[kv[0]]
-			// if a checkbox then we need to iterate to check the correct boxes.		
-			var len = el.length
-			if (len && el[0].type === "checkbox") {			
-				for (var ii = 0; ii < len; ++ii) {	
-					if (kv[1] === el[ii].value) {
-						el[ii].checked = true
-					}
-				}			
-			} else {
-				el.value = decodeURIComponent(kv[1]).replace(/\+/g, ' ')
-			}
 
-		})
+	if (values.length) {
+		alert('Prepopulated your form with query string values')
+	}
+
+	// prepopulate the form from the query string	
+	values.forEach(function(tuple) {			
+		var kv = tuple.split('=')		
+		var el = form[kv[0]]
+		var value = kv[1]
+		
+		// if a checkbox then we need to iterate to check the correct boxes.		
+		var len = el.length
+		if (len && el[0].type === "checkbox") {			
+			for (var ii = 0; ii < len; ++ii) {	
+				if (el[ii].value === value) {
+					el[ii].checked = true
+				}
+			}			
+		} else {
+			el.value = decodeURIComponent(value).replace(/\+/g, ' ')
+		}
+	})
+
 }
 
 </script>
