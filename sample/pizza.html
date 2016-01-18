@@ -1,0 +1,127 @@
+<!DOCTYLE html>
+<html>
+<head>
+	<title>Order Your Pizza!</title>
+	<meta charset="utf-8">
+	<meta name="author" value="Scott Pollack">
+</head>
+<body>
+
+<h2>Pizza Guys Order Form</h2>
+
+<img src="http://images.clipartpanda.com/whole-pepperoni-pizza-clipart-pizza-clipart-53bde6cd2d59d.jpg" width="250px">
+
+<!-- this will be changed to action="formProcessor.html" once it's created -->
+<form method="GET" action="#">
+
+	<label for="customer">
+		Name<br/>
+		<input type="text" name="customer" required size="30" placeholder="your name">
+	</label>
+	<br/><br/>
+
+	<label for="address">
+		Address: #### Street Name ... <br/>
+		<input type="text" name="address" required placeholder="delivery address" size="60" 
+			pattern="[0-9]+ [a-zA-Z ]+">
+	</label>
+	<br/><br/>
+
+	<label for="phone">
+		Phone Number: 123-123-1234<br/>
+		<input type="tel" name="phone" required placeholder="123-123-1234" size="11" 
+			pattern="\d\d\d[-]?\d\d\d[-]?\d\d\d\d">
+	</label>
+	<br/><br/>
+
+	<u>Pizza size</u><br/>
+	<label><input type="radio" name="pizzaSize" value="Large">Large</label>
+	<label><input type="radio" name="pizzaSize" value="Medium">Medium</label>
+	<label><input type="radio" name="pizzaSize" value="Small">Small</label>
+	<br/><br/>
+
+	<u>Pizza Toppings</u><br/>
+	<label><input type="checkbox" name="toppings" value="sausage">Sausage</label>
+	<label><input type="checkbox" name="toppings" value="pepperoni">Pepperoni</label>
+	<label><input type="checkbox" name="toppings" value="olives">Olives</label>
+	<label><input type="checkbox" name="toppings" value="anchovies">Anchovies</label>
+	<label><input type="checkbox" name="toppings" value="onions">Onions</label>
+	<br/><br/>
+
+	<input type="submit" value="Place Order" onclick="return validate(this.parentNode)">
+	<input type="reset" value="Clear">
+
+</form>
+
+<script>
+
+function validate(form) {
+	// We used required on the inputs themselves
+	// additionally we used patterns to validate 
+	// those entires.
+
+	// So the only thing we need to validate here is that the
+	// pizza size was chosen.  Alternatively we could have
+	// selected one for the user by default by using "checked"
+	// but for this exercise we wanted to get our hands dirty in JavaScript!
+
+	if (!form.pizzaSize) {
+		// we will never get here
+		// this is *dead code*
+		return false;
+	}
+
+	// form.pizzaSize is always present because pizzaSize is an _array_	
+	// look at this:
+	console.log(form.pizzaSize)
+	// be sure to use console.log for debugging while
+	// you develop so you get a sense of what is going on.
+
+	// remove logging messages when they are no longer needed.
+
+	// the following is an optimization, otherwise the length of
+	// the array is recomputed on each iteration of the for loop
+	var numberOfSizes = form.pizzaSize.length
+
+	var sizeSelected = false;
+	for (var ii = 0; ii < numberOfSizes; ++ii) {	
+		sizeSelected = sizeSelected || form.pizzaSize[ii].checked		
+	}
+
+	if (!sizeSelected) {
+		alert('Please select a size for your pie!')
+	}
+
+	return sizeSelected
+}
+
+// This function executes after the document has been loaded
+window.onload = function() {
+	
+	var form = document.forms[0]
+
+	// prepopulate the form from the query string	
+	location.search.substring(1).split('&').forEach(function(tuple) {
+		var kv = tuple.split('=')
+		
+		var el = form[kv[0]]
+		// if a checkbox then we need to iterate to check the correct boxes.		
+		var len = el.length
+		if (len && el[0].type === "checkbox") {			
+			for (var ii = 0; ii < len; ++ii) {	
+				if (kv[1] === el[ii].value) {
+					el[ii].checked = true
+				}
+			}			
+		} else {
+			el.value = decodeURIComponent(kv[1]).replace(/\+/g, ' ')
+		}
+
+	})
+ 
+}
+
+</script>
+
+</body>
+</html>
