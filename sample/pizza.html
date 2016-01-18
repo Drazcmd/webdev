@@ -103,10 +103,6 @@ window.onload = function() {
 	var values = location.search.substring(1).split('&')
 		.filter(function(e) { return (e.length) })
 
-	if (values.length) {
-		alert('Prepopulated your form with query string values')
-	}
-
 	// prepopulate the form from the query string	
 	values.forEach(function(tuple) {			
 		var kv = tuple.split('=')		
@@ -125,6 +121,10 @@ window.onload = function() {
 			el.value = decodeURIComponent(value).replace(/\+/g, ' ')
 		}
 	})
+
+	if (values.length) {
+		alert('Prepopulated your form with query string values')
+	}
 
 }
 
