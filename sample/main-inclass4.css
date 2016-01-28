@@ -1,0 +1,35 @@
+
+body { 
+	margin: 0 auto;
+	max-width: 600px;
+	background-color: #014181;	
+}
+
+.card {	
+	margin: 0 auto;
+	width: 75%;
+	padding-bottom: 22px;
+	margin-bottom: 1.5pt;
+	padding: 3pt;
+	border: 1pt solid grey;	
+	border-radius: 10px;
+	min-height: 3.5em;	
+	background-color: white;
+}
+
+span {
+	color: #014181;	
+	font-weight: bold;
+	font-style: italic;
+	font-size: 1em;
+}
+
+nav {
+     position: fixed;
+     left: 0px;
+     top: 0px;
+     border-radius: 5px;
+     background-color: white;
+     padding: 5px;
+}
+
