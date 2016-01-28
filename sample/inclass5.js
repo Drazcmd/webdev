@@ -32,8 +32,8 @@ window.onload = function() {
 	// set it up for play
 	gameReset();
 
-	// if ctrl didn't work you could use shift instead
-	var magicKey = 17; // ctrl
+	// I'm using shift instead of ctrl
+	var magicKey = 16; // shift
 
 	// Instead of writing this twice I made a function
 	function random() {
