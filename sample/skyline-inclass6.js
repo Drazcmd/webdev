@@ -123,6 +123,13 @@ var createApp = function(canvas) {
 
 	var carX = 0, carHeight = 15, carWidth = 40, carOffset = 2.5
 	function paintCar() {
+
+		// For a *real* game you will want to repaint
+		// perhaps as fast as possible.  Therefore do this:		
+		//requestAnimationFrame(paintCar)
+		// If you care about physics, then you'll want to know
+		// how much time has elapsed between each frame
+
 		// erase the car
 		c.fillStyle="white"
 		c.fillRect(carX, floor - carHeight - 3, carWidth, carHeight + 3)
@@ -145,7 +152,7 @@ var createApp = function(canvas) {
 		c.fillStyle = "cyan"
 		c.fillRect(carX+carWidth * 0.8, floor - carHeight - carOffset, carWidth * 0.2, 5)
 		
-		// update every 0.1 seconds
+		// update every ~0.1 seconds
 		setTimeout(paintCar, 100)
 
 		// now we could think about adding buildings automatically
