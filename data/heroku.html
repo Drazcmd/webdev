@@ -76,6 +76,7 @@ git add Procfile index.html main.html main.js
 git commit -m 'initial commit'
 heroku buildpacks:set https://github.com/skotep/nginx-buildpack.git
 git push heroku master
+heroku ps:scale web=1
 </pre>
 <p>Now your soon to be app is hosted and running on Heroku.  
 Navigate to, e.g., <a href="https://ricebookapp.herokuapp.com" target="_blank">https://ricebookapp.herokuapp.com</a> to see it.</p>
