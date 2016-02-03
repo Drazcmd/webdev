@@ -66,12 +66,13 @@ one additional file named <code>Procfile</code> which is done below.
 
 <p>To deploy to Heroku start by navigating to <code>frontend</code>.
 You will want to come up with a name for your application.  Note that 
-later in the course we will create new applications so as to not "stomp" over previous homework submissions.  So the name you pick here will not necessarily be the final name of your final social networking app (and we can always change the name later).  In the example below, I have named my application <code>ricebookapp</code>, which should be replaced with your chosen name, or leave blank and Heroku will assign a name for you.</p>
+later in the course we will create new applications so as to not "stomp" over previous homework submissions.  So the name you pick here will not necessarily be the final name of your final social networking app (and we can always change the name later).  <b>In the example below, I have named my application <code>ricebookapp</code>, which should be replaced with your chosen name, or leave blank and Heroku will assign a name for you.</b> 
+These names are world unique, therefore your name may have already been chosen, so pick another or let Heroku give you a name.</p>
 <pre class="prettyprint lang-bash">
 cd frontend
 git init
 heroku create ricebookapp
-echo "web: bin/start-nginx -f" > Procfile
+echo web: bin/start-nginx -f > Procfile
 git add Procfile index.html main.html main.js
 git commit -m 'initial commit'
 heroku buildpacks:set https://github.com/skotep/nginx-buildpack.git
@@ -92,6 +93,11 @@ contents (replaced with *your* values of course)</p>
   "frontend": "https://ricebookapp.herokuapp.com"
 }
 </pre>
-<p></p>
+<hr>
+<p>
+Note that we will continue to use this <code>frontend</code> directory as we develop our web application but
+will submit from separate hw# directories for our assignments.  Those hw# directories should only have 
+our "content" i.e., will not include the hidden <code>.git</code> directory.
+</p>
 <hr>
 

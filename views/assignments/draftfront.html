@@ -32,7 +32,6 @@ and the status headlines of the followed users.  For now these can all be hard c
 a few examples of each.  The goal is to get an idea of what the final working page will look like.
 </p>
 
-
 <h3>Landing Page Requirements</h3>
 
 <p>The "landing" page is saved as <code>index.html</code> and was
@@ -106,9 +105,43 @@ be visited and commented on by members of the class.</p>
 <p>The profile page should be styled and "look good" -- your site will 
 be visited and commented on by members of the class.</p>
 
+<h2>Publication</h2>
+
+<p>
+For your site to be reviewed by other members of the class you will need to publish it.  We will be 
+using Heroku for hosting our web applications.  Follow the <a target="_blank" href="data/heroku.html">Heroku instructions</a>
+(also used for inclass-7) to create an account on Heroku and get your site hosted.
+</p>
+
+<p>Verify the look and feel and functionality of your site as hosted on Heroku.  
+Be sure to update your site on Heroku as the final step of your submission.  You are allowed to continue
+to improve your Heroku site after you submit, but if your site is not available when students go to
+review it then you will not receive any feedback.</p>
+
+<p>Again, the purpose of this assignment is to consolidate the layout, look, and feel of
+the three pages of our web application.  Other than simple navigation
+and some validation which was mostly completed previously, there is no actual functionality
+to much of the site.</p>
+
 <h2>What to submit</h2>
 
-<p>Again we write unobtrusive JavaScript and CSS.  Your submission directory should look like this</p>
+<p>When following the <a target="_blank" href="data/heroku.html">Heroku instructions</a>, 
+you will be "git pushing" from your <code>frontend</code> directory.  When your site is 
+complete and you are ready to submit, "copy" your files to the <code>hw3-draffront</code> directory.
+Do <b>NOT</b> submit to Turnin a directory that contains the <em>hidden</em> <code>.git</code> directory -- be sure to 
+copy only the files you intend to submit.  You can use <code>ls -a</code> so see all files/paths within a directory.
+</p>
+
+<p>Include in your hw3 submission a file named README.json that has the following
+contents (replaced with *your* values of course)</p>
+<pre style="border: 1px solid black; padding: 0.5em;">
+{ 
+     "netid": "sep1",
+  "frontend": "https://ricebookapp.herokuapp.com"
+}
+</pre>
+
+<p>Again we write unobtrusive JavaScript and CSS.  Your submission directory should look like this (no .git directory)</p>
 
 
 <!-- ******************************** -->
@@ -118,6 +151,11 @@ be visited and commented on by members of the class.</p>
 		<div class="header">hw3-draftfront</div>
 
 		<div class="list">
+
+			<div class="item">
+				<i class="file text outline icon"></i>
+				<div class="content"><div class="description">README.json</div></div>
+	 		</div>
 
 			<div class="item">
 				<i class="file text outline icon"></i>
