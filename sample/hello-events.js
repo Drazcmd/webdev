@@ -13,7 +13,7 @@ function clickMe(element) {
 	if (element && element.id == "clickMeBox") {
 		console.log('... ')
 		changeResponse("You "
-			+ (box.checked ? "un" : "") 
+			+ (box.checked ? "" : "un")
 			+ "checked the box");
 		return true; // allow default
 	}
