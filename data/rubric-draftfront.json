@@ -1,0 +1,97 @@
+[
+{"section":"Overall", "items": [
+    {"item":"README.json file contains netid and URL to frontend site", "pts":5},    
+    {"item":"site is viewable on Heroku", "pts":5},
+    {"item":"All three pages share a look-and-feel", "pts":10},
+    {"item":"Correct HTML header including doctype, html, author meta tag in head", "pts":3},    
+    {"item":"Submitted file structure is appropriate, e.g., similar to example", "pts":2}    
+]},
+{"section":"Landing Page (index.html)", "items": [
+    {"item":"Registration fields with validation ala hw1-simple (form GETs to main page)", "pts": 3},
+    {"item":"Username and password login fields", "pts":3},
+    {"item":"Login button performs simple validation", "pts":4},
+    {"item":"Login an button navigates to main page", "pts":2},
+    {"item":"Landing page is styled", "pts":3}
+]},
+{"section":"Main Page (main.html)", "items": [
+    {"item":"user status headline is present", "pts":2},
+    {"item":"ability to update the status headline, e.g., text field and button, but status headline is not required to be persistant to reload", "pts": 5},
+    {"item":"user profile picture is displayed on page", "pts":2},
+    {"item":"layout of at least 4 cards (do not use table)", "pts":5},
+    {"item":"layout of page is responsive to changing width of browser", "pts": 5},
+    {"item":"each card contains author, timestamp, body (at least two with images)", "pts": 2},
+    {"item":"each card has button to edit and button to comment, buttons perform no action", "pts": 2},
+    {"item":"area to type a new post ", "pts":2},
+    {"item":"button to post and button to cancle, buttons perform no required actions", "pts":2},
+    {"item":"button to upload an image, but no functionality after image is chosen", "pts":2},
+    {"item":"button or link to profile page", "pts":2},
+    {"item":"button or link to logout, navigates to landing page (index.html)", "pts":2},
+    {"item":"search box, but input has no action", "pts": 2},
+    {"item":"sidebar with at least 3 followed users, each has name, picture, and status", "pts":5},
+    {"item":"text field and button to add a user, but button performs no action", "pts":2},
+    {"item":"each followed user has a button to unfollow, but button performs no action", "pts":2},
+    {"item":"Main page is styled", "pts":3}
+]},
+{"section":"Profile Page (profile.html)", "items":[
+    {"item":"user's current profile information is displayed", "pts":2},
+    {"item":"button to update the profile picture, but button performs no action after a file is chosen", "pts":2},
+    {"item":"Update button validates each non-empty input field", "pts": 2 },
+    {"item":"Update changes the current values that are displayed", "pts":2 },
+    {"item":"Link to return to the Main page", "pts":2 },
+    {"item":"Profile page is styled", "pts":3}
+]},
+{"section":"Demerits", "items": [
+
+    {"item":"code smells bad or has some issue", "pts": 10},
+    {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
+    {"item":"variable not appropriately scoped (i.e., missing var, or var in wrong scope)", "pts": 10},
+    {"item":"did not properly separate concerns", "pts": 10},
+    {"item":"user interface not obvious to use", "pts": 10},
+    {"item":"an error is thrown", "pts": 8},
+    {"item":"lingering console message", "pts": 5},
+    {"item":"bad variable name", "pts": 5},
+
+    {"item":"bad datastructure choice or usage", "pts": 5},
+    {"item":"inappropriate use of new", "pts": 5},
+    {"item":"improper use of comments", "pts": 5},
+    {"item":"no comments at all (you should have describing comments to explain why you are doing things the way you are doing them)", "pts": 5},
+    {"item":"dead code, e.g., commented or unreachable code", "pts": 5},
+    {"item":"code makes unchecked assumption", "pts": 5},
+    {"item":"non-CSS styling", "pts": 5},
+
+    {"item":"inefficient algorithm", "pts": 5},
+    {"item":"poor implementation", "pts": 5},
+    {"item":"expensive network load", "pts": 5},
+    {"item":"JavaScript file has too many lines of code (more than about 500 lines)", "pts": 5},
+    {"item":"JavaScript file inappropriately has too few lines of code (should be at least 5 lines otherwise combine with another file)", "pts": 5},
+    {"item":"function length is too long (more than about 60 lines)", "pts": 5},
+    {"item":"function performs too many functions", "pts": 5},
+    {"item":"complex code statement (should be broken up or is missing appropriate comment)", "pts": 5},
+
+    {"item":"unnecessary intermixing of content (HTML) and style (CSS)", "pts": 5},
+    {"item":"unnecessary intermixing of content (HTML) and logic (JavaScript)", "pts": 5},
+
+    {"item":"inappropriate magic value", "pts": 3},
+    {"item":"missing braces for blocks, e.g., if, for, while", "pts": 3},
+    {"item":"bad indentation", "pts": 3},
+
+    {"item":"poorly named function", "pts": 3},
+    {"item":"missing cached variable, e.g., not caching DOM lookup", "pts": 3},
+    {"item":"reassigning or multiply assigning variables", "pts": 3},
+    {"item":"code line length too long (more than about 80 characters)", "pts": 3},
+    {"item":"too much white space (use white space for logical separations and promote grouping)", "pts": 3},
+    {"item":"excessive use of DOM ids", "pts": 3},
+    {"item":"missing clear abstraction usage opportunity", "pts": 3},
+
+    {"item":"for loop used instead of more appropriate functional style", "pts": 3},
+    {"item":"variable not appropriately initialized", "pts": 3},
+    {"item":"did not use shortcut for boolean, i.e., if (bool == true) should be if (bool)", "pts": 3},
+    {"item":"inappropriate character in filename, e.g., space", "pts": 3},
+    {"item":"a 'what' comment, e.g., // set var to 0", "pts": 3},
+
+    {"item":"multi-line comment where // should be used instead", "pts": 1},
+    {"item":"long comment at end of line instead of on separate line", "pts": 1}
+
+]}
+
+]
