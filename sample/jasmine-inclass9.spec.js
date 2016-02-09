@@ -16,7 +16,7 @@ describe('Jasmine In Class Exercise', function() {
 	})
 
 	it('should set the span text color to blue on load', function() {
-		expect($('span', $('#fixture'))[0].color).toBe('blue')
+		expect($('span', $('#fixture'))[0].style.color).toBe('blue')
 	})
 
 	it('should set span text color to red when checked', function() {
