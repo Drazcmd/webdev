@@ -2,7 +2,7 @@
 
 function setupHandlers(root) {
 
-	$('span', root)[0].color = 'blue'
+	$('span', root)[0].style.color = 'blue'
 
 	// find the input and add an event handler
 	// checked box -> red text
