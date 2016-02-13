@@ -1,40 +1,29 @@
 <p>
-In this assignment you will implement and test the frontend of your web application.  The final product will be a fully functioning and tested front-end for a web application.
+In this assignment you will partially implement and test the frontend of your web application.  
 </p>
-<p>In the previous assignment we created two pages for our web application: the Landing page and the Main page.  
-The Landing page welcomes users and asks them to register or log in.  
-Additionally, visitors are invited to browse sample content from the site.
-The Main page is focused on the user's feed where they can add new posts, or comment on posts.  The feed is comprised of posts by the user and the users being followed.  These followed users appear in a list on the sidebar accompanied by their status headline.  We have mechanisms to add users and remove users from the followed list.  We have a mechanism to log out.  The user's status headline is shown and we have a way to edit it.  Finally there is a search box that allows us to filter posts by content (e.g., post author or body).
+<p>
+We start with our draft front-end application that contains three views: landing page with registration
+and login; main page with posts, followers, and status message; and the profile page.  
+Because the dummy server requires authentication, we start this assignment by implementing
+the login logic.  After we have logged in, we then request posts, list of followers, and the status
+of the logged in user from the server.  Finally we implement the ability to update the status
+message and update the followed users list.  
+In the next assignment we will implement adding new posts, commenting on posts, and uploading images
+with posts, in addition to the profile page and new user registation.
 </p>
 
-<h3>New Functionality</h3>
-<p>
-Each user has a profile.  The profile contains their name, their email, their password, their status, their profile picture, and their zip code.
-Create a view to allow the user to edit this information (the status they can already edit on the Main page, perhaps they can edit in this new view too).  In particular, a user needs to be able to upload their profile picture.
-</p>
+<p>Most importantly we want to peform test driven development as we implement our webapp.  Therefore
+before we implement anything we will first write tests for the desired functionality.  In this
+way the desired behavior will drive our implementation and design.</p>
 
 <h3>Dummy Server</h3>
-<p>Here is a <a target="_blank" href="data/api.html">list of endpoints</a> which is your API to a dummy data server.  
-Update your web application to use the server as your data source.  If there are additional endpoints that you desire which are not currently implemented by the server contact the instructor, we probably can add them for you.
-</p>
-<p>You have been pre-provided a user on the dummy server.</p>
+<p>Please refer to the <a target="_blank" href="data/api.html">list of endpoints</a> which is your API to a dummy data server.  You have been pre-provided a user on the dummy server in addition to a test user.</p>
 
-<span style='text-decoration: line-through;'>
 <h3>Unit Testing</h3>
 <p>
 Write Jasmine unit tests for your JavaScript functionality.  We want to test as much code as possible.
 Write a Karma configuration to test your site using Chrome.  Try to maximize your testing code coverage.
 </p>
-</span>
-
-<span style='text-decoration: line-through;'>
-<h3>End-to-End Testing</h3>
-<p>
-Use Protractor and write an end-to-end test for your web application.  Use the python SimpleHTTPServer / http.server to host your web page locally and have Protractor run against it.  The required tasks for your end-to-end test are listed in the requirements below.
-</p>
-</span>
-
-<h1>Requirements</h1>
 
 <p>Use Chrome as your standard supported browser.  (Whereas you can use any browser you like for development, your assignment will be accessed using Chrome by the grading staff and therefore it behooves you that it works.)  Host your webpage locally using the python server.</p>
 

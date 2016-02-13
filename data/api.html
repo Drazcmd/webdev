@@ -43,15 +43,19 @@ curl https://webdev-dummy.herokuapp.com/status
 </pre>
 <p>Ah ha! We need to login first!</p>
 <pre class="prettyprint lang-bash">
-curl -H 'Content-Type: application/json' https://webdev-dummy.herokuapp.com/login -d '{"username":"<netid>":, "password":"<three-word-passphrase>"}' -i
+curl -H 'Content-Type: application/json' https://webdev-dummy.herokuapp.com/login \
+    -d '{"username":"netid;":, "password":"three-word-passphrase"}' -i
 </pre>
-<p>This performs a <code>POST</code> (the data flag makes it a post by default) to the <code>/login</code> endpoint.  The payload is JSON, we inform the server it's JSON with the content-type header.  Be sure to pass properly formed JSON, this means keys are quoted.  The <code>-i</code> flag shows us the response headers.  If successful, we should see two <code>Set-Cookie</code> statements in the header.  We now pass those two authentication cookies when communicating with the server:</p>
+<p>(I've added a new line and \ for display purposes, you do not need the \ or the new line.)
+This performs a <code>POST</code> (the data flag makes it a post by default) to the <code>/login</code> endpoint.  The payload is JSON, we inform the server it's JSON with the content-type header.  Be sure to pass properly formed JSON, this means keys are quoted.  The <code>-i</code> flag shows us the response headers.  If successful, we should see two <code>Set-Cookie</code> statements in the header.  We now pass those two authentication cookies when communicating with the server:</p>
 <pre class="prettyprint lang-bash">
-curl -H 'Content-Type: application/json' --cookie 'sessionId=12345; hash=222333444' https://webdev-dummy.herokuapp.com/status
+curl -H 'Content-Type: application/json' --cookie 'sessionId=12345; hash=222333444' \
+    https://webdev-dummy.herokuapp.com/status
 </pre>
 <p>You should get back your current status headline from this <code>GET</code> request.  Now we change it:</p>
 <pre class="prettyprint lang-bash">
-curl -H 'Content-Type: application/json' --cookie 'sessionId=12345; hash=222333444' https://webdev-dummy.herokuapp.com/status -X PUT -d '{ "status":"A new headline!" }'
+curl -H 'Content-Type: application/json' --cookie 'sessionId=12345; hash=222333444' \
+    https://webdev-dummy.herokuapp.com/status -X PUT -d '{ "status":"A new headline!" }'
 </pre>
 <p>Status updating is an atomic action.  Therefore we use the <code>PUT</code> verb instead of the default <code>POST</code>.  Notice that we again pass JSON as the payload (the <code>-d</code> flag).  The server should respond with the updated status message.  We can then reverify by the previous <code>GET</code> request.
 </p>
@@ -67,11 +71,11 @@ the browser based REST client to verify what your payload should be and what the
 a cookie.  Using cookies in a browser based REST client is non-trivial.  Instead, I permit the
 cookie to be passed as an authorization header.  Below I use Advanced REST Client.  First
 we login to the server with our netid and three-word-passphrase</p>
-<img src="images/dummy-login.png">
+<img src="../images/dummy-login.png">
 <p>Look for the cookies in the response</p>
-<img src="images/dummy-cookie.png">
+<img src="../images/dummy-cookie.png">
 <p>Send these cookies on all future requests.  For example, here's changing the status headline</p>
-<img src="images/dummy-status.png">
+<img src="../images/dummy-status.png">
 
 <h3>Dummy Server API</h3>
 <table>
@@ -183,18 +187,6 @@ we login to the server with our netid and three-word-passphrase</p>
           <td>/zipcode</td><td>PUT</td><td>{ zipcode: newZipCode }</td>
           <td>{ username: loggedInUser, zipcode: newZipCode }</td>
           <td>update the zipcode for the loggedInUser</td>
-     </tr>
-
-     <tr>
-          <td>/locations/:user</td><td>GET</td><td>:user is a user id</td>
-          <td>{ username: :user, location: locationObject }</td>
-          <td>Returns the { lat:, lng: } of the requested user.</td>
-     </tr>
-
-     <tr>
-          <td>/locations</td><td>PUT</td><td>{ lat: latitude, lng: longitude }</td>
-          <td>{ username: :user, location: locationObject }</td>
-          <td>Updates the lat+lng of the loggedInUser</td>
      </tr>
 
      <tr>
