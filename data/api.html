@@ -44,7 +44,7 @@ curl https://webdev-dummy.herokuapp.com/status
 <p>Ah ha! We need to login first!</p>
 <pre class="prettyprint lang-bash">
 curl -H 'Content-Type: application/json' https://webdev-dummy.herokuapp.com/login \
-    -d '{"username":"netid;":, "password":"three-word-passphrase"}' -i
+    -d '{"username":"netid", "password":"three-word-passphrase"}' -i
 </pre>
 <p>(I've added a new line and \ for display purposes, you do not need the \ or the new line.)
 This performs a <code>POST</code> (the data flag makes it a post by default) to the <code>/login</code> endpoint.  The payload is JSON, we inform the server it's JSON with the content-type header.  Be sure to pass properly formed JSON, this means keys are quoted.  The <code>-i</code> flag shows us the response headers.  If successful, we should see two <code>Set-Cookie</code> statements in the header.  We now pass those two authentication cookies when communicating with the server:</p>
