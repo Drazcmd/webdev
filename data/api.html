@@ -118,7 +118,7 @@ we login to the server with our netid and three-word-passphrase</p>
      </tr>
 
      <tr>
-          <td>/posts/:id*?</td><td>PUT</td><td>:id is a post id<br/>
+          <td>/posts/:id</td><td>PUT</td><td>:id is a post id<br/>
           { body: message, commentId: optional }</td>
           <td>{ posts: [{ id: 1, author: Scott, ..., comments: [ ... ] }]</td>
           <td>Update the post :id with a new body if commentId is not supplied.  
