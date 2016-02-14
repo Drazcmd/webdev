@@ -93,7 +93,7 @@ we login to the server with our netid and three-word-passphrase</p>
      <tr>
           <td>/login</td><td>POST</td><td>{username: username, password: password }</td>
           <td>{ username: :user, result: "success"}</td>
-          <td>log in to server, resisters session id and hash</td>
+          <td>log in to server, sets session id and hash cookies</td>
      </tr>
      
      <tr>
@@ -104,7 +104,7 @@ we login to the server with our netid and three-word-passphrase</p>
 
      <tr>
           <td>/register</td><td>POST</td><td>{ username: username,
-          email:email, zipcode:zipcode, password:password}</td>
+          email: email, zipcode: zipcode, password: password}</td>
           <td>{ result: 'success', username: username}</td>
           <td>Register a new user with the system.  This is not functional,
           new users cannot log in.</td>
@@ -112,15 +112,15 @@ we login to the server with our netid and three-word-passphrase</p>
 
 
      <tr>
-          <td>/posts/:id</td><td>GET</td><td>If specificed, :id is a postId</td>
-          <td>[ { id: 1, author: Scott, ... }, { ... } ]</td>
-          <td>A requested post or array of posts in the loggedInUser's feed</td>
+          <td>/posts/:id*?</td><td>GET</td><td>If specificed, :id is a postId or username</td>
+          <td>{ posts: [ { id: 1, author: Scott, ... }, { ... } ] }</td>
+          <td>A requested post, all requested posts by a user, or array of posts in the loggedInUser's feed</td>
      </tr>
 
      <tr>
-          <td>/posts/:id</td><td>PUT</td><td>:id is a post id<br/>
+          <td>/posts/:id*?</td><td>PUT</td><td>:id is a post id<br/>
           { body: message, commentId: optional }</td>
-          <td>[ { id: 1, author: Scott, ..., comments: [ ... ] } ]</td>
+          <td>{ posts: [{ id: 1, author: Scott, ..., comments: [ ... ] }]</td>
           <td>Update the post :id with a new body if commentId is not supplied.  
                Forbidden if the user does not own the post.
           If commentId is supplied, then update the requested comment on the post, if owned.  If commentId is -1, then a new comment is posted with the body message.</td>
@@ -129,25 +129,23 @@ we login to the server with our netid and three-word-passphrase</p>
      <tr>
           <td>/post</td><td>POST</td><td>
           { body: message, img: &lt;file&gt; } img is optional</td>
-          <td>[ { id: 1, author: Scott, ..., comments: [] } ]</td>
+          <td>{ posts: [{ id: 1, author: Scott, ..., comments: [] } ]}</td>
           <td>Add a new post for the loggedInUser, date and id are determined by server.  Optional image upload -- <a href="#upload"><b>see below</b></a>.</td>
      </tr>
 
      <tr>
           <td>/statuses/:users</td><td>GET</td><td>none<br>:users is a comma separated list of user names</td>
-          <td>[ {username:Scott, status:Happy}, { ... } ]</td>
+          <td>{ statuses: [ {username:Scott, status:Happy}, { ... } ] }</td>
           <td>Get the statuses for multiple users</td>
      </tr>
-
      <tr>
           <td>/status</td><td>GET</td><td>none<br></td>
-          <td>[ {username:Scott, status:Happy}, { ... } ]</td>
-          <td>Get the status for the currently logged in user</td>
+          <td>{ statuses: [{username:Scott, status:Happy}]}</td>
+          <td>Get the status for the loggedInUser</td>
      </tr>
-
      <tr>
           <td>/status</td><td>PUT</td><td>{ status: Happy }</td>
-          <td>{username: Scott, status: Happy }</td>
+          <td>{ statuses: [{username: Scott, status: Happy }]}</td>
           <td>Update the status for the loggedInUser</td>
      </tr>
 
@@ -156,13 +154,11 @@ we login to the server with our netid and three-word-passphrase</p>
           <td>{ username: :user, following: [ userids ]}</td>
           <td>get the list of users being followed by the requested user</td>
      </tr>
-
      <tr>
           <td>/following/:user</td><td>PUT</td><td>:user is a user id.</td>  
           <td>{ username: :user, following: [ userids ]}</td>
           <td>add :user to the following list for the loggedInUser</td>
      </tr>
-
      <tr>
           <td>/following/:user</td><td>DELETE</td><td>:user is a user id.</td>  
           <td>{ username: :user, following: [ userids ]}</td>
@@ -174,6 +170,7 @@ we login to the server with our netid and three-word-passphrase</p>
           <td>{ username: :user, email: emailAddress }</td>
           <td>get the email address for the requested user</td>
      </tr>
+     <tr>
           <td>/email</td><td>PUT</td><td>{ email: newEmailAddress }</td>
           <td>{ username: loggedInUser, email: newEmailAddress }</td>
           <td>update the email addres for the loggedInUser</td>
@@ -184,6 +181,7 @@ we login to the server with our netid and three-word-passphrase</p>
           <td>{ username: :user, zipcode: emailAddress }</td>
           <td>get the zipcode for the requested user</td>
      </tr>
+     <tr>
           <td>/zipcode</td><td>PUT</td><td>{ zipcode: newZipCode }</td>
           <td>{ username: loggedInUser, zipcode: newZipCode }</td>
           <td>update the zipcode for the loggedInUser</td>
@@ -194,13 +192,14 @@ we login to the server with our netid and three-word-passphrase</p>
           <td>[{ username: :user, picture: pictureURL }, { ... } ]</td>
           <td>get the picture address for the requested user(s)</td>
      </tr>
+     <tr>
           <td>/picture</td><td>PUT</td>
           <td>{ img: &lt;file&gt; }</td>
           <td>{ username: loggedInUser, picture: pictureURL }</td>
           <td>Update the picture address for the loggedInUser. <a href="#upload"><b>See below</b></a></td>
      </tr>
 
-     </tr>
+     <tr>
           <td>/password</td><td>PUT</td><td>{ password: newPassword }</td>
           <td>{ username: loggedInUser, status: 'will not change' }</td>
           <td>would update the password for the loggedInUser.  But instead
