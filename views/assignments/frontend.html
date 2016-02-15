@@ -108,7 +108,8 @@ with posts, in addition to editing the user profile and new user registation.
 
 <p>Use Chrome as your standard supported browser.  (Whereas you can use any browser you like for development, your assignment will be accessed using Chrome by the grading staff and therefore it behooves you that it works.)  
 </p>
-<p>Host your submission on Heroku, you may use the same appname as for the draft front-end assignment.</p>
+<p>Host your submission on Heroku, you may use the same appname as for the draft front-end assignment.  Include the URL in a <code>README.json</code> file as before.  The deployed version of your code on Heroku may be used during grading.  Therefore after you make 
+your submission, please do not re-deploy to Heroku until the next assignment.</p>
 <p>Remember separation of concerns and write DRY modularized code.</p>
 
 <h3>Functionality</h3>
@@ -134,7 +135,7 @@ that we wrote.</p>
 	<li>Test updating the user's status headline</li>
 	<li>Test getting the list of followed users</li>
 	<li>Test getting the status message and picture for all of the followed users</li>
-	<li>Test adding a new followed user, check both cases when the request user exists and does not exist.</li>
+	<li>Test adding a new followed user, check both cases when the requested user exists and does not exist.</li>
 	<li>Test removing a followed user</li>
 	<li>Test logging in a user</li>
 	<li>Test logging out a user, User service should have no username stored</li>
@@ -144,10 +145,131 @@ that we wrote.</p>
 </ul>
 
 <h2>What to submit</h2>
-....
-TODO
-...
 
-The rubric is not up to date either. (2/13/2016)
+<p>Remember to develop your web app in your <code>frontend</code> directory and then copy your files for the final submission to the <code>hw4-frontend</code> directory to <em>turnin</em>.  We do not want any library files (i.e., angular.js) or your Heroku files (i.e., Procfile and .git directory) to be submitted to turnin.  Your submission might look like this:</p>
+
+<!-- ******************************** -->
+<div class="ui list"><div class="item">
+	<i class="folder icon"></i>
+	<div class="content">
+		<div class="header">hw4-frontend</div>
+
+		<div class="list">
+
+			<div class="item">
+				<i class="file text outline icon"></i>
+				<div class="content"><div class="description">README.json</div></div>
+	 		</div>
+
+			<div class="item">
+				<i class="file text outline icon"></i>
+				<div class="content"><div class="description">index.html</div></div>
+			</div>
+
+			<div class="item">
+				<i class="file image outline icon"></i>
+				<div class="content"><div class="description">styles.css</div></div>
+			</div>
+
+			<div class="item">
+				<i class="folder icon"></i>
+				<div class="content"><div class="header">coverage</div></div>
+
+				<div class="list">
+					<div class="item"><i class="folder outline icon"></i>
+						<div class="content"><div class="description">Chrome...</div></div>
+			 		</div>
+				</div>
+			</div> <!-- end coverage directory -->
+
+
+			<div class="item">
+				<i class="folder icon"></i><div class="content"><div class="header">app</div></div>
+
+				<div class="list">
+
+					<div class="item">
+						<i class="file text outline icon"></i>
+						<div class="content"><div class="description">main.html</div></div>
+					</div>
+
+					<div class="item">
+						<i class="file outline icon"></i>
+						<div class="content"><div class="description">app.js</div></div>
+					</div>
+
+
+					<div class="item">
+						<i class="folder icon"></i>
+						<div class="content"><div class="header">services</div></div>
+
+						<div class="list">
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">apiSrv.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">apiMock.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">userSrv.js</div></div></div>
+						</div>
+
+					</div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">login</div></div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">login.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">loginCtrl.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">loginCtrl.spec.js</div></div></div>
+						</div>
+					</div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">post</div></div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">post.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postCtrl.js (not fully implemented)</div></div></div>
+						</div>
+					</div>
+
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">status</div></div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">status.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">statusCtrl.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">statusCtrl.spec.js</div></div></div>
+						</div>
+					</div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">following</div></div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">following.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">followingCtrl.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">followingCtrl.spec.js</div></div></div>
+						</div>
+					</div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">profile</div></div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">profile.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profileCtrl.js (not fully implemented)</div></div></div>
+						</div>
+					</div>
+
+				</div>
+			</div> <!-- end app directory -->
+
+	 	</div>
+ 	</div>
+ </div></div>
+
+<p>Note that in the above the registration and login sections of <code>index.html</code> have been moved to <code>login.html</code> 
+and the <code>main.html</code> page has been stripped of much of it's content, that content being moved to <code>post.html</code>,
+<code>status.html</code>, and <code>following.html</code>, and being loaded using ng-include.  Alternatively you keep <code>main.html</code>
+monolithic.</p>
+
+<p>The postCtrl has just enough logic so that a post will show on the main view, but otherwise does not need to be
+connected to the dummy server.  Similarly the profileCtrl has just enough logic to show hard coded values, but otherwise
+does not need the logic we previously developed to validate the changed entries etc.  We will re-add this logic in the next assignment,
+so don't loose it!</p>
 
 </div>

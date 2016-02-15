@@ -1,5 +1,21 @@
 [
-{"section":"Merits", "items": [    
+{"section":"Merits", "items": [   
+
+    {"item":"New Posts appear at top of feed with submission timestamp", "pts": 4},
+    {"item":"Post can be text or text with image", "pts":4},
+    {"item":"New posts are persistent to log off and refresh", "pts":4},
+    {"item":"Can comment on a post", "pts":4},
+    {"item":"Comment is persistent", "pts":4},
+    {"item":"Can update a post", "pts":3},
+    {"item":"Can update a comment", "pts":3},
+    {"item":"updates are persistent", "pts":3},
+    {"item":"Post is implemented as an Angular directive", "pts":4},
+    {"item":"Profile edit page: update and persist email", "pts":4},
+    {"item":"Profile edit page: update and persist zipode", "pts":4},
+    {"item":"Profile edit page: upload and persist new profile picture", "pts":4},
+
+
+
     {"item":"Frontend: Every application logic JavaScript file has an associated Jasmine spec file", "pts":5},
     {"item":"Frontend: Jasmine coverage results page included in submission", "pts": 3},
     {"item":"Frontend: Code coverage is close to or greater than 70%", "pts":10},
