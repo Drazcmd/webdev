@@ -29,6 +29,33 @@ get posts, add text only post, edit post, add comment
 In this assignment you will integrate your frontend and backend web applications.  
 </p>
 
+
+
+
+<!-- ******************************************************************** -->
+<h4>Aside on Middleware</h4>
+<p>Node is all about middleware.  Middleware are functions inserted between the server and the endpoint handler that have three arguments, request, response, and a "pointer" to the next piece of middleware or endpoint.  In <code>index.js</code> we see examples of functions in the request-reponse pipeline with two arguments request and response.  These are endpoints -- they do not have a <code>next</code> function to pass on to.  A middleware function might look like this:</p>
+<pre class="prettyprint lang-javascript">
+function isLoggedIn(req, res, next) {   
+    var id = req.cookies['sessionId']
+    var hash = req.cookies['hash']
+    ...
+    return next()
+}
+</pre>
+<p>To use this middleware we can either <code>app.use(isLoggedIn)</code> &quot;globally&quot; on all of our endpoints (bearing in mind that <code>app.use()</code> is applied in order) or on individual endpoints like this:</p>
+<pre class="prettyprint lang-javascript">
+    app.put('/logout', isLoggedIn, logout)
+</pre>
+<p>we can chain together as many pieces of middleware as we want.</p>
+
+
+
+
+
+
+
+
 <h2>Cross-Origin Resource Sharing</h2>
 
 <p>The browser has a same-origin policy.  Which means it will only allow javascript to transfer
@@ -93,12 +120,20 @@ backend is the preferred approach.)  You do not need to make stubs for the <code
 a portion of the backend in this assignment, and the rest in the final assignment.
 The endpoints to implement in this assignment are:</p>
 <ul>
-  <li><code>GET  /sample</code></li>
-  <li><code>POST /login</code></li>
-  <li><code>PUT  /logout</code></li>
-  <li><code>POST /register</code></li>
-  <li><code>GET  /posts/:id</code></li>
-  <li><code>POST /post</code></li>
+    <li><code>POST /login</code></li>
+    <li><code>PUT  /logout</code></li>
+    <li><code>POST /register</code></li>
+    <li><code>PUT /posts/:id</code></li>
+    <li><code>GET /following/:users*?</code></li>
+    <li><code>PUT /following/:user</code></li>
+    <li><code>DELETE /following/:user</code></li>
+    <li><code>GET /email/:user*?</code></li>
+    <li><code>PUT /email</code></li>
+    <li><code>GET /zipcode/:user*?</code></li>
+    <li><code>PUT /zipcode</code></li>
+    <li><code>GET /pictures/:user*?</code></li>
+    <li><code>PUT /picture</code></li>
+    <li><code>PUT /password</code></li>
 </ul>
 
 <p>Note that our <code>POST /post</code> endpoint will only be accepting

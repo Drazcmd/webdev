@@ -9,113 +9,69 @@ code, pre {
 <div onload="prettyPrint()">
 
 <p>
-In this assignment you will begin developing your backend server and complete the implementation
-of your frontend web application.</p>
+In this assignment you will begin developing your backend server and complete the implementation of your frontend web application.</p>
+
+<p>Separations of concerns instructs us to
+divide our application into separate front and back end processes.  
+In this way our application is modular, can be selectively scaled, 
+and we have indepdence to change each at their own pace.
+In this assignment we will separately host our frontend and backend applications on Heroku.</p>
 
 <p>The remaining implementations missing from our frontend web app are the ability
 to register new users, edit a user's profile including uploading a new profile picture, 
-and most importantly, add, edit, and comment on posts, including adding new posts with pictures.
+the listing of followed users with their status headlines and profiles pictures,
+adding a new followed users, and removing followed users.
 For our first implementation of the backend server we will implement
-the status and followers endpoints.  Both the frontend and backend will be
-deployed to Heroku and used during grading.  
-Additionally, your frontend webapp from this assignment will be reviewed by your peers 
+the status and post endpoints.</p>
+<p>
+Note that your frontend webapp from this assignment will be reviewed by your peers 
 to provide you user feedback.</p>
 
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
 <h2>Frontend</h2>
 
 <p>In the previous assignment we implemented the ability for users to login to our webapp,
-and pulled from the dummy server status messages and profile pictures of followed users.
-Now we add the missing functionality, which when complete we will have a fully functioning 
+and pulled from the dummy server the user's status message, their profile picture,
+and their feed os posts.
+Now we add the missing functionality (add posts with images, register new users, following list with status
+and pictures, and editing the users profile, including uploading a new profile picture), which when complete we will have a fully functioning 
 social networking web application frontend.</p>
 
-<p>In contrast to the previous assignment, you are not being asked to perform test driven development (TDD).  However, I hope that you realize the benefits in doing so and therefore <em>will</em> use TDD while
-you implement this assignment.  Whereas unit tests validate individual business logic of unit functionality,
-for this assignment we will use Protractor and write end-to-end tests to validate the full functioning of our web app.  During your development, use the python SimpleHTTPServer / http.server to host your web page locally and have Protractor run against it.  The required tasks for your end-to-end test are listed in the requirements section below.
+<p>
+For this assignment we will use Protractor and write end-to-end tests to validate the full functioning of our web app.  
+So you can still do test driven development (TDD) by writing the Protractor end-to-end tests first
+and then implementing the missing functionality.
+During your development, use the python SimpleHTTPServer / http.server to host your web page locally and have Protractor run against it.  The required tasks for your end-to-end tests are listed in the requirements section below.
 </p>
 
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
 <h2>Backend</h2>
 
-<p>Getting started you should do your development for your backend in it's own directory separate from your frontend and separate from your hw submission directory.  I.e., just like how we separated <code>hw4-frontend</code> from the <code>frontend</code> directory, create a new <code>backend</code> directory use for development.  Therefore in this assignment we will work in the <code>frontend</code> directory for completing the frontend webapp and deploying to Heroku, the <code>backend</code> directory for our implementation of the backend server and deploying to Heroku, and the <code>hw6-draftback</code> directory that contains our files to submit to turnin.</p>
-
-TODO HERE 20160214
-
-
-backend with status (get and put) and followers (get, add, remove)
-
-<h3>Publication</h3>
-
-<p>When you have completed the implementation of the required pieces of your
-backend server you are ready to publish your server to Heroku.  
-
-
-
-<hr>
-<hr>
-
-<h2>Getting Started with Heroku</h2>
-<p>In the previous assignment we integrated our front-end web application with a back-end server. 
-But our application only runs on our local host.  Now we want to deploy our application to the cloud.
-We will be using <a href="https://www.heroku.com" target="_blank">Heroku</a> because of their free tier
-and overall simplicity in usage.
+<p>
+We will have separate frontend and backend applications.  
+Your frontend app is currently talking to my dummy server, and eventually we want it talking to your server.  But there's a lot of work to get that done!
 </p>
-<p>First you will need to sign up for an account.  They require a credit card, but so long 
-as you stay in the free tier they will not charge you.  After you have an account and
-are signed in you need to download the Heroku Toolbelt.  If you do not already have a Git client
-installed, they bundle one for you.  We use Git to talk to Heroku.
-</p>
-<p>In class we had created a fresh node project.  Separations of concerns instructs us to
-divide our application into separate front and back end processes.  In this way our application
-is modular, can be selectively scaled, and we have indepdence to change each at their own pace.
-In this assignment we will separately host our front-end and back-end applications on Heroku.
-</p>
-<p>You will need to be logged in to Heroku to proceed: </p>
-<pre class="prettyprint lang-bash">
-heroku login
-</pre>
 
-<!-- ******************************************************************** -->
-<!-- ******************************************************************** -->
-<!-- ******************************************************************** -->
+<h3>Setting up your backend server</h3>
 
-<h3>Deploying your Front-End</h3>
-<p>To deploy your front-end start by navigating to your app directory.  I called mine RiceBookApp.
-If you have been using git already, then you can ignore the first command.  Do the following, and note
-that the application name, <code>ricebookapp</code>, should be omitted or you can supply a name for your app upfront</p>
-<pre class="prettyprint lang-bash">
-cd RiceBookApp
-git init
-heroku create ricebookapp
-echo "web: bin/start-nginx -f" > Procfile
-git add Procfile index.html app lib css
-git commit -m 'initial commit'
-heroku buildpacks:set https://github.com/skotep/nginx-buildpack.git
-git push heroku master
-</pre>
-<p>Now your app is hosted and running on Heroku.  
-Navigate to, e.g., <a href="https://ricebookapp.herokuapp.com" target="_blank">https://ricebookapp.herokuapp.com</a> to see it.</p>
+<p>Getting started you should do your development for your backend in it's own directory separate from your frontend and separate from your hw submission directory.  I.e., just like how we separated <code>hw4-frontend</code> from the <code>frontend</code> directory, create a new <code>backend</code> directory use for development.  Therefore in this assignment we will work in the <code>frontend</code> directory for completing the frontend webapp and deploying to Heroku, the <code>backend</code> directory for our implementation of the backend server and deploying to Heroku, and the <code>hw{{vm.hwid}}-{{vm.assignmentId}}</code> directory that contains our files to submit to turnin.</p>
 
-<p>What did these steps do?  We started by creating a new git repository.  We then created a new Heroku application that was tied to it.  (The order of these operations matters because if you create the Heroku app first then it will not be attached to the git repo.  If you did this, then to fix it execute <code>heroku git:remote -a ricebookapp</code>)  Next we defined the command that Heroku will execute to start our application.  Notice that it executes "start-nginx" which implies we have an Nginx server running that will surface
-our (static) front-end application.  Next we add all of the importat files to the git repo (I assume your app is laid out like mine.  If it isn't, then you'll need to adjust this execution accordingly).  We commit the changes.  We then tell Heroku that we'll be using Nginx for our application (as opposed to node, ruby, python, etc).  Finally we push to the remote Heroku git master.  Heroku builds our application and spins up the Nginx server.</p>
-
-<!-- ******************************************************************** -->
-<!-- ******************************************************************** -->
-<!-- ******************************************************************** -->
-
-<h2>Creating your Back-End</h2>
-<p>In class #18 we began creating a NodeJS server.  In case you missed it or did not get it completed, here are the commands again to set it up.  We will have the front-end and back-end separated therefore we have a new directory and a new project.  If you already have completed the following you can skip to the next part.  </p>
 <p>For the "npm init" call below, 
-the defaults are in general fine, i.e., just press enter a lot
-init creates for us a packages.json file which will be the 
-configuration for our node application.  Given that we want a 
+the defaults are in general fine, i.e., just press enter a lot.
+The "init" call will create for us a <code>package.json</code> file which will be the 
+configuration for our NodeJS application.  Given that we want a 
 <a href="https://en.wikipedia.org/wiki/MEAN_(software_bundle)" target="_blank">MEAN application</a>, 
-we install express and we'll use body-parse middleware to make things easier for us.
-The --save flag in "npm install" adds these dependencies to our package.json file so when Heroku
-builds our app it will grab these dependencies for us.
-The final step below is to pull the example <code>index.js</code> from the class website.  Again,
-if you already completed the in class exercise and have a working Node server, you can skip these steps.
+we install express and we'll use the body-parse middleware to make things easier for us.
+The --save flag in <code>npm install</code> adds these dependencies to our <code>package.json</code>
+file so when Heroku builds our app it will grab these dependencies for us.
+The final step below is to pull the example <code>index.js</code> from the class website. 
+If you already completed the inclass exercise and have a working Node server, you can skip these steps.</p>
 <pre class="prettyprint lang-bash">
-mkdir RiceBookServer
-cd RiceBookServer
+cd backend
 npm init
 npm install express body-parser --save
 wget https://www.clear.rice.edu/comp431/sample/RiceBookServer/index.js
@@ -129,46 +85,54 @@ node index.js
 <pre class="prettyprint lang-bash">
 curl -H 'Content-Type: application/json' -d '{"Hello": "World" }' http://localhost:8080/post
 </pre>
-<p>The -H sets a header field: It tells the server we are going to send a JSON payload.  The -d flag is the payload: Notice that we have formatted it as JSON because that's what we told the server we were going to do.  <em>If you don't do this correctly then it won't work correctly!</em>  If you look at <code>index.js</code> you'll notice we use the middleware <code>bodyParser.json()</code> which parses the JSON input and places the payload in the <code>body</code> attribute of the request object (normally called <code>req</code>).</p>
+<p>Again, the -H sets a header field which tells the server we are going to send a JSON payload.  The -d flag is the payload: Notice that we have formatted it as JSON because that's what we told the server we were going to do.  <em>If you don't do this correctly then it won't work correctly!</em>  If you look at <code>index.js</code> you'll notice we use the middleware <code>bodyParser.json()</code> which parses the JSON input and places the payload in the <code>body</code> attribute of the request object (normally called <code>req</code>).</p>
+
 
 <!-- ******************************************************************** -->
-<h4>Aside on Middleware</h4>
-<p>Node is all about middleware.  Middleware are functions inserted between the server and the endpoint handler that have three arguments, request, response, and a "pointer" to the next piece of middleware or endpoint.  In <code>index.js</code> we see examples of functions in the request-reponse pipeline with two arguments request and response.  These are endpoints -- they do not have a <code>next</code> function to pass on to.  A middleware function might look like this:</p>
+<h3>What to implement</h3>
+
+<p>Just as for the previous assignment, we will employ test driven development as we implement
+our backend server.  Therefore start by writing Jasmine unit tests for each unit of functionality
+we desire to implement, and then implement that functionality, thereby satisfying the test criteria.</p>
+
+<p>We'll use <code>jasmine-node</code> for running our unit tests.  
+To get XML test results, use the following command</p>
+<pre class="prettyprint lang-bash">
+./node_modules/.bin/jasmine-node --output test-results --junitreport app_server
+</pre>
+
+<p>For this assignment write tests for, and then implement, the following endpoints 
+(see the <a target=_blank href="data/api.html#api">API page for specification</a>)</p>
+<ul>
+	<li><code>GET /status</code></li>
+	<li><code>PUT /status</code></li>
+	<li><code>GET /statuses/:users*?</code></li>	
+	<li><code>GET  /posts/:id*/</code> (test both with no :id specified, you should have 3 posts returned, then test with a valid id, and then test with an invalid id)</li>	
+	<li><code>POST /post</code> (test that adding a post increments the post id, validate the contents of the new post)</li>
+</ul>
+
+<p>We do not yet have a database for storing the information
+the server needs to provide to the client.  Therefore we keep
+all data in memory.  For example, we can use a map for status headlines, for example,</p>
 <pre class="prettyprint lang-javascript">
-function isLoggedIn(req, res, next) {   
-    var id = req.cookies['sessionId']
-    var hash = req.cookies['hash']
-    ...
-    return next()
+def _statues = { }
+...
+function getStatus(req, res) {
+	var user = 'me'	
+
+	if (!_status[user]) {
+		_status[user] = "Hello World!"
+	}
+
+	res.send({ statuses: [ { username: user, status: _status[user] } ] })
 }
 </pre>
-<p>To use this middleware we can either <code>app.use(isLoggedIn)</code> &quot;globally&quot; on all of our endpoints (bearing in mind that <code>app.use()</code> is applied in order) or on individual endpoints like this:</p>
-<pre class="prettyprint lang-javascript">
-    app.put('/logout', isLoggedIn, logout)
-</pre>
-<p>we can chain together as many pieces of middleware as we want.</p>
+<p>Here I prepend underscore to help me remember that this is a "global" variable.  
 
-<!-- ******************************************************************** -->
-<h3>Deploying your Back-End</h3>
-<p>In class #19 we deployed our back-end application.  If you didn't do this yet, then follow the prescription below to create a git repo and a Heroku application.  Note that we tell git not to add our <code>node_modules</code> directory to the repo by adding it to the gitignore file (Heroku will automatically install these libraries for us because they are in our packages.json file).</p>
-<pre class="prettyprint lang-bash">
-git init
-heroku create ricebookserver
-echo "web: node index.js" > Procfile
-echo node_modules > .gitignore
-echo npm-debug.log >> .gitignore
-git add .gitignore Procfile package.json index.js
-git commit -m 'initial commit'
-git push heroku master
-</pre>
-<p>No need to set a buildpack this time, Heroku should automatically recognize that we have a NodeJS application.</p>
 
-<!-- ******************************************************************** -->
-<h3>Initial Functionality: Posts</h3>
-<p>We now have separate frontend and backend applications.  Your frontend app is currently talking to my dummy server.
-Eventually we want it talking to your server.  But there's a lot of work to get that done.  We'll start simple with only post functionality.
-</p>
-<p>In your server add a variable <code>var posts = []</code> and add at least three hardcoded posts to the array.  A post has the following schema:</p>
+<p>Similar to status,  we'll have an array for posts.  
+When a new post is added, it should be added to this array.  
+A post has the following schema:
 <pre class="prettyprint lang-javascript">
 var post = {
 	id: int,
@@ -178,43 +142,16 @@ var post = {
 	comments: []
 }
 </pre>
-<p>Implement the following endpoints:</p>
+A new post will arrive with only the body in the payload.  The timestamp is the current time on the server,
+the author is the currently logged in user, and the id is a unique value determined by the server (the 
+length of the post array would be sufficient for now).  The response to <code>POST /post</code>
+is an array of the newly added post, i.e., with it's timetsamp, author, and id values supplied.
+The newly added post will automatically be available in the list of all posts
+returned by a call to the <code>GET /posts</code> endpoint.
+</p>
 
-<style>
-table {
-     border: 2pt solid black;
-     border-collapse: collapse;     
-}
-
-td {
-     padding: 1em;
-     border: 1pt solid grey;     
-}
-</style>
-
-<table>
-	 <tr>
-	      <th>endpoint</th><th>verb</th><th>request payload / response</th><th style="width: 40%; font-size: 80%;">description</th>
-	 </tr>
-
-     <tr>
-          <td>/posts/:id</td><td>GET</td>
-          <td>res: { posts: [ { id: 1, author: Scott, ... }, { ... } ]}</td>
-          <td>If :id is set, then return the post that has id=:id -- if there is none, then return <code>{ posts: [] }</code>, i.e., an empty array.  
-          <br/>If :id is not set, then return an array of hardcoded posts.</td>
-     </tr>
-
-	 <tr>
-          <td>/post</td><td>POST</td>
-          <td>
-	          req: { body: message }<br><br>
-	          res: { posts: [{ id: 5, author: "sep1", body: message, date: ..., comments: [] }] }
-          </td>
-          <td>The payload is JSON with a single field, <code>body</code>.
-          Given the supplied payload, add the author (yourself), an empty array for comments, the datetime the server received the request, and an id (which needs to increment with each additionally added post).  Add this post to the array of hardcoded posts that are returned by <code>GET /posts</code>.  Return this one new post (as the only element of the array posts) as the response.</td>
-     </tr>
-</table>
-<p>Check that your backend works by performming the following commands (either using curl as shown here or Advanced Rest Client or similar)</p>
+<p>
+Check that your backend works by performming the following commands (either using curl as shown here or Advanced Rest Client or similar)</p>
 <pre class="prettyprint lang-bash">
 curl https://ricebookserver.herokuapp.com/posts
 # you should receieve 3 posts
@@ -228,20 +165,36 @@ curl https://ricebookserver.herokuapp.com/posts
 <p>We will use an automated test similiar to these commands to check the functionality of your backend.</p>
 
 <!-- ******************************************************************** -->
-<h3>Unit Test the Back End</h3>
-<p>We'll use <code>jasmine-node</code> for running our unit tests.
-Write unit tests for the two endpoints.  There will be at least four unit tests:</p>
-<table>
-	<tr><td style="width: 30%;"><code>GET /posts</code></td><td>Confirm at least 3 posts returned</td></tr>
-	<tr><td><code>GET /posts/id</code></td><td>where id is a valid post id, confirm that only one post is returned and that it has the correct post id</td></tr>
-	<tr><td><code>GET /posts/id</code></td><td>where is it not a valid post id, confirm that no posts are returned</td></tr>
-	<tr><td><code>POST /post</code></td><td>assure that adding two posts will increment the post id accordingly.  Validate the contents of each post</td></tr>
-</table>
-<p>To get XML test results, use the following command</p>
-<pre class="prettyprint lang-bash">
-./node_modules/.bin/jasmine-node --output test-results --junitreport app_server
-</pre>
+<h3>Deploying your Back-End</h3>
 
+<p>When you have completed the implementation of the required pieces of your
+backend server you are ready to publish your server to Heroku.  
+The backend server will be hosted under a different application name than
+the frontend web app.  If you did not already create a backend Heroku app during
+an inclass exercise, then following these steps to
+create a git repo and a Heroku application.  
+Note that we tell git not to add our <code>node_modules</code> directory to the repo by adding it to the gitignore file (Heroku will automatically install these libraries for us because they are in our package.json file).  In the below I have named by server "ricebookserver" you will want
+to pick your own name, or omit and Heroku will supply a name for you</p>
+</p>
+<pre class="prettyprint lang-bash">
+git init
+heroku create ricebookserver
+echo web: node index.js > Procfile
+echo node_modules > .gitignore
+echo npm-debug.log >> .gitignore
+git add .gitignore Procfile package.json index.js
+git commit -m 'initial commit'
+git push heroku master
+</pre>
+<p>No need to set a buildpack this time, Heroku should automatically recognize that we have a NodeJS application.</p>
+
+
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
 <!-- *********************************************************** -->
 <!-- *********************************************************** -->
 <!-- *********************************************************** -->
@@ -264,17 +217,15 @@ a backend data store.</p>
 
 <ul>
 	<li>Your frontend is deployed on Heroku</li>
+	<li>All of the functionality in the previous assignment is assumed to be working in this assignment</li>
 	<li>Landing view: Register a new user, but new users cannot log in</li>
 	<li>Profile view: update email and zipcode with validation</li>
 	<li>Profile view: upload new profile picture</li>
-	<li>Profile view: update password, but new password will not persist</li>
-	<li>Main view: posts are ordered with newest posts first</li>
-	<li>Main view: add a new post with picture and text</li>
-	<li>Main view: edit a post authored by the logged in user</li>
-	<li>Main view: comment on posts</li>
-	<li>Main view: edit comments authored by the logged in user</li>
-	<li>Main view: search bar filters displayed posts by author or content</li>
-	<li>Main view: a post is implemented as an Angular directive</li>
+	<li>Profile view: update password, but new password will not persist</li>	
+	<li>Main view: add a new post with both text and a picture</li>
+	<li>Main view: sidebar shows followed users with profile pictures and statuses</li>
+	<li>Main view: add user to followed users list</li>
+	<li>Main view: remove user from followed users list</li>
 </ul>
 
 <h3>End-to-End Tests</h3>
@@ -282,7 +233,7 @@ a backend data store.</p>
 <p>Your end-to-end tests will run against your web app running on your local python server.  Here are the tasks for your end-to-end test</p>
 
 <ul>
-	<li>Register a new user</li>	
+	<li>Register a new user</li>
 	<li>Log in as your test user</li>
 	<li>Create a new post and validate the post appears in the feed</li>
 	<li>Update the status headline and verify the change</li>
@@ -300,13 +251,17 @@ a backend data store.</p>
 
 <h3>Backend</h3>
 
-TODO COMPLETE THIS SECTION 20160214
+<p>Your backend server will be hosted on Heroku, we will use a grading robot to validate
+your implementation, so be sure you test your deployed server before you submit to turnin.</p>
 
 <ul>	
 	<li>Your backend server is deployed on Heroku.</li>
+	<li><code>GET /status</code> returns status of current user</li>
+	<li><code>PUT /status</code> allows user to update their status</li>
 	<li><code>GET /posts/</code> returns all posts, 3 hardcoded and any additional that are added</li>
 	<li><code>GET /posts/:id</code> returns the post with matching id if it exists, none otherwise</li>
 	<li><code>POST /post</code> adds a new post to the list of all posts.  Returns the newly added post</li>
+	<li>Unit test get status
 	<li>Unit tests for the endpoints</li>
 	<li>Unit test results, e.g., <code>test-results/TEST-ValidatePostFunctionality.xml</code></li>
 </ul>
@@ -320,7 +275,7 @@ TODO: REVISE THIS 20160214
 <div class="ui list"><div class="item">
 	<i class="folder icon"></i>
 	<div class="content">
-		<div class="header">hw-backend</div>
+		<div class="header">hw{{vm.hwid}}-{{vm.assignmentId}}</div>
 		<div class="list">
 
 			<div class="item">

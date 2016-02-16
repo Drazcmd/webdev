@@ -15,6 +15,12 @@
     {"item":"Profile edit page: upload and persist new profile picture", "pts":4},
 
 
+    {"item":"Followed user list contains usernames, pictures, and status headlines", "pts":3},
+    {"item":"Add a new followed user", "pts":3},
+    {"item":"Trying to follow an invalid user results in an approriate error message", "pts":3},
+    {"item":"Removed a followed user", "pts":3},
+    {"item":"Suitable message when trying to add user that does not exist", "pts":3},
+
 
     {"item":"Frontend: Every application logic JavaScript file has an associated Jasmine spec file", "pts":5},
     {"item":"Frontend: Jasmine coverage results page included in submission", "pts": 3},
