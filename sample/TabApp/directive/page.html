@@ -4,9 +4,13 @@
 
 <p>The following contains a custom directive</p>
 
-<div style="border: 1px solid black; padding: 1em;" my-custom>
+<div init="vm.foo" magic="magic" style="border: 1px solid black; padding: 1em; margin: 1em" my-custom>
 	original contents
 </div>
+
+<my-custom init="vm.bar" magic="magic" style="border: 1px dashed blue; padding: 1em; margin: 1em">
+    this works too!
+</my-custom>
 
 <p>Outer scope: {{ magic }}</p>
 
