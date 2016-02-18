@@ -124,19 +124,19 @@ Therefore after you make your submission, please do not re-deploy to Heroku unti
 All of the data mentioned below comes
 from the dummy server, therefore the only hard-coded data in your frontend code is the user's profile information and the following list on the main view.
 The currently logged in user's status and profile picture and collection of posts all come from the dummy server.</p>
-<ul>
+<ul>	
 	<li>User can log in with netID and three-word-passphrase, if successful then redirect to the main view, otherwise inform user of incorrect login</li>
 	<li>When a user logs out it redirects to the landing view</li>
 	<li>status headline for user is displayed</li>
 	<li>ability to update status headline for user</li>
-	<li>display user's profile picture</li>
+	<li>display user's profile picture</li>	
 	<li>list of posts from server with newest posts first</li>
+	<li>search bar filters displayed posts by author or body, but not date or post id</li>
 	<li>add a new post with text (no picture upload required yet)</li>
 	<li>edit posts authored by the logged in user</li>
 	<li>each post has a list of comments</li>	
 	<li>add a new comment on a post</li>
-	<li>edit comments authored by the logged in user</li>	
-	<li>search bar filters displayed posts by author or content</li>
+	<li>edit comments authored by the logged in user</li>		
 </ul>
 
 <h3>Unit Test</h3>
@@ -144,6 +144,7 @@ The currently logged in user's status and profile picture and collection of post
 do not need to test that a Controller functions as advertised by the Angular team.  Instead we only want to test our specific business logic
 that we wrote.</p>
 <ul>
+	<li>Test your search filter to filter by body and author but not by date or post id</li>
 	<li>Test updating the user's status headline</li>
 	<li>Test adding a new post</li>
 	<li>Test editing a post</li>	
@@ -178,6 +179,9 @@ that we wrote.</p>
 				<i class="file text outline icon"></i>
 				<div class="content"><div class="description">index.html</div></div>
 			</div>
+
+			<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">jasmine.html</div></div></div>
+			<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">karma.conf.js</div></div></div>
 
 			<div class="item">
 				<i class="file image outline icon"></i>
@@ -238,6 +242,8 @@ that we wrote.</p>
 							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">post.html</div></div></div>
 							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postCtrl.js</div></div></div>
 							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postCtrl.spec.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postFilter.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postFilter.spec.js</div></div></div>
 						</div>
 					</div></div>
 
@@ -283,7 +289,8 @@ This is okay.  What is important is that there <em>is</em> structure and that th
 <p>
 Note that in the above, the registration and login sections of <code>index.html</code> have been moved to <code>login.html</code> 
 and the <code>main.html</code> page has been stripped of much of it's content, that content being moved to <code>post.html</code>,
-<code>status.html</code>, and <code>following.html</code>, and being loaded using ng-include.  Alternatively you keep <code>main.html</code> monolithic -- this is your choice.
+<code>status.html</code>, and <code>following.html</code>, and being loaded using ng-include.  Alternatively you keep <code>main.html</code> monolithic -- this is your choice.  Additionally I've written my post filter in a separate file, and tested my filter functionality
+by itself.
 </p>
 
 <p>Note again that for this assignment we are not requiring new posts to 
