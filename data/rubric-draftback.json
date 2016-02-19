@@ -51,6 +51,7 @@
 ]},
 {"section":"Demerits", "items": [
 
+    {"item":"did not follow John Papa's Angular Style Guide", "pts":25},
     {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
     {"item":"variable not appropriately scoped (i.e., missing var, or var in wrong scope)", "pts": 10},
