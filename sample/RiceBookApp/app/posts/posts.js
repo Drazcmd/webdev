@@ -13,7 +13,6 @@ function PostCtrl() {
 	]
 
 	vm.removePost = function(postId) {		
-		var len = vm.posts.length;
 		var index = vm.posts.findIndex(function(post) {
 			return post.id === postId
 		})
