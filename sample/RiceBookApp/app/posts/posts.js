@@ -17,7 +17,7 @@ function PostCtrl() {
 		var index = vm.posts.findIndex(function(post) {
 			return post.id === postId
 		})
-		if (index > 0) {
+		if (index >= 0) {
 			vm.posts.splice(index, 1)	
 		}
 	}
