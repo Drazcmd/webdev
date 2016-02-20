@@ -12,16 +12,14 @@ function PostCtrl() {
 		{'id':3, 'title':'the third', 'body':'e plurbus unum'},
 	]
 
-	vm.removePost = function(postId) {
-		var index = -1;
+	vm.removePost = function(postId) {		
 		var len = vm.posts.length;
-		for (var ii = 0; ii < len; ++ii) {
-			if (vm.posts[ii].id === postId) {
-				index = ii;
-				break;
-			}
+		var index = vm.posts.findIndex(function(post) {
+			return post.id === postId
+		})
+		if (index > 0) {
+			vm.posts.splice(index, 1)	
 		}
-		vm.posts.splice(index, 1)
 	}
 
 	vm.addPost = function() {
