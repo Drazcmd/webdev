@@ -155,12 +155,19 @@
         srv.sessions = []
         srv.assignments = {}
         
-        srv.getDueDate = function(sessionDay) {            
+        srv.getDueDate = function(sessionDay, offset) {
+            if (!offset) {
+                offset = srv.sessions[sessionDay] ? srv.sessions[sessionDay].offset : 0
+            }
+            if (offset) {
+                sessionDay += offset
+            }
+
             var week = Math.floor((sessionDay - 1) / 2);
             var dow = (sessionDay - 1) - 2 * week;
             return moment(srv.firstDayOfClass)
-            .add(week, 'weeks').add(dow * 2, 'days')
-            .format("ddd MM/DD")
+                .add(week, 'weeks').add(dow * 2, 'days')
+                .format("ddd MM/DD")
         }
         
         srv.getAssignment = function(id) {
