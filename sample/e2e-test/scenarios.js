@@ -1,4 +1,4 @@
-describe('RiceBookApp', function() {
+describe('In class End to End Exercise', function() {
 	'use strict'
 
 	beforeEach(function() {
