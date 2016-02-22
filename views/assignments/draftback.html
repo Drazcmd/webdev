@@ -84,9 +84,9 @@ The final step above is to pull the example <code>index.js</code> from the class
 <pre class="prettyprint lang-bash">
 node index.js
 </pre>
-<p>Test it out by navigating to <a href="http://localhost:8080" target="_blank">http://localhost:8080</a> it should say "Hello World!".  In the sample from the course site there is also the <code>POST /post</code> endpoint.  To test this you can either use a browser extension such as Advanced REST Client or Postman, or use curl on the commandline:
+<p>Test it out by navigating to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> it should say "Hello World!".  In the sample from the course site there is also the <code>POST /post</code> endpoint.  To test this you can either use a browser extension such as Advanced REST Client or Postman, or use curl on the commandline:
 <pre class="prettyprint lang-bash">
-curl -H 'Content-Type: application/json' -d '{"Hello": "World" }' http://localhost:8080/post
+curl -H 'Content-Type: application/json' -d '{"Hello": "World" }' http://localhost:3000/post
 </pre>
 <p>The -H flag of curl sets a header field which tells the server we are going to send a JSON payload.  The -d flag is the payload: Notice that we have formatted it as JSON because that's what we told the server we were going to do.  <em>If you don't do this correctly then it won't work correctly!</em>  If you look at <code>index.js</code> you'll notice we use the middleware <code>bodyParser.json()</code> which parses the JSON input and places the payload in the <code>body</code> attribute of the request object (normally called <code>req</code>).</p>
 
@@ -405,8 +405,8 @@ your implementation, so be sure you test your deployed server before you submit 
 					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.js</div></div></div>
 					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.spec.js</div></div></div>
 
-					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">status.js</div></div></div>
-					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">status.spec.js</div></div></div>
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.js</div></div></div>
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.spec.js</div></div></div>
 
 				</div>
 			</div></div>
@@ -425,6 +425,10 @@ your implementation, so be sure you test your deployed server before you submit 
  		 	
  </div></div>
 
+
+<p>Note that I have places the status endpoints in <code>profile.js</code> as a look ahead to 
+the way in which we will be persisting the data: the status of a user will be stored along
+with their other profile information.</p>
 
 <!-- ******************************** -->
 

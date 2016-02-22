@@ -1,7 +1,7 @@
 [
 {"section":"Merits", "items": [
-    {"item":"README.txt file with netid, frontend and backend URLs", "pts": 5 },
-    {"item":"sample content (different than logged-in content) is accessible from landing page for non-logged in users, at least 3 posts", "pts": 5},
+    {"item":"README.json file with netid, frontend and backend URLs", "pts": 5 },
+    
     {"item":"Can register a new user", "pts": 5 },
     {"item":"Can log in as the new user", "pts": 7 },
     {"item":"Can logout but then required to login again to view non-sample content", "pts": 5},
@@ -10,20 +10,23 @@
     {"item":"New posts appear at top of feed with submission timestamp", "pts": 7 },
     {"item":"New posts are persistent to log off and refresh", "pts": 7 },
     {"item":"One post is returned by GET /posts/:id if a valid id is supplied", "pts": 10 },
+
     {"item":"User passwords are salted (unique salt per user) and hashed using md5 or encrypted with bcrypt", "pts": 10},
-    {"item":"Session handling is manually implemented, session id is stored as a httpOnly lient cookie", "pts":  7 },
+    {"item":"Session handling is manually implemented, session id is stored as a httpOnly client cookie", "pts":  7 },
     {"item":"Enabled CORS correctly", "pts": 7 },
-    {"item":"Stubs exist for all endpoints (except /location)", "pts": 10},
+    {"item":"Stub for PUT /picture", "pts": 1},
+    
     {"item":"JavaScript source is appropriately divided into separate files by component", "pts": 5}
 ]},
-{"section":"Demerits", "items": [
 
-    {"item":"unapproved third party module", "pts": 13},
+{"section":"Demerits", "items": [
+    
+    {"item":"did not follow John Papa's Angular Style Guide", "pts":25},
+    {"item":"unapproved third party module", "pts": 20},
     {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
     {"item":"variable not appropriately scoped (i.e., missing var, or var in wrong scope)", "pts": 10},
     {"item":"fat Angular Controller", "pts":10},
-
     {"item":"did not properly separate concerns", "pts": 10},
     {"item":"user interface not obvious to use", "pts": 10},
     {"item":"a non-server error is thrown", "pts": 8},
@@ -62,11 +65,11 @@
     {"item":"excessive use of DOM ids", "pts": 3},
     {"item":"missing clear abstraction usage opportunity", "pts": 3},
 
-    {"item":"for loop used instead of more appropriate functional style", "pts": 3},
-    {"item":"variable not appropriately initialized", "pts": 3},
-    {"item":"did not use shortcut for boolean, i.e., if (bool == true) should be if (bool)", "pts": 3},
-    {"item":"inappropriate character in filename, e.g., space", "pts": 3},
-    {"item":"a 'what' comment, e.g., // set var to 0", "pts": 3},
+    {"item":"for loop used instead of more appropriate functional style", "pts": 2},
+    {"item":"variable not appropriately initialized", "pts": 2},
+    {"item":"did not use shortcut for boolean, i.e., if (bool == true) should be if (bool)", "pts": 2},
+    {"item":"inappropriate character in filename, e.g., space", "pts": 2},
+    {"item":"a 'what' comment, e.g., // set var to 0", "pts": 2},
 
     {"item":"multi-line comment where // should be used instead", "pts": 1},
     {"item":"long comment at end of line instead of on separate line", "pts": 1}
