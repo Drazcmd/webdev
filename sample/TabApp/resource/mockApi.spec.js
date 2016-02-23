@@ -1,6 +1,6 @@
 describe('Shared Resource Controller Tests', function() {
 	var helper = jasmine.helper
-	var ctrl;	
+	var ctrl;
 	var promises = []
 
 	beforeEach(module('tabApp'))	
@@ -16,16 +16,15 @@ describe('Shared Resource Controller Tests', function() {
  		ctrl = $controller('ResourceCtrl', {
 			'api': api,
 			'LocationService': LocationService
-		})	
+		})
 		ctrl._resolveTestPromises = function() {
 			helper.resolveTestPromises($rootScope)
 		}
 		ctrl._resolveTestPromises()
 	}))
 
-
 	it('should have a location', function() {
-		expect(ctrl.location).toEqual(jasmine.any(Object))
+		expect(ctrl.loc).toEqual(jasmine.any(Object))
 	})
 
 	it('should have a status', function() {
@@ -44,8 +43,34 @@ describe('Shared Resource Controller Tests', function() {
 	it('should remove a post', function() {
 		ctrl.posts.push({ 'id': 1 })
 		expect(ctrl.posts.length).toBe(1)
-		ctrl.removePosts(1)
+		ctrl.removePost(1)
 		expect(ctrl.posts.length).toBe(0)
 	})
+
+	// ****************** //
+	// XXX start here XXX //
+
+	it('should login, register the username, and logout', inject(function(UserService) {
+		// log in
+		// you need to set some models in the controller first
+		// ...
+		// ctrl.login()
+		ctrl._resolveTestPromises()
+
+		// verify UserService has username
+		
+		// logout
+		// ctrl.logout()
+		ctrl._resolveTestPromises()
+		
+		// verify UserService has no username
+		expect(0).toBe(0) // remove this statement
+	}))
+
+	it('should share the username between controllers', inject(function($controller, UserService) {
+		var testCtrl = $controller('TestCtrl', { UserService })
+		//expect(ctrl.getUsername()).toBe(testCtrl.getUsername()) // uncomment this statement
+		expect(0).toBe(0) // remove this statement
+	}))
 
 })

@@ -1,15 +1,19 @@
 ;(function() {
 
+// Look for lines with XXX and fill in the missing implementation
+
 angular.module('tabApp')
 	.constant('apiURL', 'https://webdev-dummy.herokuapp.com')
 	.factory('api', apiService)
 	.factory('LocationService', LocationService)
+	.factory('UserService', userService)
 	.controller('ResourceCtrl', ResourceCtrl)
+	.controller('TestCtrl', TestCtrl)
 	;
 
 function apiService($http, $resource, apiURL) {
     $http.defaults.withCredentials = true
-	return $resource(apiURL + '/:endpoint/:user', { user: '@user' }, 
+	return $resource(apiURL + '/:endpoint/:user', {  }, 
 		{
             login    : { method:'POST', params: {endpoint: 'login'  } },
             logout   : { method: 'PUT' , params: {endpoint: 'logout'  } },
@@ -25,8 +29,14 @@ function LocationService($resource, apiURL) {
 	})
 }
 
-ResourceCtrl.$inject = ['$http', '$interval', 'api', 'LocationService']
-function ResourceCtrl($http, $interval, api, LocationService) {
+function userService() {
+	// XXX Use the UserService to share the username of the 
+	// logged in user between controller instances
+	return {  }
+}
+
+ResourceCtrl.$inject = ['$http', '$interval', 'api', 'LocationService', 'UserService']
+function ResourceCtrl($http, $interval, api, LocationService, UserService) {
 
 	var vm = this
 	vm.posts = []
@@ -37,7 +47,8 @@ function ResourceCtrl($http, $interval, api, LocationService) {
     vm.loggedIn = false
 
 	vm.userStatus = ''
-	vm.saveStatus = saveStatus
+	vm.getUsername = getUsername
+	vm.updateStatus = updateStatus
 	vm.updateLocation = updateLocation
     vm.login = login
     vm.logout = logout
@@ -45,29 +56,38 @@ function ResourceCtrl($http, $interval, api, LocationService) {
 	// treat LocationService as classic REST API
 	vm.loc = LocationService.get()
 
-	updateStatus()
+	getStatus()
 
 	//*********** functions ******************//
+
+	function getUsername() {
+		// XXX return the username from the UserService
+		return 'Daffy'
+	}
 
     function login() {
          console.log('logging in', vm.username)
          
         api.login({'username':vm.username, 'password':vm.password})
              .$promise.then(function(result) {
-                   console.log('LogIn', result)
-                   updateStatus()
+                   console.log('Payload from server:', result)
+                   getStatus()
                    vm.loggedIn = true
                    vm.password = ''
                    vm.loc = LocationService.get()
+                   // XXX grab the username from the server
+                   // put it into the UserService singleton
              })
     }
 
     function logout() {
          api.logout()
+         vm.username = ''
          vm.userStatus =''
          vm.newUserStatus =''
          vm.loggedIn = false
          vm.loc = { }
+         // XXX clear the UserService singleton's username value
     }
 
 
@@ -101,7 +121,7 @@ function ResourceCtrl($http, $interval, api, LocationService) {
 		}
 	}
 
-	function updateStatus() {
+	function getStatus() {
 		api.getStatus().$promise.then(function(result) {
 			vm.userStatus = result.statuses[0].status
 			vm.newUserStatus = vm.userStatus
@@ -109,7 +129,7 @@ function ResourceCtrl($http, $interval, api, LocationService) {
 		})
 	}
 
-	function saveStatus() {
+	function updateStatus() {
 		api.setStatus({ status: vm.newUserStatus}).$promise.
 		then(function(result) {
             console.log(result)
@@ -131,5 +151,13 @@ function ResourceCtrl($http, $interval, api, LocationService) {
 	}
 
 } ////////////////// end FifthCtrl ///////////////
+
+TestCtrl.$inject = ['UserService']
+function TestCtrl(UserService) {
+	this.getUsername = function() {
+		// XXX return the username from the UserService
+		return 'Donald'
+	}
+}
 
 })()

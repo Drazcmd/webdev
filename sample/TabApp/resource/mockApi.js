@@ -25,7 +25,7 @@
 		},
 		getStatus: function() {
 			return makePromise(
-				{'status':'Test Status'}
+				{ statuses: [{'status':'Test Status'}] }
 			)
 		},
 		setStatus: function() {
@@ -33,6 +33,9 @@
 				{'status':'Was set'}
 			)
 		}
+
+		// XXX add the login and logout functions here
+
 	}
 
 	var mockLocationService = {

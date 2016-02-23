@@ -10,9 +10,9 @@
 </div>
 
 
-<p>User status message: {{ vm.userStatus }}<br>
+<p>User status message: {{ vm.userStatus }} for {{ vm.getUsername() }}<br>
 <input type="text" ng-model="vm.newUserStatus" placeholder="status message">
-<input type="button" ng-click="vm.saveStatus()" value="Save">
+<input type="button" ng-click="vm.updateStatus()" value="Save">
 </p>
 
 <p>User Location: { <span ng-click="vm.updateLocation('lat')">{{ vm.loc.location.lat | number: 3 }}</span>, 
