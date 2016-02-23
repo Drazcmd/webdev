@@ -42,7 +42,7 @@ function HttpCtrl($http, $interval, postFactory, $scope) {
 	var vm = this
 	vm.posts = []
 	vm.loadPosts = loadPosts
-	vm.removePosts = removePost
+	vm.removePost = removePost
 	vm.toggleLoading = toggleLoading
 	vm.stop = null
 
@@ -62,15 +62,12 @@ function HttpCtrl($http, $interval, postFactory, $scope) {
 	}
 
 	function removePost(postId) {
-		var index = -1;
-		var len = vm.posts.length;
-		for (var ii = 0; ii < len; ++ii) {
-			if (vm.posts[ii].id === postId) {
-				index = ii;
-				break;
-			}
-		}
-		vm.posts.splice(index, 1)
+        var index = vm.posts.findIndex(function(post) { 
+             return post.id === postId 
+        }) 
+        if (index >= 0) { 
+             vm.posts.splice(index, 1)  
+        } 
 	}
 
 	function toggleLoading() {
