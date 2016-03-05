@@ -56,6 +56,7 @@ function ResourceCtrl($http, $interval, api, LocationService, UserService) {
 	// treat LocationService as classic REST API
 	vm.loc = LocationService.get()
 
+	// this may result in a console error because we are not logged in yet
 	getStatus()
 
 	//*********** functions ******************//
@@ -66,7 +67,11 @@ function ResourceCtrl($http, $interval, api, LocationService, UserService) {
 	}
 
     function login() {
-         console.log('logging in', vm.username)
+    	if (!vm.username) {
+    		console.log('username not defined')
+    		return
+    	}
+        console.log('logging in', vm.username)    	
          
         api.login({'username':vm.username, 'password':vm.password})
              .$promise.then(function(result) {
