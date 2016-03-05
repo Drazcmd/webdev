@@ -1,6 +1,6 @@
 (function(jasmine) {
 	jasmine.foobar = function() {
-		console.log('hellowworld!')
+		//console.log('hellowworld!')
 	}
 
 })(window.jasmine)

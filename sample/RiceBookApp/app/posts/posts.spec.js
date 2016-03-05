@@ -31,4 +31,5 @@ describe('Validate PostCtrl functionality', function () {
     expect(ctrl.posts.length).toBe(4)
   })
 
+
 });
