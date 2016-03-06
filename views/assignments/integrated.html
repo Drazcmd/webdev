@@ -100,77 +100,39 @@ isLoggedIn, but it just won't do anything other than provide a default user on t
 <!-- ******************************************************************** -->
 <!-- ******************************************************************** -->
 
-<h2>Adding Endpoints</h2>
+<h2>Implementing Endpoints</h2>
 
-<p>Here is the recommended breakout by endpoint for each source file in your backend server
-<table>
-     <tr><th>endpoint</th><th>verbs</th><th>source file</th></tr>  
-     <tr><td>/login</td><td>POST</td><td>auth.js</td></tr>
-     <tr><td>/logout</td><td>PUT</td><td>auth.js</td></tr>
-     <tr><td>/register</td><td>POST</td><td>auth.js</td></tr>
-     <tr><td>/password</td><td>PUT</td><td>auth.js</td></tr>
-     <tr class="double"><td>/posts</td><td>GET, PUT</td><td>posts.js</td></tr>
-     <tr><td>/post</td><td>POST</td><td>posts.js</td></tr>
-     <tr class="double"><td>/status</td><td>GET, PUT</td><td>profile.js</td></tr>
-     <tr><td>/statuses</td><td>GET</td><td>profile.js</td></tr>
-     <tr><td>/email</td><td>GET, PUT</td><td>profile.js</td></tr>
-     <tr><td>/zipcode</td><td>GET, PUT</td><td>profile.js</td></tr>
-     <tr><td>/pictures</td><td>GET</td><td>profile.js</td></tr>
-     <tr><td>/picture</td><td>PUT (stub only)</td><td>profile.js</td></tr>
-     <tr class="double"><td>/following</td><td>GET, PUT, DELETE</td><td>following.js</td></tr>
-</table>
-Start by creating "stubs" for all endpoints.  A stub returns dummy data, for example
+<p>Even if we have not yet implemented fully the <code>isLoggedIn</code>
+middleware, you should stub the function and add it to all routes.
+This will assure that all requests are made by authenticated clients.<p>
+
 <pre class="prettyprint lang-javascript">
 // this is profile.js which contains all user profile 
 // information except passwords which is in auth.js
 exports.setup = function(app) {
     app.get('/statuses/:users*?', isLoggedIn, getStatuses)
 }
-
-function getStatuses(req, res) {
-
-    // this isn't correct, but gives you a start
-    // for the stub this is fine.
-    var username = req.params.users.split(',')[0]
-    // but what if users is not specified as a parameter in the request?
-    // then we use the currently logged in user, i.e., req.user    
-
-    // this only sends one status, we want to send an
-    // array of all the requested user's statuses
-    res.send({ statuses: [ 
-        { username: username, status: 'the status of the user' } 
-    ] })
-}
 </pre>
-Note that we're using the <code>isLoggedIn</code> middleware to assure that all requests 
-are made by authenticated clients (even if we haven't fully implemented it yet).  
 The API for the endpoints is the same as for the dummy server 
 (i.e., this way we don't need to change any of the frontend code).  That api is found here
 <center><a target="_blank" href="data/api.html#api">Backend API list of endpoints</a></center>
-Note that the only endpoints we will <em>not implement</em> in this assignment are 
-<ul>
-    <li><code>GET /sample</code></li>
-    <li><code>PUT /picture</code> (but add a stub for this one)</li>
-</ul>
-Note also that we only accept new posts with text only, no pictures.</p>
+<p>We will implement all of the endpoints except <code>GET /sample</code> and
+<code>PUT /picture</code>.  Additionally, we still only accept new posts with text only, no pictures.
+</p>
 <p>
-Making stubs for all of the endpoints should not take too long.  If we were doing TDD then
-we would write tests for each function before we even write the stubs.  Given that you have
-some experience in writing tests, I recommend you do this, but it will not be a requirement
+If we were doing TDD then we would write tests for each function before we write the implementation.  
+Given that you have some experience in writing tests, 
+I recommend you do this, but it will not be a requirement
 for this assignment.  Additionally, we already have a working frontend with end-to-end tests 
 which can serve us well in testing our backend functionality.  (But again, unit testing the 
 backend separately is the preferred approach.)
 </p>
-
-<h3>Implementing Endpoints</h3>
-
-<p>After we have stubs created for all of these endpoints, we now work at implementing them.
-Previously our status and post endpoints used an in-memory data structure
+<p>Previously our status and post endpoints used an in-memory data structure
 for storage.  Now we change these to use our mongodb document store.
-Follow the inclass slides and exercise as examples for how to do this.
+Follow the inclass slides and exercises as examples for how to do this.
 I would perform the implementation file by file, i.e., all of <code>profile.js</code>
 then <code>following.js</code> then <code>post.js</code> and finally <code>auth.js</code> --
-but as mentioned above, you can implement in any order you desire.
+but you can implement in any order you desire.
 <p>
 
 <p>During implementation I would make use of either the command line program <code>curl</code>
@@ -283,7 +245,7 @@ See the lecture on security for the inclass exercise enabling CORS.</p>
 <p>You should enable CORS globally: whatever origin requests data, you should allow a response.  I.e., 
 <u>you should not hardcode a domain.</u></p>
 
-<h3>Text-only posts from the frontend</h3>
+<h3>Sending text-only posts from the frontend</h3>
 
 <p>Note that our <code>POST /post</code> endpoint will only be accepting
 text at the current moment.  I.e., no picture uploads.  Therefore the frontend
@@ -435,7 +397,7 @@ An automated grading robot will use your deployed frontend app and it's interope
                     <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">auth.js</div></div></div>
 
                     <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">db.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">model.js (if using mongoose)</div></div></div>
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">model.js</div></div></div>
                     <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">following.js</div></div></div>
 
 

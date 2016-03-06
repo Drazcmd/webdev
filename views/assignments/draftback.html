@@ -2,7 +2,32 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
 <style>
 code, pre {
-	font-size: 0.85em;
+    font-size: 0.85em;
+}
+
+table {
+     border: 2pt solid black;
+     border-collapse: collapse;
+     font-size: 80%;
+}
+
+td {
+     padding: 1em;
+     border: 1pt solid grey;
+}
+
+tr.double {
+     border-top: 3pt double black;
+}
+
+.warning {
+    background-color: #ff5555;
+    padding: 0.5em;
+    width: 80%;
+    border-radius: 1em;
+    border: 1px solid black;
+    text-align: center;    
+    margin: auto;
 }
 </style>
 
@@ -24,7 +49,7 @@ to upload an image with a post, register new users, edit a user's profile includ
 the listing of followed users with their status headlines and profiles pictures,
 adding a new followed users, and removing followed users.
 For our first implementation of the backend server we will implement
-the status and post endpoints.</p>
+the status and post endpoints, and provide stubs for the others.</p>
 
 <!-- ******************************************************************** -->
 <!-- ******************************************************************** -->
@@ -90,6 +115,58 @@ curl -H 'Content-Type: application/json' -d '{"Hello": "World" }' http://localho
 </pre>
 <p>The -H flag of curl sets a header field which tells the server we are going to send a JSON payload.  The -d flag is the payload: Notice that we have formatted it as JSON because that's what we told the server we were going to do.  <em>If you don't do this correctly then it won't work correctly!</em>  If you look at <code>index.js</code> you'll notice we use the middleware <code>bodyParser.json()</code> which parses the JSON input and places the payload in the <code>body</code> attribute of the request object (normally called <code>req</code>).</p>
 
+<!-- ******************************************************************** -->
+<h3>Stubbing the Backend</h3>
+
+<p>Stubs are <a href="https://en.wikipedia.org/wiki/Method_stub" target=_blank>"pieces of code used to stand in for some other programming functionality."</a> 
+For this assignment we will create stubs for all of the desired endpoints of our API.  
+After the stubs are created, then we will implement selected functionality 
+in this assignment.
+
+<p>Here is the recommended breakout by endpoint for each source file in your backend server
+<table>
+     <tr><th>endpoint</th><th>verbs</th><th>source file</th></tr>  
+     <tr><td>/login</td><td>POST</td><td>auth.js</td></tr>
+     <tr><td>/logout</td><td>PUT</td><td>auth.js</td></tr>
+     <tr><td>/register</td><td>POST</td><td>auth.js</td></tr>
+     <tr><td>/password</td><td>PUT</td><td>auth.js</td></tr>
+     <tr class="double"><td>/posts</td><td>GET, PUT</td><td>posts.js</td></tr>
+     <tr><td>/post</td><td>POST</td><td>posts.js</td></tr>
+     <tr class="double"><td>/status</td><td>GET, PUT</td><td>profile.js</td></tr>
+     <tr><td>/statuses</td><td>GET</td><td>profile.js</td></tr>
+     <tr><td>/email</td><td>GET, PUT</td><td>profile.js</td></tr>
+     <tr><td>/zipcode</td><td>GET, PUT</td><td>profile.js</td></tr>
+     <tr><td>/pictures</td><td>GET, PUT</td><td>profile.js</td></tr>     
+     <tr class="double"><td>/following</td><td>GET, PUT, DELETE</td><td>following.js</td></tr>
+</table>
+Start by creating "stubs" for all endpoints.  A stub returns dummy data, for example
+<pre class="prettyprint lang-javascript">
+// this is profile.js which contains all user profile 
+// information except passwords which is in auth.js
+exports.setup = function(app) {
+    app.get('/statuses/:users*?', getStatuses)
+}
+
+function getStatuses(req, res) {
+
+    // this isn't correct, but gives you a starting point
+    // for the stub this is a fine implementation
+    var username = req.params.users.split(',')[0]
+
+    // but what if 'users' is not specified as a parameter in the request?
+    // then we use the currently logged in user, i.e., req.user
+
+    // this returns only one status, but we want to send
+    // an array of all the requested user's statuses
+    res.send({ statuses: [ 
+        { username: username, status: 'the status of the user' } 
+    ] })
+}
+</pre>
+The API for the endpoints is the same as for the dummy server 
+(i.e., this way we don't need to change any of the frontend code).  That api is found here
+<center><a target="_blank" href="data/api.html#api">Backend API list of endpoints</a></center>
+Note you do not need to create a stub for <code>GET /sample</code></p>
 
 <!-- ******************************************************************** -->
 <h3>What to implement</h3>
@@ -137,17 +214,27 @@ all data in memory.  For example, we can use a map for status headlines, for exa
 <pre class="prettyprint lang-javascript">
 var _statues = { }
 ...
-function getStatus(req, res) {
-	var user = 'me'	// or whatever you like
+function getStatuses(req, res) {
 
-	if (!_status[user]) {
-		_status[user] = "Hello World!"
+    // this isn't correct, but gives you a starting point
+    // for the stub this is a fine implementation
+    var username = req.params.users.split(',')[0]
+
+    // but what if 'users' is not specified as a parameter in the request?
+    // then we use the currently logged in user, i.e., req.user
+
+	if (!_status[username]) {
+		_status[username] = "Hello World!"
 	}
 
-	res.send({ statuses: [ { username: user, status: _status[user] } ] })
+    // this returns only one status, but we want to send
+    // an array of all the requested user's statuses
+    res.send({ statuses: [ 
+        { username: username, status: _status[username] } 
+    ] })
 }
 </pre>
-<p>Here I prepend underscore to help me remember that this is a "global" variable.  
+<p>Here I prepend underscore to the variable name to help me remember that this is a "global" variable.  
 
 <p>Similar to status,  we'll have an array for posts.  
 We should start with 3 hardcoded posts in this array.
@@ -286,6 +373,7 @@ your implementation, so be sure you test your deployed server before you submit 
 	<li><code>POST /post</code> adds a new post to the list of all posts.  Returns the newly added post</li>
 	<li>Unit test that PUT status updates the status message, i.e., GET, PUT to change the value, GET to verify it was changed</li>
 	<li>Unit test adding a post, i.e., GET and count the current number of posts, POST a new post, verify you get back what you added, then GET again and count the number verifying it increased by one</li>
+	<li>The other endpoints all function and return stubbed data according to the API definition.</li>
 </ul>
 <p>Inlucde a JUnitXML report of your backend unit tests, e.g., <code>testresults/TEST-ValidatePostFunctionality.xml</code>
 </p>
@@ -401,6 +489,12 @@ your implementation, so be sure you test your deployed server before you submit 
 			<div class="item">
 				<i class="folder icon"></i><div class="content"><div class="header">app_server</div>
 				<div class="list">
+
+
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">auth.js</div></div></div>
+
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">following.js</div></div></div>
+
 
 					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.js</div></div></div>
 					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.spec.js</div></div></div>

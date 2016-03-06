@@ -29,37 +29,37 @@ td {
 
 <p>We need a database to store user information and to persist posts.  Because we are developing a MEAN stack,
 we will use MongoDB for our document store.  Heroku provides an easy prescription for 
-setting up a <a target=_blank href="https://elements.heroku.com/addons/mongolab">free mongolab mongoDB</a> for your backend app.  
+setting up a <a target=_blank href="https://elements.heroku.com/addons/mongolab">free mLab (mongolab) mongoDB</a> for your backend app.  
 As <a target=_blank href="heroku.html">mentioned previously</a>, you need to supply
 Heroku a credit card, but so long as you stay within the free tier you will not be charged.
 
 <p><a target=_blank href="https://docs.mongodb.org/manual/">MongoDB documentation</a></p>
 
-<h3>Setting up with Mongolab directly</h3>
+<h3>Setting up with mLab directly</h3>
 
 <p>For Heroku to add the mongodb add-on you need to supply them a credit card.  
 Don't worry they won't charge you unless you go over your "free" quota. 
 </p><p>
 If you have difficulty giving Heroku your credit card (i.e., the billing page provides an error) 
-then ... you can wait and try again... or, we can get a free mongodb from mongolab.</p>
+then ... you can wait and try again... or, we can get a free mongodb from mLab.</p>
 <ol>
-	<li>Create an account at <a target=_blank href="https://mongolab.com/">mongolab.com</a></li>
+	<li>Create an account at <a target=_blank href="https://mlab.com/">mlab.com</a></li>
 	<li>Create a new mongodb deployment</li>
 	<li>Add a database user to your deployment (make it a writable account, i.e., not read only)</li>
 	<li>Now you have a URI that you can connect to from your Heroku backend app</li>
 </ol>
-<img src="../images/mongolab.png" width="550" alt="mongolab setup">
+<img src="../images/mongolab.png" width="550" alt="mLab setup">
 <p>Once you have the URI you can use this URI in your local run of the backend server
 as well as on Heroku.  First we need to tell Heroku to use that URI for it's configuration:</p>
 <pre class="prettyprint lang-bash">
-heroku config:set MONGOLAB_URI=mongodb://&lt;the URI from mongolab&gt;
+heroku config:set MONGOLAB_URI=mongodb://&lt;the URI from mLab&gt;
 </pre>
 
 <h2>Connecting to MongoDB locally</h2>
 
 <p>We want to do as much development as possible on our locally running server
 before pushing it to Heroku, and then iteratively develop locally until we are ready
-for another push.  Now we could hardcode the mongolab URI in our code,
+for another push.  Now we could hardcode the mLab URI in our code,
 but this breaks separations of concerns: configuration should not be in code.
 Instead we want to use environment variables.
 </p>
