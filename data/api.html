@@ -205,7 +205,7 @@ we login to the server with our netid and three-word-passphrase</p>
 
      <tr class="double">
           <td>/pictures/:user</td><td>GET</td><td>:user is a user id, or comma separated list of user ids</td>
-          <td>[{ username: :user, picture: pictureURL }, { ... } ]</td>
+          <td>{ pictures: [{ username: :user, picture: pictureURL }, { ... } ]}</td>
           <td>get the picture address for the requested user(s)</td>
      </tr>
      <tr>
