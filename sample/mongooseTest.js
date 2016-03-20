@@ -1,12 +1,6 @@
+// this is model.js 
 var mongoose = require('mongoose')
-var url = 'mongodb://localhost:27017/webdev'
-if (process.env.MONGOLAB_URI) {
-	url = process.env.MONGOLAB_URI;
-}
-mongoose.connect(url)
-function done() {
-	mongoose.connection.close()
-}
+require('./db.js')
 
 var commentSchema = new mongoose.Schema({
 	commentId: Number, author: String, date: Date, body: String
@@ -15,8 +9,13 @@ var postSchema = new mongoose.Schema({
 	id: Number, author: String, img: String, date: Date, body: String,
 	comments: [ commentSchema ]
 })
-var Post = mongoose.model('post', postSchema)
 
+exports.Post = mongoose.model('post', postSchema)
+
+//////////////////////////////
+// remove these examples 
+
+var Port = exports.Post
 function findByAuthor(author, callback) {
 	Post.find({ author: author }).exec(function(err, items) {
 		console.log('There are ' + items.length + ' entries for ' + author)
@@ -31,7 +30,8 @@ function findByAuthor(author, callback) {
 
 findByAuthor('sep1', function() {
 	findByAuthor('jmg3', function() {
-		done()
+		console.log('complete')
 	})
 })
 
+//////////////////////////////
