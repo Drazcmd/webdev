@@ -150,7 +150,7 @@ we login to the server with our netid and three-word-passphrase</p>
      </tr>
 
      <tr class="double">
-          <td>/statuses/:users</td><td>GET</td><td>none<br>:users is a comma separated list of user names</td>
+          <td>/statuses/:users?</td><td>GET</td><td>none<br>:users is a comma separated list of user names</td>
           <td>{ statuses: [ {username:Scott, status:Happy}, { ... } ] }</td>
           <td>Get the statuses for multiple users</td>
      </tr>
@@ -166,7 +166,7 @@ we login to the server with our netid and three-word-passphrase</p>
      </tr>
 
      <tr class="double">
-          <td>/following/:user</td><td>GET</td><td>:user is an optional user id.  Defaults to loggedInUser</td>
+          <td>/following/:user?</td><td>GET</td><td>:user is an optional user id.  Defaults to loggedInUser</td>
           <td>{ username: :user, following: [ userids ]}</td>
           <td>get the list of users being followed by the requested user</td>
      </tr>
@@ -182,7 +182,7 @@ we login to the server with our netid and three-word-passphrase</p>
      </tr>
 
      <tr class="double">
-          <td>/email/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>/email/:user?</td><td>GET</td><td>:user is a user id</td>
           <td>{ username: :user, email: emailAddress }</td>
           <td>get the email address for the requested user</td>
      </tr>
@@ -193,7 +193,7 @@ we login to the server with our netid and three-word-passphrase</p>
      </tr>
 
      <tr>
-          <td>/zipcode/:user</td><td>GET</td><td>:user is a user id</td>
+          <td>/zipcode/:user?</td><td>GET</td><td>:user is a user id</td>
           <td>{ username: :user, zipcode: emailAddress }</td>
           <td>get the zipcode for the requested user</td>
      </tr>
@@ -204,7 +204,7 @@ we login to the server with our netid and three-word-passphrase</p>
      </tr>
 
      <tr class="double">
-          <td>/pictures/:user</td><td>GET</td><td>:user is a user id, or comma separated list of user ids</td>
+          <td>/pictures/:user?</td><td>GET</td><td>:user is a user id, or comma separated list of user ids</td>
           <td>{ pictures: [{ username: :user, picture: pictureURL }, { ... } ]}</td>
           <td>get the picture address for the requested user(s)</td>
      </tr>
