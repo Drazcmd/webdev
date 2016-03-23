@@ -126,7 +126,7 @@ print(cc.YELLOW + ('Testing stubs...') + cc.ENDC)
 for e in [ "/status", "/statuses", "/statuses/"+config['netid'], "/email", "/email/"+config['netid'], "/zipcode", "/zipcode/"+config['netid'], "/pictures", "/pictures/" + config['netid'] ]:
     msg("GET " + e)
     pp.pprint(get(e))
-for e in [ "/status", "/email", "/zipcode", "/pictures" ]:
+for e in [ "/status", "/email", "/zipcode", "/picture" ]:
     msg("PUT " + e)
     pp.pprint(put(e))
 
