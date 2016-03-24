@@ -1,6 +1,16 @@
 // this is dbpost.js 
 var Post = require('./model.js').Post
 
+exports.setup = function(app) {
+     app.get('/find/:user', find)
+}
+
+function find(req, res) {
+     findByAuthor(req.params.user, function(items) {
+          res.send({items: items})
+     })
+}
+
 //////////////////////////////
 // remove these examples 
 
@@ -12,7 +22,7 @@ function findByAuthor(author, callback) {
 			totalLength += post.body.length
 		})
 		console.log('average length', totalLength / items.length)		
-		callback()
+		callback(items)
 	})
 }
 
