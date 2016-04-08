@@ -12,6 +12,7 @@
     {"item":"One post is returned by GET /posts/:id if a valid id is supplied", "pts": 10 },
 
     {"item":"User passwords are salted (unique salt per user) and hashed using md5 or encrypted with bcrypt", "pts": 10},
+    {"item":"When user updates password a new salt is generated", "pts":99999},
     {"item":"Session handling is manually implemented, session id is stored as a httpOnly client cookie", "pts":  7 },
     {"item":"Enabled CORS correctly", "pts": 7 },
     {"item":"Stub for PUT /picture", "pts": 1},
