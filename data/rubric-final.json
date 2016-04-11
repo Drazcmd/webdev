@@ -1,5 +1,6 @@
 [
 {"section":"Merits", "items": [
+    {"item":"NOT UP TO DATE", "pts":1000},
     {"item":"README.txt file with netid, frontend and backend URLs", "pts":2},
     {"item":"AutoGrader: bad creds do not login, login and logout work as per specification", "pts": 3},
     {"item":"AutoGrader: Posts are persistent across multiple days", "pts": 5 },

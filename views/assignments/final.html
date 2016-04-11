@@ -8,20 +8,6 @@ code, pre {
 
 <div onload="prettyPrint()">
 
-
-<H1>AS OF FEB 2016 THIS PAGE IS NOT READY YET</H1>
-YOU MIGHT WANT TO HARD-REFRESH: SHIFT-F5
-
-<hr>
-
-backend upload profile picture, make post with image
-oauth, redis, cloudinary
-
-get posts returns proper posts via followed users
-
-<hr>
-
-
 <p style="
     background-color: #ff5555;
     padding: 0.5em;
@@ -31,50 +17,21 @@ get posts returns proper posts via followed users
     text-align: center;    
     margin: auto;
 ">
-<strong>Contrary to the above, this assignment is due 12/10 11:59 PM</strong>
+<strong>Note the due date for this assignment</strong>
 </p>
 
 <p>
 In this assignment you will deliver your multi-user web application.  
 The objectives are:</p>
-<ul>
-  <li>complete implementation of the backend</li>
-  <li>includes generating a unified feed of posts for a user based on their followed users</li>
-  <li>use MongoDB as a document store for user information and posts</li>
-  <li>permit users to upload profile pictures and posts with pictures (either persisting with Cloudinary or not)</li>
+<ul>  
+  <li>generate a unified feed of posts for a user based on their followed users</li>  
   <li>add a third-party authentication option</li>
   <li>add a redis caching store for session management</li>  
+  <li>permit users to upload profile pictures and posts with pictures</li>
 </ul>
-<p>I was going to include geolocation (MongoDB has a sweet built-in API for distance searching)
-but I think we have enough tasks with the above.</p>
-
-<h2>Implementing the Backend Part II</h2>
-
-<p>We now implement the remaining endpoints in the backend, excluding <code>/location</code>, these are:</p>
-
-<ul>
-  <li><code>PUT /posts/:id</code></li>
-  <li><code>GET /statuses/:users</code></li>
-  <li><code>GET /status</code></li>
-  <li><code>PUT /status</code></li>
-  <li><code>GET /following/:user</code></li>
-  <li><code>PUT /following/:user</code></li>
-  <li><code>DELETE /following/:user</code></li>
-  <li><code>GET /email/:user</code></li>
-  <li><code>PUT /email</code></li>
-  <li><code>GET /zipcode/:user</code></li>
-  <li><code>PUT /zipcode</code></li>
-  <li><code>GET /picture/:user</code></li>
-  <li><code>PUT /picture</code></li>
-  <li><code>PUT /password</code></li>
-</ul>
-
-<center><a target="_blank" href="data/api.html">Backend API list of endpoints</a></center>
-
 
 <!-- ********************************************************************** -->
 <!-- ********************************************************************** -->
-
 
 <h2>A User's Feed</h2>
 
@@ -102,109 +59,40 @@ var posts = getPostsByAuthors({ authors: usersToQuery, limit: 10 })
 <p>where the query will preferentially grab the 10 most recent posts by all of the users in the array.
 In this way the client will make one request to get the user's feed and it will be relatively small in size.
 To retrieve the next set of posts after the initial 10, we would implement pagination on the query.
-You'll want to look at the MongoDB documentation, specifically the find() function so that you 
-write only one query to the database, and return only the desired data.  The sorting of posts (most recent first) can be
+You'll want to look at the MongoDB/<a href="http://mongoosejs.com/docs/queries.html" target=_blank>mongoose</a> documentation,
+and write only one query to the database, and return only the desired data.  The sorting of posts (most recent first) can be
 done either by MongoDB (better) or by the server (not terrible).</p>
-</p>
-
-<h2>User Profile</h2>
-
-<p>
-A new user will have a blank profile picture (you could supply some default pic if you like) and should have some default status message.
-Additionally a user should be able to change their password.  When a user changes their password, generate a new random salt for them and store the new salt and hashed salted password in the document store.
-</p>
-
-<h2>Uploading Pictures</h2>
-
-<p style="
-    background-color: #ffe000;
-    padding: 0.5em;
-    width: 80%;
-    border-radius: 1em;
-    border: 1px solid black;
-    text-align: center;    
-    margin: auto;
-">If you already have, or plan to, implement uploading pictures to Cloudinary
-then you do not need upload.js (which accepts files and stores them locally on your Heroku dyno).
-Instead, skip to <a ng-click="vm.scrollTo('persistUpload')">Persistent Picture Uploads</a></p>
-
-<p>After you have all other endpoints functional, it is time to implement
-the uploading of images.  The profile.picture and post.img fields are both urls to images stored
-on our backend.  Note that we can potentially consume a lot of disk space if we're not careful
-about limiting user uploads etc.  Additionally, local storage is not persistent to dyno reboots, i.e., 
-after you repush your code, your Heroku dyno will reboot and any locally uplaoded files 
-will not be available on the new dyno.  Later we'll push storage off of our Heroku app.</p>
-
-<p>Multer is a node.js middleware for handling <code>multipart/form-data</code>, which is exactly what we have for uploading files.
-
-Here is the work horse already implemented for you.  
-Download <code>upload.js</code> and use it in your app.</p>
-
-<center><a target="_blank" href="data/upload.js">Get upload.js here</a></center>
-
-<p>Upload.js provides us one export <code>uploadFile</code> which provides to us middleware for use in our routes to upload the profile 
-picture and upload a post.  Upload.js additionally requires node-fs which is an extension to node's js module.</p>
-<pre class="prettyprint lang-bash">
-npm install multer node-fs --save
-</pre>
-<pre class="prettyprint lang-javascript">
-app.post('/post'   , isLoggedIn, uploadFile('post')  , addPost)
-app.put ('/picture', isLoggedIn, uploadFile('avatar'), setProfilePicture)
-
-// the middleware consumes the file (if it exists) and sets
-//   req.filepath = local path to file
-//   req.fileurl  = full url to file
-
-function setProfilePicture(req, res) {
-    var userObj = getUser(req.username)
-    userObj.picture = req.fileurl
-    res.send({ 
-        'status': 'OK', 
-        'username': userObj.username, 
-        'picture': userObj.picture 
-    })
-})
-</pre>
-<p>Test locally before uploading to Heroku so you can see where the files are being uploaded and moved to. 
-Again, each time your Heroku app reboots, it will start with a fresh installation which means none of the uploads
-will be persistent.</p>
-
-<a id="persistUpload"></a>
-<h3>Persistent Picture Uploads [optional]</h3>
-
-<p>
-MongoDB has a document limit size of 16 MB.  This means for most uploads we could probably
-store them as documents in MongoDB.  However, for images this is inconvenient because our
-backend server much first pull the document from MongoDB and then serve the image to the frontend.
-It would be much better if images were readily available to the frontend and the frontend
-could pull the images directly from a datastore.
-</p>
-<p>
-In lecture #26 I showed how we can use Amazon's S3 to store blobs of data, such as images.  
-S3 is a great service, and in fact S3 is used by Heroku for storage.  But outside of a free trial
-period, S3 is not free.  Following in class #26 we can use Cloudinary (which has a free tier) 
-to persist uploaded pictures (and other documents too).
-</p>
-<p>
-For this assignment you may either leave your pictures unpersisted to backend server reboots, or implement
-uploading to Cloudinary for picture persistence.
 </p>
 
 <h2>Third-Party Authentication</h2>
 
-<p>Following in class #24 add an option for third party authentication.  It is
+<p>Following an in class exercise add an option for third party authentication.  It is
 your pick as to which third party you partner with.  It can be Twitter, Facebook, Google, etc, 
 any OAuth or OAuth2 provider should work.  
 You should use either Request (OAuth) or PassportJS (OAuth or OAuth2) as middleware for authentication.</p>
 
 <p>On your landing page next to the register and login buttons have an additional button
-to login with the third party to login with.  When a user logs in this way you do not know what user
-account they are linked to in our system.  Create a new record in the document store with no salt,
-no password, and only a username which is identifiably for the third party you chose. 
-E.g., I might have username="sep1@rice" to signify this is the Rice OAuth service for the netid sep1
-and not have username conflicts with an already registered sep1 on our site.
+to login with the third party.  When a user logs in this way you do not know what user
+account they are linked to in our system.  Perhaps you can try looking up the user by their
+email address.  Nevertheless we will need some way to distinguish third part authenticated
+users from normal password users.  Therefore add an additional field to your User model
+to capture this.  When a user logs using third party authentication, if you do not already
+have a user record for them (i.e., by email or by looking up username+third party)
+then create a new record in the document store with no salt, no password, but with a username
+and with an identifier for the third party.
+E.g., I might have username="sep1" and auth="rice" to signify this is the Rice OAuth service for the netid sep1.
+Notice that we may now have username conflicts between "sep1" registered with a password and "sep1"
+with OAuth.  Perhaps we would link these accounts together?  But doing that without
+user confirmation can be problematic (what if the user owning sep1@rice does not own sep1 on our site?).
+Therefore we might instead choose to uniquly identify the username, e.g., "sep1@rice" 
+to prevent username conflicts with an already registered sep1 on our site.
 This way a user can always log in with third party auth and still use our site as if they 
 were a regular user.</p>
+
+<h4>Account Linking [OPTIONAL]</h4>
+<p>
+But perhaps the accounts do below to the same user?
+</p>
 <p>
 <em>Optionally</em> add to your profile page a way for a user to link their accounts together.
 For example, on the profile page there would be a "Link Account" button 
@@ -226,27 +114,73 @@ with them a session identifier.  This session id we store in a cookie for the us
 and in a map from session id to user on our server.  This way all subsequent
 requests from the user will be identifiable as them without requiring them
 to log in again.</p>
-<p>Following in class #25 move the in memory session id-to-user map 
+<p>Following an in class exercise, move the in memory sessionId-to-user map 
 to a Redis caching store.  In this way if we have multiple backend
 servers, they will share the memory of the session id lookup and not
 require users to login multiple times.</p>
 
+<h2>Persistent Picture Uploads</h2>
+
+<p>When we upload a picture to the server it will be stored on disk.  
+This we can potentially consume a lot of disk space if we're not careful
+about limiting user uploads etc.  Additionally, local storage on Heroku is not persistent to dyno reboots, i.e., 
+after you repush your code, your Heroku dyno will reboot and any locally uploaded files 
+will not be available on the new dyno.  Therefore local storage of images is not ideal.</p>
+<p>
+MongoDB has a document limit size of 16 MB.  This means for most uploads we could probably
+store them as documents in MongoDB.  However, for images this is inconvenient because our
+backend server much first pull the document from MongoDB and then serve the image to the frontend.
+It would be much better if images were readily available to the frontend and the frontend
+could pull the images directly from a datastore.
+</p>
+<p>
+In a lecture I showed how we can use Amazon's S3 to store blobs of data, such as images.  
+S3 is a great service, and in fact S3 is used by Heroku for storage.  But outside of a free trial
+period, S3 is not free.  Instead, we will use Cloudinary, which has a free tier,
+to persist uploaded pictures.
+</p>
+<p>We need a few modules: 
+Multer is a node.js middleware for handling <code>multipart/form-data</code>, which is exactly what we have for uploading files.</p>
+<pre class="prettyprint lang-bash">
+npm install cloudinary multer --save
+heroku addons:create cloudinary:starter
+heroku config | grep CLOUDINARY
+</pre>
+<p>
+The addon for Cloudinary requires billing information for Heroku -- again you will not be charged
+if you stay in the free tier.  If you can not get Cloudinary to work through the Heroku plugin
+you can go to their site and register directly.  We need the Cloudinary url, which is what
+the last line above provides.  Store the Cloudinary url in your local environemnt (.env or .env.json).
+</p>
+<center>Download the <a href="https://www.clear.rice.edu/comp431/sample/uploadCloudinary.js">Cloudinary starter</a> presented in class.</center>
+<p>
+Require this file in your <code>index.js</code> which will add a <code>GET /image</code> endpoint.  
+Using your browser, navigate to <a href="http://localhost:3000/image" target=_blank>http://localhost:3000/image</a>
+and try uploading an image.</p>
+
+<p>That was an example to get you started.  Now implement the <code>PUT /picture</code> endpoint
+and validate it works using your frontend.
+You also need to implement adding posts with text and images.  
+You will use the same middleware <code>uploadImage</code> for both uploads.
+</p>
+
 <h1>Requirements</h1>
 
 <ul>
-  <li>Your backend implements all endpoints, except the <code>/locations</code> 
-    endpoints, in the <a target="_blank" href="data/api.html">API list</a>.</li>  
-  <li>There are at least three collections in the MongoDB database as described above</li>
-  <li>User feed comprises 10 most recent posts from them and their following list</li>
-  <li>Users can update their profile picture and create posts with images</li>
-  <li>All data (except uploads if not using Cloudinary) is persistent to server reboot ala MongoDB</li>
+  <li>User feed includes posts from logged in user and their followers</li>
   <li>Third-Party Authentication Login</li>
   <li>Redis caching store for session management</li>
+  <li>Users can update their profile picture</li>
+  <li>Users can create posts with images</li>  
+  <li>All data is persistent to server reboots</li>
 </ul>
 
 <p>Your submission should include your final frontend and backend applications as well as your
-README.json file with URLs to your Heroku hosted sites.  Your directory structure
-<em>may</em> look like the following</p>
+README.json file with URLs to your Heroku hosted sites.  This is your <em>final</em> submission everything should work "out of the box".
+An automated robot will grade sections of your assignment.
+</p>
+<p>Your submission directory might look something like this</p>
+
 <div class="ui list"><div class="item">
     <i class="folder icon"></i>
     <div class="content">
@@ -261,7 +195,7 @@ README.json file with URLs to your Heroku hosted sites.  Your directory structur
             <div class="item">
               <i class="folder icon"></i>
               <div class="content">
-                <div class="header">RiceBookApp</div>
+                <div class="header">frontend</div>
                     <div class="list">
                         <div class="item">
                             <i class="file outline icon"></i>                            
@@ -271,76 +205,58 @@ README.json file with URLs to your Heroku hosted sites.  Your directory structur
               </div>
             </div>
 
+
+    <div class="item">
+        <i class="folder icon"></i><div class="content"><div class="header">backend</div>
+        
+        <div class="list">
+
+
+            <div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">.env or .env.json</div></div></div>
+            <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">index.js</div></div></div>
+            <div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">package.json</div></div></div>
+
+
             <div class="item">
-                <i class="folder icon"></i>
-                <div class="content">
-                    <div class="header">RiceBookServer</div>
-                    <div class="list">
-                        <div class="item">
-                            <i class="folder icon"></i>
-                            <div class="content">
-                                <div class="header">app_server</div>
-                                <div class="list">
+                <i class="folder icon"></i><div class="content"><div class="header">app_server</div>
+                <div class="list">
 
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">auth.js [all login/session logic]</div></div>
-                                    </div>  
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">db.js [database wrapper]</div></div>
-                                    </div>  
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">following.js [logic for following users]</div></div>
-                                    </div> 
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">model.js [if using mongoose]</div></div>
-                                    </div> 
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">posts.js [all post logic]</div></div>
-                                    </div>  
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">posts.spec.js</div></div>
-                                    </div>  
-                                    <div class="item">
-                                        <i class="file text outline icon"></i>
-                                        <div class="content"><div class="description">users.js [user profile logic]</div></div>
-                                    </div>  
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">auth.js [all login/session logic]</div></div></div>
 
-                                </div>
-                            </div>
-                        </div>      
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">db.js</div></div></div>
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">model.js</div></div></div>
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">following.js</div></div></div>
 
-                        <div class="item">
-                            <i class="file text outline icon"></i>
-                            <div class="content"><div class="description">index.js</div></div>
-                        </div>  
-                        <div class="item">
-                            <i class="file text outline icon"></i>
-                            <div class="content"><div class="description">package.json</div></div>
-                        </div>  
-                        <div class="item">
-                            <i class="file outline icon"></i>
-                            <div class="content"><div class="description">Procfile</div></div>
-                        </div>
-                        <div class="item">
-                            <i class="folder icon"></i>
-                            <div class="content"><div class="header">test-results</div>
-                                <div class="list">
-                                    <div class="item">
-                                        <i class="file outline icon"></i>
-                                        <div class="content"><div class="description">TEST-ValidatePostFunctionality.xml</div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                    </div>                  
+
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.js</div></div></div>
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.spec.js</div></div></div>
+
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.js</div></div></div>
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.spec.js</div></div></div>
+
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">cloudinary.js [renamed from uploadCloundary and stripped of the setup() export -- keep your code clean!]</div></div></div>
+
                 </div>
-            </div>      
+            </div></div>
+
+            <div class="item">
+                <i class="folder icon"></i><div class="content"><div class="header">testresults</div>
+                <div class="list">
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">...</div></div></div>
+                </div>
+            </div></div>
         </div>
-    </div>
+        </div>
+    </div>  
+            
+ </div></div>
+
+
+<!-- ******************************** -->
+<!-- ******************************** -->
+<!-- ******************************** -->
+<!-- ******************************** -->
+
+
+<hr>
 </div>

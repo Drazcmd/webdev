@@ -8,7 +8,7 @@
     .constant('appValues', { 
         syy: 'S16', 
         long: 'Spring 2016',
-        lastUpdated: '1/1/2016'
+        lastUpdated: '4/10/2016'
     })
     
     .controller('MainCtrl', MainCtrl)
@@ -118,7 +118,7 @@
 
         vm.getDueTime = function(id) {
             var duetime = undefined
-            if (vm.srv && vm.srv.getAssignment(id)) {
+            if (vm.srv && vm.srv.getAssignment(id)) {                   
                 duetime = vm.srv.getAssignment(id).duetime
             }
             return duetime ? "before class at 2:30 PM" : "after class by 2 AM"
@@ -156,9 +156,12 @@
         srv.assignments = {}
         
         srv.getDueDate = function(sessionDay, offset) {
-            if (!offset) {
-                offset = srv.sessions[sessionDay] ? srv.sessions[sessionDay].offset : 0
-            }
+
+            if (!offset) {                
+                var session = srv.sessions.filter(function(s) { return s.day == sessionDay})            
+                offset = session[0] ? session[0].offset : 0
+            }            
+            
             if (offset) {
                 sessionDay += offset
             }

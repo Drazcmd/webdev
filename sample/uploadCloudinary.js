@@ -5,17 +5,19 @@ var multer = require('multer')
 var stream = require('stream')
 var cloudinary = require('cloudinary')
 
+// multer parses multipart form data.  Here we tell
+// it to expect a single file upload named 'image'
+var uploadImage = multer().single('image')
+
+exports.uploadImage = uploadImage
+
 exports.setup = function(app) {
 	
 	// this provides a form.  This is uneeded because
 	// we have the upload on the frontend already.
 	app.get('/image', getImage)
 
-	// multer parses multipart form data
-	// here we tell it to expect a single file upload
-	// with the name "image"
-	app.post('/image', multer().single('image'), putImage)
-
+	app.post('/image', uploadImage, putImage)
 }
 
 function getImage(req, res) {
@@ -49,9 +51,8 @@ function putImage(req, res) {
 	}, { public_id: publicName })	
 
 	// multer can save the file locally if we want
-	// this is done in upload.js (see final assignment page)
-	// Instead we do not instruct multer to save the file
-	// and instead have the file in memory.
+	// instead we do not instruct multer to save the file
+	// and have the file in memory.
 	// multer provides req.file and within is the byte buffer
 
 	// we create a passthrough stream to pipe the buffer
