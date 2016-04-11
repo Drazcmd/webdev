@@ -118,6 +118,36 @@ to log in again.</p>
 to a Redis caching store.  In this way if we have multiple backend
 servers, they will share the memory of the session id lookup and not
 require users to login multiple times.</p>
+<p>Run these commands to add Redis</p>
+<pre class="prettyprint lang-bash">
+heroku addons:create heroku-redis:hobby-dev
+heroku plugins:install heroku-redis
+npm install redis --save
+heroku config | grep REDIS
+</pre>
+<p>
+The last line provides you your Redis URL.  Put this in .env or .env.json to access locally.
+Here is some code to get you started using Redis:
+</p>
+<pre class="prettyprint lang-javascript">
+var redis = require('redis').createClient(process.env.REDIS_URL)
+
+// This sets the key-value pair (sid, userObj)
+redis.hmset(sid, userObj)
+
+// This gets the value corresponding to the key sid -- it is an async call
+redis.hgetall(sid, function(err, userObj) {
+  console.log(sid + ' is mapped to ' + userObj)
+})
+</pre>
+<p>To log into your Redis server and flush the cache (i.e., delete all entires)
+to the following:</p>
+<pre class="prettyprint lang-bash">
+heroku redis:cli --confirm &lt;APPNAME&gt;
+redis> keys *
+redis> flushall
+</pre>
+<p>Here is the <a href="http://redis.io/commands" target=_blank>full list of commands</a> for Redis.</p>
 
 <h2>Persistent Picture Uploads</h2>
 
