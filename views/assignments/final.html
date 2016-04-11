@@ -89,23 +89,43 @@ to prevent username conflicts with an already registered sep1 on our site.
 This way a user can always log in with third party auth and still use our site as if they 
 were a regular user.</p>
 
-<h4>Account Linking [OPTIONAL]</h4>
+<h4>Account Linking</h4>
 <p>
 But perhaps the accounts do belong to the same user?
 </p>
 <p>
-<em>Optionally</em> add to your profile page a way for a user to link their accounts together.
+Add to your profile page a way for a user to link their accounts together.
 For example, on the profile page there would be a "Link Account" button 
 which if they are logged in using the third party, they would be able to login with a username 
 and password for our site.  If they are logged into our site, then it would direct them
 to login with the third party.  After the user has logged in the second time,
-we merge the two accounts together, storing the third party information in a new field of
-the document.  I.e., I would merge sep1 and sep1@rice into one record, sep1 with a new field,
-perhaps <code>auth = [ rice: sep1, google: sep1, facebook: sep1  ]</code> so that I can 
+we merge the two accounts together.
+This means we need to search to see if there was already the second User record
+and delete it if it exists.  I.e., if I logged in as sep1 and then as sep1@rice
+but then wanted to link the accounts together, then I would delete the sep1@rice record,
+and merge the followed users together.
+For the sep1 record I would add the additional auth information, 
+perhaps the field would be <code>auth = [ rice: sep1, google: skotep, facebook: scott ]</code> so that I can 
 link multiple third party accounts.  Later when a user logs in using the third party, 
-we need a MongoDB query that searches this new auth field to find a previously linked account.
+we need a MongoDB query that searches this new auth field to find the account in addition
+to searching by username.
 </p>
-<p>If we can link accounts then we should also allow users to unlink accounts, which should be straightforward.</p>
+<p>If we can link accounts then we should also allow users to unlink accounts, which should be straightforward.
+In this case we would only delete the OAuth account, we would not generate a new User record for it, i.e.,
+if I unlink my @rice then auth becomes: <code>[ google: skotep, facebook: scott ]</code> but
+no sep1@rice User record will be generated separately.</p>
+
+
+<p style="
+    background-color: #fe0;
+    padding: 0.5em;
+    width: 80%;
+    border-radius: 1em;
+    border: 1px solid black;
+    text-align: center;    
+    margin: auto;
+">
+<b>Tip!</b><br/> Complete all other parts of the assignment before you work on linking accounts.</p>
 
 <h2>Session Management</h2>
 
