@@ -9,7 +9,7 @@
     {"item":"AutoGrader: register a new account", "pts":3},
     {"item":"AutoGrader: login as new account", "pts":3},
     {"item":"AutoGrader: Add a post", "pts":3},
-    {"item":"AutoGrader: Backend GET /post/id works as expected", "pts":3},
+    {"item":"AutoGrader: Backend GET /posts/id works as expected", "pts":3},
     {"item":"AutoGrader: New posts appear in GET /posts", "pts":3},    
     {"item":"AutoGrader: Posts are persistent across multiple days", "pts":5},
     {"item":"AutoGrader: Edit post", "pts":3},
