@@ -11,14 +11,13 @@
 	{"item":"Is free of most errors in grammar, usage, and mechanics", "pts": 10 }
 ]},
 {"section":"Presentation", "items": [
-	{"item":"Topic was pre-approved", "pts": 10},
-	{"item":"Talk is about 6 minutes in length", "pts": 5},
-	{"item":"Opening of presentation clearly describes topic premise including opinion", "pts": 5}, 
-	{"item":"Demonstrates enthusiasm about topic", "pts": 5},
-	{"item":"Demonstrates understanding of the topic", "pts": 5}, 
-	{"item":"Presentation materials are legible", "pts": 5}, 
-	{"item":"Presentation materials are additive to content delivery", "pts": 5},
-	{"item":"Closing of presentation summarizes main points", "pts": 5},
-	{"item":"Provides references for additional information", "pts": 5}
+	{"item":"Talk is no more than 5 minutes in length", "pts": 10},
+	{"item":"Opening of presentation clearly describes topic premise including opinion", "pts": 6}, 
+	{"item":"Demonstrates enthusiasm about topic", "pts": 6},
+	{"item":"Demonstrates understanding of the topic", "pts": 6}, 
+	{"item":"Presentation materials are legible", "pts": 6}, 
+	{"item":"Presentation materials are additive to content delivery", "pts": 6},
+	{"item":"Closing of presentation summarizes main points", "pts": 6},
+	{"item":"Provides references for additional information", "pts": 4}
 ]}
 ]

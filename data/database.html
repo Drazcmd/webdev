@@ -69,7 +69,6 @@ Here are two different ways of doing it.  Decide for yourself which "style" belo
 <pre class="prettyprint lang-javascript">
 // this is .env
 MONGOLAB_URI="mongodb://ian:sekret@widmore.mongohq.com:27017/dev_local"
-REDIS_KEY="1234"
 
 // runs these in terminal
 # npm install dotenv --save-dev
@@ -84,8 +83,7 @@ or
 <pre class="prettyprint lang-javascript">
 // this is .env.json
 {
-  "MONGOLAB_URI": "mongodb://ian:sekret@widmore.mongohq.com:27017/dev_local",
-  "REDIS_KEY": "1234"
+  "MONGOLAB_URI": "mongodb://ian:sekret@widmore.mongohq.com:27017/dev_local"
 }
 
 // runs these in terminal
@@ -196,7 +194,7 @@ data and users.  Add your <em>dummy server test user</em> to your site.  This is
 same password as well.  (You'll need to generate a salt and then store the salt and the hash of the salted password in mongo.)  </p>
 <p>Next add some sample content. For example, you can pull posts from the dummy server and
 post them to your server.  I wrote a script to do this for you.  You can use it or modify it as you like.  
-Download <a target="_blank" href="data/initDatabase.js">initDatabase.js</a>
+Download <a target="_blank" href="initDatabase.js">initDatabase.js</a>
 and place in a node package that has <code>request</code> already installed (e.g., your backend!).
 Create a file <code>cred.json</code> with something like the following:
 </p>
