@@ -1,0 +1,534 @@
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
+<style>
+code, pre {
+    font-size: 0.85em;
+}
+
+table {
+     border: 2pt solid black;
+     border-collapse: collapse;
+     font-size: 80%;
+}
+
+td {
+     padding: 1em;
+     border: 1pt solid grey;
+}
+
+tr.double {
+     border-top: 3pt double black;
+}
+
+.warning {
+    background-color: #ff5555;
+    padding: 0.5em;
+    width: 80%;
+    border-radius: 1em;
+    border: 1px solid black;
+    text-align: center;    
+    margin: auto;
+}
+</style>
+
+<div onload="prettyPrint()">
+
+<p>
+In this assignment you will begin developing your backend server and complete the implementation of your frontend web application.
+Your frontend webapp from this assignment will be reviewed by your peers 
+to provide you user feedback.</p>
+
+<p>Separations of concerns instructs us to
+divide our application into separate front and back end processes.  
+In this way our application is modular, can be selectively scaled, 
+and we have indepdence to change each at their own pace.
+In this assignment we will separately host our frontend and backend applications on Heroku.</p>
+
+<p>The remaining implementations missing from our frontend web app are the ability
+to upload an image with a post, register new users, edit a user's profile including uploading a new profile picture, 
+the listing of followed users with their status headlines and profiles pictures,
+adding a new followed users, and removing followed users.
+For our first implementation of the backend server we will implement
+the status and post endpoints, and provide stubs for the others.</p>
+
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<h2>Frontend</h2>
+
+<p>In the previous assignment we implemented the ability for users to login to our webapp,
+and pulled from the dummy server the user's status message, their profile picture,
+and their feed of posts.
+Now we add the missing functionality to create a fully functioning 
+social networking web application frontend.
+</p>
+<p>
+Continue to use <code>$resource</code> to communicate with the dummy server. See <strong><a href="data/api.html#upload" target=_blank>this</a></strong> section of the API page for help in implementing the picture uploads from your frontend.
+</p>
+
+<p>
+For this assignment we will use Protractor and write end-to-end tests to validate the full functioning of our web app.  
+So you can still do test driven development (TDD) by writing the Protractor end-to-end tests first
+and then implement the missing functionality.
+During your development, use the python SimpleHTTPServer / http.server to host your web page locally and have Protractor run against it.  The required tasks for your end-to-end tests are listed in the requirements section below.
+</p>
+
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<!-- ******************************************************************** -->
+<h2>Backend</h2>
+
+<p>
+We will have separate frontend and backend applications.  
+Your frontend app is currently talking to my dummy server, and eventually we want it talking to your server.  But there's a lot of work to get that done!
+</p>
+
+<h3>Setting up your backend server</h3>
+
+<p>Getting started you should do your development for your backend in it's own directory separate from your frontend and separate from your hw submission directory, i.e., just like how we separated <code>hw#-frontend</code> from the <code>frontend</code> directory, create a new <code>backend</code> directory to use for development.  Therefore in this assignment we will work in the <code>frontend</code> directory for completing the frontend webapp and deploying to Heroku, the <code>backend</code> directory for our implementation of the backend server and deploying to Heroku, and the <code>hw{{vm.hwid}}-{{vm.assignmentId}}</code> directory that contains our files to submit to turnin.</p>
+
+<p>Let's get our backend setup.  If you have not already done so you need to install <a target=_blank href="https://nodejs.org">NodeJS</a>
+and then get your backend server running.
+For the "npm init" call below, the defaults are in general fine, i.e., just press enter a lot.
+Again if you already completed the inclass exercise and have a working Node server, you can skip these steps.
+<pre class="prettyprint lang-bash">
+cd backend
+npm init
+npm install express body-parser --save
+wget https://www.clear.rice.edu/comp431/sample/RiceBookServer/index.js
+</pre>
+The "init" call will create for us a <code>package.json</code> file which will be the 
+configuration for our NodeJS application.  Given that we want a 
+<a href="https://en.wikipedia.org/wiki/MEAN_(software_bundle)" target="_blank">MEAN application</a>, 
+we install express and we'll use the body-parse middleware to make things easier for us.
+The --save flag in <code>npm install</code> adds these dependencies to our <code>package.json</code>
+file so when Heroku builds our app it will grab these dependencies for us.
+The final step above is to pull the example <code>index.js</code> from the class website. 
+</p>
+<p>We can now run our Node application</p>
+<pre class="prettyprint lang-bash">
+node index.js
+</pre>
+<p>Test it out by navigating to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> it should say "Hello World!".  In the sample from the course site there is also the <code>POST /post</code> endpoint.  To test this you can either use a browser extension such as Advanced REST Client or Postman, or use curl on the commandline:
+<pre class="prettyprint lang-bash">
+curl -H 'Content-Type: application/json' -d '{"Hello": "World" }' http://localhost:3000/post
+</pre>
+<p>The -H flag of curl sets a header field which tells the server we are going to send a JSON payload.  The -d flag is the payload: Notice that we have formatted it as JSON because that's what we told the server we were going to do.  <em>If you don't do this correctly then it won't work correctly!</em>  If you look at <code>index.js</code> you'll notice we use the middleware <code>bodyParser.json()</code> which parses the JSON input and places the payload in the <code>body</code> attribute of the request object (normally called <code>req</code>).</p>
+
+<!-- ******************************************************************** -->
+<h3>Stubbing the Backend</h3>
+
+<p>Stubs are <a href="https://en.wikipedia.org/wiki/Method_stub" target=_blank>"pieces of code used to stand in for some other programming functionality."</a> 
+For this assignment we will create stubs for all of the desired endpoints of our API.  
+After the stubs are created, then we will implement selected functionality 
+in this assignment.
+
+<p>Here is the recommended breakout by endpoint for each source file in your backend server
+<table>
+     <tr><th>endpoint</th><th>verbs</th><th>source file</th></tr>  
+     <tr><td>/login</td><td>POST</td><td>auth.js</td></tr>
+     <tr><td>/logout</td><td>PUT</td><td>auth.js</td></tr>
+     <tr><td>/register</td><td>POST</td><td>auth.js</td></tr>
+     <tr><td>/password</td><td>PUT</td><td>auth.js</td></tr>
+     <tr class="double"><td>/posts</td><td>GET, PUT</td><td>posts.js</td></tr>
+     <tr><td>/post</td><td>POST</td><td>posts.js</td></tr>
+     <tr class="double"><td>/status</td><td>GET, PUT</td><td>profile.js</td></tr>
+     <tr><td>/statuses</td><td>GET</td><td>profile.js</td></tr>
+     <tr><td>/email</td><td>GET, PUT</td><td>profile.js</td></tr>
+     <tr><td>/zipcode</td><td>GET, PUT</td><td>profile.js</td></tr>
+     <tr><td>/pictures</td><td>GET</td><td>profile.js</td></tr>     
+     <tr><td>/picture</td><td>PUT</td><td>profile.js</td></tr>     
+     <tr class="double"><td>/following</td><td>GET, PUT, DELETE</td><td>following.js</td></tr>
+</table>
+Start by creating "stubs" for all endpoints.  A stub returns dummy data, for example
+<pre class="prettyprint lang-javascript">
+// this is profile.js which contains all user profile 
+// information except passwords which is in auth.js
+exports.setup = function(app) {
+    app.get('/statuses/:users*?', getStatuses)
+}
+
+function getStatuses(req, res) {
+
+    // this isn't correct, but gives you a starting point
+    // for the stub this is a fine implementation
+    var username = req.params.users.split(',')[0]
+
+    // but what if 'users' is not specified as a parameter in the request?
+    // then we use the currently logged in user, i.e., req.user
+
+    // this returns only one status, but we want to send
+    // an array of all the requested user's statuses
+    res.send({ statuses: [ 
+        { username: username, status: 'the status of the user' } 
+    ] })
+}
+</pre>
+The API for the endpoints is the same as for the dummy server 
+(i.e., this way we don't need to change any of the frontend code).  That api is found here
+<center><a target="_blank" href="data/api.html#api">Backend API list of endpoints</a></center>
+Note you do not need to create a stub for <code>GET /sample</code></p>
+
+<!-- ******************************************************************** -->
+<h3>What to implement</h3>
+
+<p>Just as for the previous assignment, we will employ test driven development as we implement
+our backend server.  Therefore start by writing Jasmine unit tests for each unit of functionality
+we desire to implement, and then implement that functionality, thereby satisfying the test criteria.</p>
+
+<p>We'll use <code>jasmine-node</code> for running our unit tests.  
+To get XML test results, use the following command</p>
+<pre class="prettyprint lang-bash">
+./node_modules/.bin/jasmine-node --output testresults --junitreport app_server
+</pre>
+<p>I recommend you add the following "scripts" to your package.json file:
+<pre class="prettyprint lang-javascript">
+{
+	...
+  "scripts": {
+    "start": "node index.js",
+    "test": "./node_modules/.bin/jasmine-node app_server",
+    "autotest": "./node_modules/.bin/jasmine-node --color --autotest --output testresults --junitreport app_server"
+  },
+  	...
+}
+</pre>
+where I place all of my server js files in the <code>app_server</code> directory.  Then I can
+type "<code>npm run test</code>" to run my Jasmine tests and "<code>npm run autotest</code>" to "watch"
+my app_server directory for changes and then run my tests.  In this way I can do continuous development and
+always can see how my tests respond to changes.
+</p>
+
+<p>For this assignment, write tests for, and then implement, the following endpoints 
+(see the <a target=_blank href="data/api.html#api">API page for specification</a>)</p>
+<ul>
+	<li><code>GET /status</code></li>
+	<li><code>PUT /status</code></li>
+	<li><code>GET /statuses/:users*?</code></li>	
+	<li><code>GET  /posts/:id*/</code> (test both with no :id specified, you should have 3 posts returned, then test with a valid id, and then test with an invalid id)</li>	
+	<li><code>POST /post</code> (test that adding a post increments the post id, validate the contents of the new post)</li>
+</ul>
+
+<p>We do not yet have a database for storing the information
+the server needs to provide to the client.  Therefore we keep
+all data in memory.  For example, we can use a map for status headlines, for example,</p>
+<pre class="prettyprint lang-javascript">
+var _statues = { }
+...
+function getStatuses(req, res) {
+
+    // this isn't correct, but gives you a starting point
+    // for the stub this is a fine implementation
+    var username = req.params.users.split(',')[0]
+
+    // but what if 'users' is not specified as a parameter in the request?
+    // then we use the currently logged in user, i.e., req.user
+
+	if (!_status[username]) {
+		_status[username] = "Hello World!"
+	}
+
+    // this returns only one status, but we want to send
+    // an array of all the requested user's statuses
+    res.send({ statuses: [ 
+        { username: username, status: _status[username] } 
+    ] })
+}
+</pre>
+<p>Here I prepend underscore to the variable name to help me remember that this is a "global" variable.  
+
+<p>Similar to status,  we'll have an array for posts.  
+We should start with 3 hardcoded posts in this array.
+When a new post is added, it should be added to this array.  
+A post has the following schema:
+<pre class="prettyprint lang-javascript">
+var post = {
+	id: int,
+	author: string,
+	body: string,
+	date: new Date(),
+	comments: []
+}
+</pre>
+A new post will arrive with only the body in the payload.  The timestamp is the current time on the server,
+the author is the currently logged in user, and the id is a unique value determined by the server (the 
+length of the post array would be sufficient for now).  The response to <code>POST /post</code>
+is an array of the newly added post, i.e., with it's timetsamp, author, and id values supplied.
+The newly added post will automatically be available in the list of all posts
+returned by a call to the <code>GET /posts</code> endpoint.
+For now you can supply whatever username you want, just as for the status endpoint above.
+</p>
+
+<p>
+Check that your backend works by performming the following commands (either using curl as shown here or Advanced Rest Client or similar)</p>
+<pre class="prettyprint lang-bash">
+curl https://ricebookserver.herokuapp.com/posts
+# you should receieve 3 posts
+curl -H 'Content-Type: application/json' -d '{ "body": "My first post!" }' https://ricebookserver.herokuapp.com/posts
+# you should get a complete post back with id.  I assume the value is 12345, let's verify getById works:
+curl https://ricebookserver.herokuapp.com/posts/12345
+# you should get your new post again
+curl https://ricebookserver.herokuapp.com/posts
+# you should get 4 posts now
+</pre>
+<p>We will use an automated test similiar to these commands to check the functionality of your backend.</p>
+
+<!-- ******************************************************************** -->
+<h3>Deploying your Back-End</h3>
+
+<p>When you have completed the implementation of the required pieces of your
+backend server you are ready to publish your server to Heroku.  
+The backend server will be hosted under a different application name than
+the frontend web app.  If you did not already create a backend Heroku app during
+an inclass exercise, then following these steps to
+create a git repo and a Heroku application.  
+Note that we tell git not to add our <code>node_modules</code> directory to the repo by adding it to the gitignore file (Heroku will automatically install these libraries for us because they are in our package.json file).  In the below I have named by server "ricebookserver" you will want
+to pick your own name, or omit and Heroku will supply a name for you</p>
+</p>
+<pre class="prettyprint lang-bash">
+git init
+heroku create ricebookserver
+echo web: node index.js > Procfile
+echo node_modules > .gitignore
+echo npm-debug.log >> .gitignore
+git add .gitignore Procfile package.json index.js
+git commit -m 'initial commit'
+git push heroku master
+</pre>
+<p>No need to set a buildpack this time, Heroku should automatically recognize that we have a NodeJS application.</p>
+
+
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<!-- *********************************************************** -->
+<h2>Requirements</h2>
+
+<p>Similar to before, create a file <code>README.json</code> that has contents similar to what is below (we will read this programmatically so please make sure you follow this style)</p>
+<pre style="border: 1px solid black; padding: 0.5em;">
+{ 
+     "netid": "sep1",
+  "frontend": "https://ricebookapp.herokuapp.com",
+   "backend": "https://ricebookserver.herokuapp.com"
+}
+</pre>
+<p>replace "ricebookapp" and "ricebookserver" with the names of your frontend and backend applications, and replace "sep1" with your netID.</p>
+
+<h3>Frontend</h3>
+
+<p>We finish the implementation of the frontend of our webapp while continuing to use the dummy server as 
+a backend data store.</p>
+
+<ul>
+	<li>Your frontend is deployed on Heroku</li>
+	<li>All of the functionality in the previous assignment is assumed to be working in this assignment</li>
+	<li>Landing view: Register a new user, but new users cannot log in</li>
+	<li>Profile view: update email and zipcode with validation</li>
+	<li>Profile view: upload new profile picture</li>
+	<li>Profile view: update password, but new password will not persist</li>	
+	<li>Main view: <a href="data/api.html#upload" target=_blank>add a new post with both text and a picture</a></li>
+	<li>Main view: sidebar shows followed users with profile pictures and statuses</li>
+	<li>Main view: add user to followed users list</li>
+	<li>Main view: remove user from followed users list</li>
+	<li>Your completed and published frontend webapp will be viewed by your peers</li>
+</ul>
+
+<h3>End-to-End Tests</h3>
+
+<p>Your end-to-end tests will run against your web app running on your local python server.  Here are the tasks for your end-to-end test</p>
+
+<ul>
+	<li>Register a new user</li>
+	<li>Log in as your test user [Note: the dummy server has special logic for these test users]</li>
+	<li>Create a new post and validate the post appears in the feed</li>
+	<li>Update the status headline and verify the change</li>
+	<li>Count the number of followed users</li>
+	<li>Add the user "Follower" to the list of followed users and verify the count increases by one</li>
+	<li>Remove the user "Follower" from the list of followed users and verify the count decreases by one</li>
+	<li>Search for "Only One Post Like This" and verify only one post shows, and verify the author</li>
+	<li>Navigate to the profile view and verify the page is loaded</li>
+	<li>Update the user's email and verify</li>
+	<li>Update the user's zipcode and verify</li>
+	<li>Update the user's password, verify a "will not change" message is returned</li>
+</ul>
+<p>Include a JUnitXML report of your end-to-end tests: <code>e2e-results/junitresults.xml</code>
+</p>
+
+<h3>Backend</h3>
+
+<p>Your backend server will be hosted on Heroku, we will use a grading robot to validate
+your implementation, so be sure you test your deployed server before you submit to turnin.
+</p>
+
+<ul>	
+	<li>Your backend server is deployed on Heroku.</li>
+	<li><code>GET /statuses/:user*?</code> returns a status message, you do not need to return more than one status</li>
+	<li><code>GET /status</code> returns a status message</li>
+	<li><code>PUT /status</code> updates that status</li>
+	<li><code>GET /posts/</code> returns all posts, 3 hardcoded and any additional that are added</li>
+	<li><code>GET /posts/:id</code> returns the post with the requested id if it exists, none otherwise</li>
+	<li><code>POST /post</code> adds a new post to the list of all posts.  Returns the newly added post</li>
+	<li>Unit test that PUT status updates the status message, i.e., GET, PUT to change the value, GET to verify it was changed</li>
+	<li>Unit test adding a post, i.e., GET and count the current number of posts, POST a new post, verify you get back what you added, then GET again and count the number verifying it increased by one</li>
+	<li>The other endpoints all function and return stubbed data according to the API definition.</li>
+</ul>
+<p>Inlucde a JUnitXML report of your backend unit tests, e.g., <code>testresults/TEST-ValidatePostFunctionality.xml</code>
+</p>
+
+<h2>What to submit</h2>
+
+<p>Your submission directory might look something like this</p>
+
+<div class="ui list"><div class="item">
+	<i class="folder icon"></i>
+	<div class="content">
+		<div class="header">hw{{vm.hwid}}-{{vm.assignmentId}}</div>
+
+		<div class="list">
+
+			<div class="item">
+				<i class="file text outline icon"></i>
+				<div class="content"><div class="description">README.json</div></div>
+	 		</div>
+
+
+		<div class="item">
+			<i class="folder icon"></i><div class="content"><div class="header">frontend</div>
+			<div class="list">
+
+			<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">index.html</div></div></div>
+
+			<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">jasmine.html</div></div></div>
+			<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">karma.conf.js</div></div></div>
+
+			<div class="item">
+				<i class="file image outline icon"></i>
+				<div class="content"><div class="description">styles.css</div></div>
+			</div>
+
+					<div class="item">
+						<i class="folder outline icon"></i><div class="content">coverage</div>
+					</div>
+
+			<div class="item">
+				<i class="folder icon"></i>
+				<div class="content"><div class="header">e2e</div>
+
+				<div class="list">
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">protractor.conf.js</div></div></div>
+
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">scenarios.js</div></div></div>
+				</div>
+			</div> </div>
+
+			<div class="item">
+				<i class="folder icon"></i>
+				<div class="content"><div class="header">e2e-results</div>
+				<div class="list">
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">junitresults.xml</div></div></div>
+				</div>
+			</div> </div>
+
+			<div class="item">
+				<i class="folder icon"></i><div class="content"><div class="header">app</div>
+
+				<div class="list">
+
+					<div class="item">
+						<i class="file text outline icon"></i>
+						<div class="content"><div class="description">main.html</div></div>
+					</div>
+
+					<div class="item">
+						<i class="file outline icon"></i>
+						<div class="content"><div class="description">app.js</div></div>
+					</div>
+
+
+					<div class="item">
+						<i class="folder outline icon"></i><div class="content">services</div>
+					</div>
+
+					<div class="item">
+						<i class="folder outline icon"></i><div class="content">login</div>
+					</div>
+
+					<div class="item">
+						<i class="folder outline icon"></i><div class="content">post</div>
+					</div>
+
+					<div class="item">
+						<i class="folder outline icon"></i><div class="content">status</div>						
+					</div>
+
+					<div class="item">
+						<i class="folder outline icon"></i><div class="content">following</div>
+					</div>
+
+					<div class="item">
+						<i class="folder outline icon"></i><div class="content">profile</div>
+					</div>
+
+				</div></div>
+			</div> <!-- end app directory -->
+	</div></div></div>
+
+
+	<div class="item">
+		<i class="folder icon"></i><div class="content"><div class="header">backend</div>
+		<div class="list">
+
+
+			<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">index.js</div></div></div>
+			<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">package.json</div></div></div>
+
+
+			<div class="item">
+				<i class="folder icon"></i><div class="content"><div class="header">app_server</div>
+				<div class="list">
+
+
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">auth.js</div></div></div>
+
+                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">following.js</div></div></div>
+
+
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.js</div></div></div>
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.spec.js</div></div></div>
+
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.js</div></div></div>
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.spec.js</div></div></div>
+
+				</div>
+			</div></div>
+
+			<div class="item">
+				<i class="folder icon"></i><div class="content"><div class="header">testresults</div>
+				<div class="list">
+
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">TEST-ValidatePostFunctionality.xml.js</div></div></div>
+					<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">TEST-ValidateStatusFunctionality.xml.js</div></div></div>
+				</div>
+			</div></div>
+
+		</div></div>
+	</div>	
+ 		 	
+ </div></div>
+
+
+<p>Note that I have places the status endpoints in <code>profile.js</code> as a look ahead to 
+the way in which we will be persisting the data: the status of a user will be stored along
+with their other profile information.</p>
+
+<!-- ******************************** -->
+
+
+
+<hr>
+</div>

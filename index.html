@@ -14,18 +14,18 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular-route.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular-animate.js"></script>
 	<script>window.angular || document.write('<script src="js/libs/angular-1.4.1.min.js">\x3C/script>'
-		+ '<script src="js/libs/angular-route-1.4.1.js>\x3C/script>'
-		+ '<script src="js/libs/angular-route-1.4.1.js>\x3C/script>')</script>
+		+ '<script src="js/libs/angular-route-1.4.1.js">\x3C/script>'
+		+ '<script src="js/libs/angular-animate-1.4.1.js">\x3C/script>')</script>
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-	<script>window.moment || document.write('<script src="js/libs/moment-2.10.3.min.js">\x3C/script>')</script>
+	<script>window.moment || document.write('<script src="js/libs/moment.min.js">\x3C/script>')</script>
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.0/semantic.min.js"></script>
+	<!--<script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.0/semantic.min.js"></script>-->
+	<script src="js/libs/semantic.min.js"></script>
 	<link rel="stylesheet" type="text/css" class="ui" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.0/semantic.min.css">
 
 	<script src="js/app.js"></script>
 	<link rel="stylesheet" href="css/styles.css" />
-
 </head>
 
 <body ng-app="CoursePageApp" ng-controller="MainCtrl as main">
@@ -38,11 +38,11 @@
 			<div class="header item">
 				COMP 431/531 Web Development
 			</div>
-			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/') }" href="#/"> <i class="dashboard icon"></i>Syllabus</a>
+			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/') }" href="#/"> <i class="home icon"></i>Syllabus</a>
 			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/schedule') }"href="#/schedule"><i class="calendar icon"></i>Schedule</a>
-			<a class="item" ng-class="{ 'active' : (main.$location.path().split('/')[1] == 'assignments') }"href="#/assignments">Assignments</a>
-			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/resources') }"href="#/resources"><i class="calendar icon"></i>Resources</a>
-			<a class="item" href="#/">{{ main.term }}</a>
+			<a class="item" ng-class="{ 'active' : (main.$location.path().split('/')[1] == 'assignments') }"href="#/assignments"><i class="film icon"></i>Assignments</a>
+			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/resources') }"href="#/resources"><i class="university icon"></i>Resources</a>
+			<a class="item" href="#/">{{ main.term }}</a>			
 		</div>
 	</div>
 

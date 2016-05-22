@@ -5,6 +5,11 @@
     .module('CoursePageApp', ['ngRoute', 'ngAnimate'])
     .config(config)
     .service('JsonDataService', JsonDataService)
+    .constant('appValues', { 
+        syy: 'F16', 
+        long: 'Fall 2016',
+        lastUpdated: '6/1/2016'
+    })
     
     .controller('MainCtrl', MainCtrl)
     .controller('AssignmentCtrl', AssignmentCtrl)
@@ -44,8 +49,8 @@
     //$locationProvider.html5Mode(true);
     }
     
-    AssignmentCtrl.$inject = ['$routeParams', '$timeout', 'JsonDataService']
-    function AssignmentCtrl($routeParams, $timeout, JsonDataService) {
+    AssignmentCtrl.$inject = ['$location', '$routeParams', '$timeout', '$anchorScroll', '$scope', 'JsonDataService', 'appValues']
+    function AssignmentCtrl($location, $routeParams, $timeout, $anchorScroll, $scope, JsonDataService, appValues) {
         var vm = this;
         vm.name = "AssignmentCtrl";
         vm.params = $routeParams;
@@ -56,7 +61,10 @@
         vm.assignmentId = null;
         vm.rubric = null;
         vm.url = null;
-        vm.showRubric = false;
+        vm.showRubric = true;
+        vm.scrollTo = scrollTo
+        vm.repoSYY = appValues.syy
+        vm.hwid = null;
 
         vm.computeTotalPoints = function(items) {
             return items.map(function(item) { return item.pts })
@@ -85,6 +93,7 @@
                 vm.assignmentId = undefined;
                 vm.url = undefined;
                 vm.rubric = undefined;
+                vm.showRubric = (vm.assignmentName != 'General Info')                
                 return;
             }
             var a = vm.srv.getAssignment(id);
@@ -96,9 +105,11 @@
                 vm.assignmentName = a.name;
                 vm.assignmentDue = a.due;
                 vm.assignmentId = id;
+                vm.hwid = a.hwid
                 vm.url = 'views/assignments/' + id + '.html';
                 vm.rubric = a.rubric;
-                vm.showRubric = false;
+                //vm.showRubric = false;
+                vm.showRubric = (vm.assignmentName != 'General Info')
             }
         }
         $timeout(function() {
@@ -106,20 +117,28 @@
         }, 200);
 
         vm.getDueTime = function(id) {
-            var duetime = vm.srv.getAssignment(id).duetime
-            return duetime ? "before class at 2:30 PM" : "after class by midnight"
+            var duetime = undefined
+            if (vm.srv && vm.srv.getAssignment(id)) {                   
+                duetime = vm.srv.getAssignment(id).duetime
+            }
+            return duetime ? "before class at 2:30 PM" : "after class by 2 AM"
+        }
+
+        function scrollTo(anchor) {
+            $anchorScroll.yOffset=80 // for the nav
+            $anchorScroll(anchor ? anchor : 'rubric')
         }
 
     }
     
-    MainCtrl.$inject = ['$route', '$routeParams', '$location']
-    function MainCtrl($route, $routeParams, $location) {
+    MainCtrl.$inject = ['$route', '$routeParams', '$location', 'appValues']
+    function MainCtrl($route, $routeParams, $location, appValues) {
         var vm = this;
         vm.$route = $route;
-        vm.$location = $location;
+        vm.$location = $location;        
         vm.$routeParams = $routeParams;
-        vm.lastUpdated = "7/3/2015"
-        vm.term = "Fall 2015"
+        vm.lastUpdated = appValues.lastUpdated
+        vm.term = appValues.long
     }
     
     ScheduleCtrl.$inject = ['$route', '$routeParams', '$location', 'JsonDataService']
@@ -132,16 +151,26 @@
     function JsonDataService($http) {
         
         var srv = this;
-        srv.firstDayOfClass = moment("2015-08-25")
+        srv.firstDayOfClass = moment("2016-08-23")
         srv.sessions = []
         srv.assignments = {}
         
-        srv.getDueDate = function(sessionDay) {
+        srv.getDueDate = function(sessionDay, offset) {
+
+            if (!offset) {                
+                var session = srv.sessions.filter(function(s) { return s.day == sessionDay})            
+                offset = session[0] ? session[0].offset : 0
+            }            
+            
+            if (offset) {
+                sessionDay += offset
+            }
+
             var week = Math.floor((sessionDay - 1) / 2);
             var dow = (sessionDay - 1) - 2 * week;
             return moment(srv.firstDayOfClass)
-            .add(week, 'weeks').add(dow * 2, 'days')
-            .format("ddd MM/DD")
+                .add(week, 'weeks').add(dow * 2, 'days')
+                .format("ddd MM/DD")
         }
         
         srv.getAssignment = function(id) {
