@@ -1,0 +1,40 @@
+[
+     {"section":"All Reviews", "items": [
+          {"item":"What features do you think are important (front-end side) for a social networking web application?", "pts":9}
+     ]},
+     {"section":"Review 1", "items": [
+          {"item":"What did you like best?", "pts":4},
+          {"item":"What to improve?", "pts":4},
+          {"item":"Site comparison", "pts":5}
+     ]},
+     {"section":"Review 2", "items": [
+          {"item":"What did you like best?", "pts":4},
+          {"item":"What to improve?", "pts":4},
+          {"item":"Site comparison", "pts":5}
+     ]},
+     {"section":"Review 3", "items": [
+          {"item":"What did you like best?", "pts":4},
+          {"item":"What to improve?", "pts":4},
+          {"item":"Site comparison", "pts":5}
+     ]},
+     {"section":"Review 4", "items": [
+          {"item":"What did you like best?", "pts":4},
+          {"item":"What to improve?", "pts":4},
+          {"item":"Site comparison", "pts":5}
+     ]},
+     {"section":"Review 5", "items": [
+          {"item":"What did you like best?", "pts":4},
+          {"item":"What to improve?", "pts":4},
+          {"item":"Site comparison", "pts":5}
+     ]},
+     {"section":"Review 6", "items": [
+          {"item":"What did you like best?", "pts":4},
+          {"item":"What to improve?", "pts":4},
+          {"item":"Site comparison", "pts":5}
+     ]},
+     {"section":"Review 7", "items": [
+          {"item":"What did you like best?", "pts":4},
+          {"item":"What to improve?", "pts":4},
+          {"item":"Site comparison", "pts":5}
+     ]}
+]

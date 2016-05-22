@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" class="ui" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.0/semantic.min.css">
+<style>
+
+body {
+	padding: 3em;
+	margin: auto;
+	max-width: 800px;
+}
+
+table {
+     border: 2pt solid black;
+     border-collapse: collapse;
+     font-size: 80%;
+}
+
+td {
+     padding: 1em;
+     border: 1pt solid grey;
+}
+</style>
+</head>
+<body>
+
+<h1>Database Setup</h1>
+
+<p>We need a database to store user information and to persist posts.  Because we are developing a MEAN stack,
+we will use MongoDB for our document store.  Heroku provides an easy prescription for 
+setting up a <a target=_blank href="https://elements.heroku.com/addons/mongolab">free mLab (mongolab) mongoDB</a> for your backend app.  
+As <a target=_blank href="heroku.html">mentioned previously</a>, you need to supply
+Heroku a credit card, but so long as you stay within the free tier you will not be charged.
+
+<p><a target=_blank href="https://docs.mongodb.org/manual/">MongoDB documentation</a></p>
+
+<h3>Setting up with mLab directly</h3>
+
+<p>For Heroku to add the mongodb add-on you need to supply them a credit card.  
+Don't worry they won't charge you unless you go over your "free" quota. 
+</p><p>
+If you have difficulty giving Heroku your credit card (i.e., the billing page provides an error) 
+then ... you can wait and try again... or, we can get a free mongodb from mLab.</p>
+<ol>
+	<li>Create an account at <a target=_blank href="https://mlab.com/">mlab.com</a></li>
+	<li>Create a new mongodb deployment</li>
+	<li>Add a database user to your deployment (make it a writable account, i.e., not read only)</li>
+	<li>Now you have a URI that you can connect to from your Heroku backend app</li>
+</ol>
+<img src="../images/mongolab.png" width="550" alt="mLab setup">
+<p>Once you have the URI you can use this URI in your local run of the backend server
+as well as on Heroku.  First we need to tell Heroku to use that URI for it's configuration:</p>
+<pre class="prettyprint lang-bash">
+heroku config:set MONGOLAB_URI=mongodb://&lt;the URI from mLab&gt;
+</pre>
+
+<h2>Connecting to MongoDB locally</h2>
+
+<p>We want to do as much development as possible on our locally running server
+before pushing it to Heroku, and then iteratively develop locally until we are ready
+for another push.  Now we could hardcode the mLab URI in our code,
+but this breaks separations of concerns: configuration should not be in code.
+Instead we want to use environment variables.
+</p>
+<p>When running locally you can store your environment variables in a local file and then load them in node.
+Here are two different ways of doing it.  Decide for yourself which "style" below you like better
+</p>
+<pre class="prettyprint lang-javascript">
+// this is .env
+MONGOLAB_URI="mongodb://ian:sekret@widmore.mongohq.com:27017/dev_local"
+REDIS_KEY="1234"
+
+// runs these in terminal
+# npm install dotenv --save-dev
+# echo .env >> .gitignore
+
+// add this to index.js
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').load()
+}
+</pre>
+or
+<pre class="prettyprint lang-javascript">
+// this is .env.json
+{
+  "MONGOLAB_URI": "mongodb://ian:sekret@widmore.mongohq.com:27017/dev_local",
+  "REDIS_KEY": "1234"
+}
+
+// runs these in terminal
+# npm install dot-env --save-dev
+# echo .env.json >> .gitignore
+
+// add this to index.js
+if (process.env.NODE_ENV !== "production") {
+    require('dot-env')
+}
+</pre>
+<p>So either store your environment in a shell file or in a json file -- your pick.
+In both cases we save the loading module in our dev dependencies (so they don't show up on Heroku)
+and ignore the environment file (so it doesn't show up on Heroku).  Put the loading logic
+in your <code>index.js</code> file so it will be loaded first on startup.
+</p>
+
+<h2>Database Collections</h2>
+
+<p>In the database we will have at least three collections: users, posts, profiles. 
+If we were using a RDBMS or ODM (e.g., mongoose) then these are what the schemas might look like
+</p>
+<pre class="prettyprint lang-javascript">
+users {
+    username: String,
+    salt: String,
+    hash: String    
+}
+
+profiles {
+    username: String,
+    status: String,
+    following: [ String ],
+    email: String,
+    zipcode: String,
+    picture: String    
+}
+
+posts {
+    id: Number,
+    author: String,
+    body: String,
+    date: Date,
+    img: String, 
+    comments: [{
+        commentId: Number,
+        author: String,
+        body: String,
+        date: Date
+    }]
+}
+</pre>
+<p>If you use mongoose, then you would call these schemas by their singular name: user, profile, post. 
+I would therefore have in my <code>model.js</code> file</p>
+<pre class="prettyprint lang-javascript">
+// this is model.js
+var mongoose = require('mongoose')
+
+var userSchema = new mongoose.Schema({
+    ...
+})
+
+exports.User = mongoose.model('users', userSchema)
+</pre>
+<p>and then in auth.js I would have</p>
+<pre class="prettyprint lang-javascript">
+// this is in auth.js
+var models = require('./model.js')
+
+models.User.find({ username: "sep1" }).exec(function(err, users) {
+    ...
+})
+</pre>
+<p>If you're not using mongoose (which is 100% okay) then you'd have something like this</p>
+<pre class="prettyprint lang-javascript">
+// this is in auth.js
+db.collection('users').find({ username: "sep1" }).toArray(function(err, users) {
+    ...
+})
+</pre>
+<p>and there may or may not be a <code>model.js</code> file depending on where you put your logic -- just remember <em>divide to conquer</em>!</p>
+
+<!-- ********************************************************************** -->
+<!-- ********************************************************************** -->
+
+<h2>Database Integration</h2>
+
+<p>Implement the logic to query the database for the <code>GET</code> endpoints, and write to the database for the <code>PUT</code> and <code>POST</code> endpoints.
+The default implementation of mongoDB collections have an <code>_id</code> field.  The _id is <u>automatically</u> populated
+for you during inserts.  
+<pre>
+_id: ObjectId("5099803df3f4948bd2f98391")
+</pre>
+<p>you can use this instead of a numeric id supplied by your server.  I.e., just omit "id" from your schema and perform
+queries on _id instead.  That means a request for a specific post might be</p>
+<pre>
+GET /posts/5099803df3f4948bd2f98391
+</pre>
+<p>instead of <code>GET /posts/1234</code> which is perfectly fine.  </p>
+<p>
+For the commentId you get to choose what to do.  A "global" value probably is not a good idea because
+it may collide across different servers.  Instead you might consider something unique, such as the hash of the author &amp; timestamp which assumes that an individual user will only be connected to one server and making one post at a time -- which I think is a reasonable assumption to make.  The commentId therefore is a String not a number.  Again, it doesn't matter what it is, it is just for us to use when looking up and identifying a particular comment for editing.</p>
+
+<h2>Initializing the Database</h2>
+
+<p>We start with an empty database of users, posts, and profile information.  But to visualize your site we would like some sample 
+data and users.  Add your <em>dummy server test user</em> to your site.  This is the one with a username like "sep1test" -- use the 
+same password as well.  (You'll need to generate a salt and then store the salt and the hash of the salted password in mongo.)  </p>
+<p>Next add some sample content. For example, you can pull posts from the dummy server and
+post them to your server.  I wrote a script to do this for you.  You can use it or modify it as you like.  
+Download <a target="_blank" href="data/initDatabase.js">initDatabase.js</a>
+and place in a node package that has <code>request</code> already installed (e.g., your backend!).
+Create a file <code>cred.json</code> with something like the following:
+</p>
+<pre class="prettyprint lang-javascript">
+{
+     "dummy_username": "sep1test",
+     "dummy_password": "native-web-tester",
+     "dummy_URI": "https://webdev-dummy.herokuapp.com",
+     "site_username": "sep1test",
+     "site_password": "native-web-tester",
+     "site_URI": "https://ricebookserver.herokuapp.com"
+}
+</pre>
+<p>Update the site_URI to be <em>your backend site</em> -- if you're running locally then it would be http://localhost:8080 probably.  
+Make sure you use double-quotes everywhere: it needs to be valid JSON.  Then run the program:</p>
+<pre class="prettyprint lang-bash">
+node initDatabase.js 
+</pre>
+<p>It will login to the dummy server, pull posts and push them to your server.  You can run this for your user, your test user, and for my test user (credentials above).  <u>Note that it does not do comments -- so modify the script to do it or add comments manually.</u>  The script literally pushes what it reads, so if your post schema is different then it may not behave well.</p>
+<p><strong>You are encouraged to examine and edit the code.</strong></p>
+
+<hr>
+

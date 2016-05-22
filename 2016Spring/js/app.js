@@ -6,9 +6,9 @@
     .config(config)
     .service('JsonDataService', JsonDataService)
     .constant('appValues', { 
-        syy: 'F16', 
-        long: 'Fall 2016',
-        lastUpdated: '6/1/2016'
+        syy: 'S16', 
+        long: 'Spring 2016',
+        lastUpdated: '1/1/2016'
     })
     
     .controller('MainCtrl', MainCtrl)
@@ -151,7 +151,7 @@
     function JsonDataService($http) {
         
         var srv = this;
-        srv.firstDayOfClass = moment("2016-08-23")
+        srv.firstDayOfClass = moment("2016-01-12")
         srv.sessions = []
         srv.assignments = {}
         

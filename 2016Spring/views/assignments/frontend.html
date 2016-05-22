@@ -1,0 +1,308 @@
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
+<style>
+code, pre {
+    font-size: 0.85em;
+}
+</style>
+
+<div onload="prettyPrint()">
+
+<p>
+In this assignment you will partially implement and test the frontend of your web application.  
+We start with our draft frontend application that contains three views: 
+<ul>
+  <li>landing page with registration and login</li>
+  <li>main page with posts, followers, and status message</li>
+  <li>profile page which let's a user upload a new profile picture and edit their data</li>
+</ul>
+Remember that when tackling any large task our best approach is to divide and conquer.  For 
+this assignment there are three major portions:
+<ol>
+	<li>Angularizing the three views into a single page application (SPA)</li>
+	<li>Writing unit tests for the desired Controller functionality and mocking the dummy server endpoints</li>
+	<li>Implementing Controllers for our site and connecting to the dummy server</li>
+</ol>
+<p>Additionally we want to peform test driven development as we implement our webapp.  Therefore
+before we implement anything we will first write tests for our functionality.  In this
+way the desired behavior will drive our implementation and design.</p>
+
+<p>Perhaps the most important part of this assignment is the integration of your frontend webapp with
+a backend server that supplies data.</p>
+
+<h2>Angularization</h2>
+
+<p>Using Angular views and routing, refactor our three separate html files, index.html, main.html, and profile.html,
+into a SPA.  This means index.html will contain an ng-view which will, upon routing, point to login.html, main.html or profile.html, suitably refactored.  The file structure of your web app should follow that 
+of the <a target="_blank" href="sample/RiceBookApp">RiceBookApp</a> example where we have a top level index page, an app directory, and then subdirectories for each component such as posts or users, etc.  Each subdirectory would have at least a view html file, a controller js file, and possibly a spec js file (see below).  You should also have a separate js file for your services.  Remember: one controller, factory, or service per file.</p>
+
+<p>
+As you begin the Angularization of your site, focus on the routing and delegation of sections of the web app to controllers. 
+Recall that a controller is in charge of a single view and controllers should have as small of a scope as possible.
+This will mean that for sharing information between controllers we will use a service, for example the User service might
+be used to keep track of the currently logged in user.
+</p>
+
+<p><a target=_blank href="http://plnkr.co/edit/EEBZXvZ5ZdrgEaQk4Xas?p=preview">Here is an example that should help you get started with 
+routing and communicating with the dummy server.</a></p>
+
+<h3>Test Driven Development</h3>
+
+<p>We will exercise test driven development instead of writing the implementation of our web app first and testing later.
+Write Jasmine unit tests for the desired behavior and we'll use Karma for the execution of the test suite.  
+For portions of your webapp that you have already implemented, go back and write tests for them.  
+For new functionality, write tests first and then implement.
+</p>
+
+<h4>Unit Tests</h4>
+
+<p>We will have a Status or User controller that is in charge of allowing the user to update their status.  It also displays the
+user's status on the page.  For our first test we will simulate the user entering a new status message, which will
+be sent to the server for persistence.  The test code might be similar to</p>
+<pre class="prettyprint lang-javascript">
+it('should update the status message', function() {
+  var newStatus = 'A new status message'
+  ctrl.updateStatus(newStatus)
+  ctrl._resolveTestPromises()
+  expect(ctrl.status).toBe(newStatus)
+})
+</pre>
+<p>Where we have mocked the resource calls to the dummy server.
+See below for the list of unit tests that we require in this assignment.
+</p>
+
+<h4>Behavior Implementation</h4>
+
+<p>Now that we have failing tests we need to implement the desired functionality so that the tests
+pass.  In this way we also assure that all of the code we write is covered by our test cases.
+I.e., we should get high marks for code coverage with no extra effort and no need to later refactor our
+code so that it will be testable -- this again is a benefit of test driven development.</p>
+
+<p>Note that the username of the logged in user may be needed by several controllers.  Therefore we will want a User service that contains the user's information.  This User service would be injected into individual controllers as needed.</p>
+
+<h3>Dummy Server</h3>
+
+<p>After we have written our tests, and fleshed out the implementation of our controllers,
+we are ready to implement the <code>$resource</code> service connection to the dummy server.
+Because the dummy server requires authentication, we should start by working on
+the login logic.  
+After we have logged in, then we can work on getting that status message of the currently logged in user,
+posts for the user, etc, from the server.  
+</p>
+<p>Please refer to the <a target="_blank" href="data/api.html#api">list of endpoints</a> which is your API to the dummy data server.  You have been pre-provided a user on the dummy server in addition to a test user.  Instructions on getting
+started with the dummy server are at the top of the API page.
+</p>
+<p>The User service should not communicate directly with the resource service, 
+nor should it be mutated by that service.  The resource service should have no side-effects.  
+Instead, the User service is updated by whatever Controller needs to make the update.  
+See the <a target="_blank" href="sample/TabApp">TabApp</a> example for how this can be done.
+</p>
+<p>Once we are completed with the connections to the dummy server
+ we can manually verify that our site works as expected because we already tested and implemented
+the status and followers functionality, the site should therefore be fully functional in these two areas.  Perform
+live user testing by logging in with your account, changing your status message, and then logging in with your test user
+account and verify that the status message is indeed persistent.
+</p>
+
+<h3>For next time...</h3>
+<p>
+In the next assignment we will implement the uploading of images for posts, the list of followers, editing the user profile, and new user registation.
+</p>
+
+<h2>Requirements</h2>
+
+<p>Use Chrome as your standard supported browser.  Whereas you can use any browser you like for development, your assignment will be accessed using Chrome by the grading staff and therefore it behooves you that it works.
+</p>
+<p>Host your submission on Heroku, you may use the same appname as for the draft frontend assignment.  
+Include the URL in a <code>README.json</code> file as before.  The deployed version of your code on Heroku may be used during grading.  
+Therefore after you make your submission, please do not re-deploy to Heroku until the next assignment.</p>
+
+<p>Remember separation of concerns and write DRY modularized code.</p>
+
+<h3>Functionality</h3>
+<p>Below are the functional requirements for this assignment.  
+All of the data mentioned below comes
+from the dummy server, therefore the only hard-coded data in your frontend code is the user's profile information and the following list on the main view.
+The currently logged in user's status and profile picture and collection of posts all come from the dummy server.</p>
+<ul>	
+	<li>User can log in with netID and three-word-passphrase, if successful then redirect to the main view, otherwise inform user of incorrect login</li>
+	<li>When a user logs out it redirects to the landing view</li>
+	<li>status headline for user is displayed</li>
+	<li>ability to update status headline for user</li>
+	<li>display user's profile picture</li>	
+	<li>list of posts from server with newest posts first</li>
+	<li>search bar filters displayed posts by author or body, but not date or post id</li>
+	<li>add a new post with text (no picture upload required yet)</li>
+	<li>edit posts authored by the logged in user</li>
+	<li>each post has a list of comments</li>	
+	<li>add a new comment on a post</li>
+	<li>edit comments authored by the logged in user</li>		
+</ul>
+
+<h3>Unit Test</h3>
+<p>Use Jasmine and Karma to test your application.  Note that in principle we only test "our" code and not "framework" code.  Therefore we 
+do not need to test that a Controller functions as advertised by the Angular team.  Instead we only want to test our specific business logic
+that we wrote.</p>
+<ul>
+	<li>Test your search filter to filter by body and author but not by date or post id</li>
+	<li>Test updating the user's status headline</li>
+	<li>Test adding a new post</li>
+	<li>Test editing a post</li>	
+	<li>Test commenting on a post</li>	
+	<li>Test editing a comment</li>
+
+	<li>Test logging in a user</li>
+	<li>Test logging out a user (User service should have no username stored after logout)</li>
+	<li>Test that the User service shares the logged in username between the status and post controllers 
+		(this exercise is good to do, but is in fact testing the framework)</li>	
+	<li>Include your Jasmine coverage results page in your submission</li>
+</ul>
+
+<h2>What to submit</h2>
+
+<p>Remember to develop your web app in your <code>frontend</code> directory and then copy your files for the final submission to the <code>hw{{vm.hwid}}-{{vm.assignmentId}}</code> directory to <em>turnin</em>.  We do not want any library files (i.e., angular.js) or your Heroku files (i.e., Procfile and .git directory) to be submitted to turnin.  Your submission <em>might</em> look like this:</p>
+
+<!-- ******************************** -->
+<div class="ui list"><div class="item">
+	<i class="folder icon"></i>
+	<div class="content">
+		<div class="header">hw{{vm.hwid}}-{{vm.assignmentId}}</div>
+
+		<div class="list">
+
+			<div class="item">
+				<i class="file text outline icon"></i>
+				<div class="content"><div class="description">README.json</div></div>
+	 		</div>
+
+			<div class="item">
+				<i class="file text outline icon"></i>
+				<div class="content"><div class="description">index.html</div></div>
+			</div>
+
+			<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">jasmine.html</div></div></div>
+			<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">karma.conf.js</div></div></div>
+
+			<div class="item">
+				<i class="file image outline icon"></i>
+				<div class="content"><div class="description">styles.css</div></div>
+			</div>
+
+			<div class="item">
+				<i class="folder icon"></i>
+				<div class="content"><div class="header">coverage</div>
+
+				<div class="list">
+					<div class="item"><i class="folder outline icon"></i>
+						<div class="content"><div class="description">Chrome...</div></div>
+			 		</div>
+				</div></div>
+			</div> <!-- end coverage directory -->
+
+
+			<div class="item">
+				<i class="folder icon"></i><div class="content"><div class="header">app</div>
+
+				<div class="list">
+
+					<div class="item">
+						<i class="file text outline icon"></i>
+						<div class="content"><div class="description">main.html</div></div>
+					</div>
+
+					<div class="item">
+						<i class="file outline icon"></i>
+						<div class="content"><div class="description">app.js</div></div>
+					</div>
+
+
+					<div class="item">
+						<i class="folder icon"></i>
+						<div class="content"><div class="header">services</div>
+
+						<div class="list">
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">apiSrv.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">apiMock.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">userSrv.js</div></div></div>
+						</div>
+					</div></div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">login</div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">login.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">loginCtrl.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">loginCtrl.spec.js</div></div></div>
+						</div>
+					</div></div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">post</div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">post.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postCtrl.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postCtrl.spec.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postFilter.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">postFilter.spec.js</div></div></div>
+						</div>
+					</div></div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">status</div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">status.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">statusCtrl.js</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">statusCtrl.spec.js</div></div></div>
+						</div>
+					</div></div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">following</div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">following.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">followingCtrl.js (not fully implemented)</div></div></div>							
+						</div>
+					</div></div>
+
+					<div class="item">
+						<i class="folder icon"></i><div class="content"><div class="header">profile</div>
+						<div class="list">
+							<div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">profile.html</div></div></div>
+							<div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profileCtrl.js (not fully implemented)</div></div></div>
+						</div>
+					</div></div>
+
+				</div></div>
+			</div> <!-- end app directory -->
+
+	 	</div>
+ 	</div>
+ </div></div>
+
+<p>The important thing about the above structure is that each portion of the web app has it's own directory.  
+We try to keep the HTML files small.  We try to be modular in our design patterns.  You are not required
+to follow this directory structure exactly, but you are required to have a modular layout.  For example, you might
+have a separate directory for your styles, perhaps called css.  Or you might separate your styles by functionality, i.e., post.css.
+This is okay.  What is important is that there <em>is</em> structure and that the structure makes good extensible and maintainable sense.
+</p>
+
+<p>
+Note that in the above, the registration and login sections of <code>index.html</code> have been moved to <code>login.html</code> 
+and the <code>main.html</code> page has been stripped of much of it's content, that content being moved to <code>post.html</code>,
+<code>status.html</code>, and <code>following.html</code>, and being loaded using ng-include.  Alternatively you keep <code>main.html</code> monolithic -- this is your choice.  Additionally I've written my post filter in a separate file, and tested my filter functionality
+by itself.
+</p>
+
+<p>Note again that for this assignment we are not requiring new posts to 
+allow image uploads -- we'll do that in the next assignment.</p>
+
+<p>
+The followingCtrl has just enough logic so that a list of hard-coded followers is
+displayed to the screen.  
+It does not need to be connected to the dummy server.  
+Similarly the profileCtrl has just enough logic to show hard coded values, but otherwise
+does not need the logic we previously developed to validate the changed entries etc.  
+We will re-add this logic in the next assignment, so don't loose it!
+</p>
+
+</div>
