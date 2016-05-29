@@ -1,0 +1,103 @@
+<html>
+
+<style>
+#red { 
+	color: red;
+}
+
+.blue {
+	color: blue;
+}
+
+#shrunken {
+	font-size: 8pt;
+}
+
+</style>
+
+
+
+<body>
+
+<h2>With CSS</h2>
+
+<p><span id="red">A &lt;font&gt; tag can be
+used to change the "font" of some text.</span>  This
+<em>still</em> works because browsers are backwards
+compatible and are forgiving. We can even change
+<span style="font-family: verdata; font-size: 14pt">the font face</span>
+or <span id="shrunken"> even the size</span>.
+But the <em>control</em> over these styles
+is made difficult because we have to search
+the DOM for the tags and then modify them.</p>
+
+<p>
+<span style="color: red">name</span>,
+<span style="color: #ff55aa">#ff55aa</span>,
+<span style="color: rgb(255, 156, 0)">rgb(255,156,0)</span>,
+<span style="color: rgba(0,10,55,0.5)">rgba(0,10,55,0.5)</span>
+<span style="color: hsl(25,80%,15%)">hsl(25,80%,15%)</span>
+<span style="color: hsla(25,80%,15%,0.5)">hsla(25,80%,15%,0.5)</span>
+</p>
+
+<a href="http://www.w3schools.com/cssref/css_colornames.asp" title="w3schools colors">
+http://www.w3schools.com/cssref/css_colornames.asp
+</a>
+
+<p>
+<span style="text-decoration: overline">overlined text</span>
+<span style="text-decoration: underline">is better than underlined text</span>
+</p>
+<p>
+<span style="letter-spacing: 1em">we control the horizontal</span>
+<span style="word-spacing: 1.5em">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <span style="text-transform: uppercase">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</span> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span>
+</p>
+<p>
+<span style="line-height: 3em">We control the vertical!
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span>
+</p>
+
+<div>
+
+<p>
+<img style="height: 5em" src="Rice_Owl_small.jpg">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+<div style="float:right; width: 30%; border: 0.5em solid blue; padding: 1em; margin: 2em">
+	<img style="float:left; margin: 1em; height: 4em;" src="Rice_Owl_small.jpg">
+	<p>
+	float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right float right
+	</p>
+</div>
+
+<p>
+<img style="height: 5em; position:absolute; left: 8em; top: 60em" src="Rice_Owl_small.jpg">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<!---
+<div style="position:fixed; left: 50%; top: 50%">
+	<img style="height: 5em; position:relative; left: -2.5em" src="Rice_Owl_small.jpg">
+</div>
+-->
+</div>
+
+<div style="height:30em"></div>
+
+<div style="display:inline">
+<p style="display:inherit">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+</p>
+<p style="color: blue; display:inline">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+</p><p style="display:inline">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+<span style="border: 1pt dashed red">
+<span style="visibility:hidden">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></span> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+<img style="float:left; margin: 1em; height: 4em;" src="Rice_Owl_small.jpg">
+<img style="display:none; float:left; margin: 1em; height: 4em;" src="Rice_Owl_small.jpg">
+<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+
+</body>
+</html>
