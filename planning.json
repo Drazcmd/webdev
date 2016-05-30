@@ -1,10 +1,15 @@
 {
+    "class": {
+        "term": "Fall",
+        "year": "2016",
+        "firstDay": "2016-08-23"
+    },
 	"assignments": [
 	{ "name": "Simple Page", "due": 3, "id": "simple" },
 	{ "name": "Dynamic Page", "due": 6, "id": "dynamic" },
 	{ "name": "JavaScript Game", "due": 9, "id": "jsgame" },
 	{ "name": "Draft Front-End", "due": 12, "id":"draftfront" },
-	{ "name": "Front-End App", "due": 16, "id": "frontend"},    
+	{ "name": "Front-End App", "due": 16, "id": "frontend"},
 	{ "name": "Draft Back-End", "due": 20, "id": "draftback"},
 	{ "name": "Integrated Web App", "due": 24, "id": "integrated"},
 	{ "name": "Final Full Web App", "due": 29, "id": "final" },
@@ -32,7 +37,7 @@
 	{ "day": 15, "topic": "Web Servers", "exercise": "node server", "offset": 1 },
 	{ "day": 16, "topic": "Back End", "exercise": "endpoints", "offset": 1 },
 	{ "day": 17, "topic": "Architecture and REST", "exercise": "stubbing", "offset": 1 },
-	{ "day": 18, "topic": "Back End Unit Testing", "exercise": "Backend Unit Tests", "offset": 1 },
+	{ "day": 18, "topic": "Back-End Unit Testing", "exercise": "Backend Unit Tests", "offset": 1 },
 	{ "day": 19, "topic": "Web hosting", "exercise": "Heroku", "offset": 1 },
 	{ "day": 20, "topic": "Databases", "exercise": "MongoDB", "offset": 1 },
 	{ "day": 21, "topic": "Salted Authorization", "exercise": "login", "offset": 1 },
