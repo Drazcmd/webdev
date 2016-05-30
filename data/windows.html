@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" class="ui" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.0/semantic.min.css">
+<style>
+
+body {
+    padding: 3em;
+    margin: auto;
+    max-width: 800px;
+}
+
+table {
+     border: 2pt solid black;
+     border-collapse: collapse;
+     font-size: 80%;
+}
+
+td {
+     padding: 1em;
+     border: 1pt solid grey;
+}
+</style>
+</head>
+<body >
+
+<h2>Using Windows in COMP 431 / COMP 531</h2>
+
+<p>
+The Windows operating system poses a collection of challenges for web developers.  Naively
+everything should work out of the box.  However, much of what we do in web development utilizes
+the command line.  Additionally, compiling from source sometimes poses problems.  Heroku for example
+requires Ruby, and we also utilize some Python -- so we have lots of resources that are desired.
+It has been 50-50 if Windows environments "work" or require a lot of "work".
+</p>
+<p>In Windows there are a few options:</p>
+<ul>
+    <li>Windows command prompt</li>
+    <li>Cygwin bash</li>
+    <li>Git bash</li>
+    <li>Windows Ubuntu bash</li>
+</ul>
+<p>Using the command prompt alone might work, but you might find yourself feeling like you're translating languages.</p>
+<p>Personally I use Cygwin in Windows land.
+This being said, I typically have to re-engineer my solutions for every Windows machine I
+touch.  I.e., my Cygwin setup on my desktop is different than the Cygwin setup on my laptop.
+This requires a great deal of dedication and persistence.
+</p>
+<p>Git bash may be a good solution, but I have not spent much time with it given that I already have Cygwin.</p>
+<p>The last item in the list is very intriguing, but is still rather new, and I don't yet have any feedback to give you on it.</p>
+
+<h3>Virtual Machine</h3>
+<p>A gauranteed solution is to use a virtual machine (VM) and run Linux within it.
+I recommend the most recent version of Ubuntu available on the <a href="https://www.virtualbox.org/wiki/Linux_Downloads" target="_blank">linux downloads page</a>.
+The instructional staff can provide some assistance in getting your VM running and configured, but you are advised to following
+the documentation and see if you can get it running yourself.
+In particular, you will likely want to have some shared drive between the VM and your Windows machine, as well as forward ports so that you can access
+your VM's website from your Windows browser.</p>
+
+<hr>
