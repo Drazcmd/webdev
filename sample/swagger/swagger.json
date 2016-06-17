@@ -1,5 +1,6 @@
 {
     "swagger": "2.0",
+    "host": "webdev-dummy.herokuapp.com",
     "info": {
         "version": "0.1.0",
         "title": "Webdev Dummy Server"
