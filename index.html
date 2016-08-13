@@ -42,7 +42,7 @@
 			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/schedule') }"href="#/schedule"><i class="calendar icon"></i>Schedule</a>
 			<a class="item" ng-class="{ 'active' : (main.$location.path().split('/')[1] == 'assignments') }"href="#/assignments"><i class="film icon"></i>Assignments</a>
 			<a class="item" ng-class="{ 'active' : (main.$location.path() == '/resources') }"href="#/resources"><i class="university icon"></i>Resources</a>
-			<a class="item" href="#/">{{ main.term }}</a>			
+			<a class="item" href="#/">{{ main.getTerm() }}</a>			
 		</div>
 	</div>
 

@@ -12,15 +12,15 @@
   <div class="ui grid">
 
     <div class="four wide column">
-      <div class="ui vertical fluid tabular menu">    
-        <a class="item" 
-        ng-class="{ active: vm.assignmentName === 'General Info' }" 
+      <div class="ui vertical fluid tabular menu">
+        <a class="item"
+        ng-class="{ active: vm.assignmentName === 'General Info' }"
         ng-click="vm.setAssignment()">
         <div class="header">General Info</div>
-        </a>            
-        <a class="item" 
-        ng-class="{ active: a.name == vm.assignmentName }" 
-        ng-click="vm.setAssignment(a.id)" 
+        </a>
+        <a class="item"
+        ng-class="{ active: a.name == vm.assignmentName }"
+        ng-click="vm.setAssignment(a.id)"
         ng-repeat="a in vm.srv.assignments">
         <div class="header">{{a.hwid ? a.hwid + ". " : ""}}{{a.name}}</div>
         (due {{ vm.srv.getDueDate(a.due) }})</a>
@@ -46,9 +46,17 @@
             <li>Webapp for submissions: <a target=new_window href="https://webdev-rice.herokuapp.com/">https://webdev-rice.herokuapp.com/</a></li>
             <li>The webapp will complain report an error if you do not follow the directory naming guideline, i.e., if you try to submit for inclass-3 but do not have a top level directory inclass-3 in your repo then it will error.</li>
           </ul>
+
+          <h3>Development Resources</h3>
+          <ul>
+            <li><a href="data/windows.html" target="_blank">Using Windows?  Here are some tips.</a></li>
+            <li><a href="data/api.html" target="_blank">Using the Dummy Server</a></li>
+            <li><a href="data/heroku.html" target="_blank">Getting Started with Heroku</a></li>
+            <li><a href="data/database.html" target="_blank">MongoDB Database Setup</a></li>
+          </ul>
         </div>
 
-        <div class="ui message transition" ng-show="vm.assignmentId">Remember to review the 
+        <div class="ui message transition" ng-show="vm.assignmentId">Remember to review the
         <span ng-click="vm.scrollTo()" class="rubriclink"><b>Rubric</b></span> before you submit!</div>
 
         <div class="ui message transition" ng-include="vm.url"></div>
@@ -68,7 +76,7 @@
           <tr><th class="right aligned rubrichead">Total&nbsp;&nbsp;</th>
               <th class="right aligned rubrichead">&nbsp;[{{ vm.getTotalPoints() }}]</th></tr>
         </table>
-       
+
       </div><!-- end segment -->
     </div><!-- end stretched column -->
 

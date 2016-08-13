@@ -1,15 +1,15 @@
 (function(angular) {
     'use strict';
+
+    var Globals = {
+        lastUpdated: '5/29/2016'
+    }
     
     angular
     .module('CoursePageApp', ['ngRoute', 'ngAnimate'])
     .config(config)
     .service('JsonDataService', JsonDataService)
-    .constant('appValues', { 
-        syy: 'F16', 
-        long: 'Fall 2016',
-        lastUpdated: '6/1/2016'
-    })
+    .service('AppValues', AppValues)
     
     .controller('MainCtrl', MainCtrl)
     .controller('AssignmentCtrl', AssignmentCtrl)
@@ -49,8 +49,8 @@
     //$locationProvider.html5Mode(true);
     }
     
-    AssignmentCtrl.$inject = ['$location', '$routeParams', '$timeout', '$anchorScroll', '$scope', 'JsonDataService', 'appValues']
-    function AssignmentCtrl($location, $routeParams, $timeout, $anchorScroll, $scope, JsonDataService, appValues) {
+    AssignmentCtrl.$inject = ['$location', '$routeParams', '$timeout', '$anchorScroll', '$scope', 'JsonDataService', 'AppValues']
+    function AssignmentCtrl($location, $routeParams, $timeout, $anchorScroll, $scope, JsonDataService, AppValues) {
         var vm = this;
         vm.name = "AssignmentCtrl";
         vm.params = $routeParams;
@@ -63,7 +63,7 @@
         vm.url = null;
         vm.showRubric = true;
         vm.scrollTo = scrollTo
-        vm.repoSYY = appValues.syy
+        vm.getRepoSYY = function() { return AppValues.syy }
         vm.hwid = null;
 
         vm.computeTotalPoints = function(items) {
@@ -131,14 +131,16 @@
 
     }
     
-    MainCtrl.$inject = ['$route', '$routeParams', '$location', 'appValues']
-    function MainCtrl($route, $routeParams, $location, appValues) {
+    MainCtrl.$inject = ['$route', '$routeParams', '$location', 'AppValues']
+    function MainCtrl($route, $routeParams, $location, AppValues) {
         var vm = this;
         vm.$route = $route;
         vm.$location = $location;        
         vm.$routeParams = $routeParams;
-        vm.lastUpdated = appValues.lastUpdated
-        vm.term = appValues.long
+        vm.lastUpdated = Globals.lastUpdated
+        vm.getTerm = function() {
+            return AppValues.long
+        }
     }
     
     ScheduleCtrl.$inject = ['$route', '$routeParams', '$location', 'JsonDataService']
@@ -147,11 +149,15 @@
         vm.sessions = JsonDataService.sessions;
         vm.getDueDate = JsonDataService.getDueDate;
     }
+
+    function AppValues() {
+        return { syy: '?', long: '??' }
+    }
     
-    function JsonDataService($http) {
+    function JsonDataService($http, AppValues) {
         
         var srv = this;
-        srv.firstDayOfClass = moment("2016-08-23")
+        srv.firstDayOfClass = moment("2015-01-01")
         srv.sessions = []
         srv.assignments = {}
         
@@ -177,10 +183,10 @@
             return srv.assignments[id];
         }
 
-        var getRubric = function(assignment) {
-        }
-
         $http.get('planning.json').success(function(data) {
+            srv.firstDayOfClass = moment(data.class.firstDay)
+            AppValues.syy = data.class.term.substring(0,1) + data.class.year.substring(2)
+            AppValues.long = data.class.term + ' ' + data.class.year
             srv.sessions.length = 0;
             angular.forEach(data.sessions, function(row) {
                 srv.sessions.push(row);                

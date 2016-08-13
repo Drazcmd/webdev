@@ -1,0 +1,491 @@
+{
+    "swagger": "2.0",
+    "host": "webdev-dummy.herokuapp.com",
+    "info": {
+        "version": "0.1.0",
+        "title": "Webdev Dummy Server"
+    },
+    "paths": {
+        "/login": {
+            "post": {
+                "description": "Log in to server, set session id and hash cookies",
+                "parameters": [
+                    {
+                        "name": "credentials",
+                        "in": "body",
+                        "description": "payload sent with request",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful log in, cookies set",
+                        "schema": {
+                            "$ref": "#/definitions/AuthOK"
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "put": {
+                "description": "log out",
+                "responses": {
+                    "200": {
+                        "description": "Successful log out"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "description": "register a new user with the system.  \nThis is not a fully functional endpoint, uesr users cannot log in.\n",
+                "parameters": [
+                    {
+                        "name": "registration",
+                        "description": "new user information",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "zipcode": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful post, but new user not registered",
+                        "schema": {
+                            "$ref": "#/definitions/AuthOK"
+                        }
+                    }
+                }
+            }
+        },
+        "/articles/{id}": {
+            "get": {
+                "description": "get articles for currently logged in user, optionally one article by id\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "optional id of article to fetch",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Articles"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update an article, add a comment, or update a comment\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "optional id of article to modify or comment on",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "payload",
+                        "description": "article or comment.  If commentId is specified then update the comment.  If commentId = -1 then add a new comment.  If commentId is not specified, then update the article with the new content.",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "text": {
+                                    "type": "string"
+                                },
+                                "commentId": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the full updated article as seen by server",
+                        "schema": {
+                            "$ref": "#/definitions/Articles"
+                        }
+                    }
+                }
+            }
+        },
+        "/article": {
+            "post": {
+                "description": "add a new article",
+                "parameters": [
+                    {
+                        "name": "text",
+                        "description": "new article cotent",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "description": "image to accompany text",
+                        "required": false,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the new article as seen by server",
+                        "schema": {
+                            "$ref": "#/definitions/Articles"
+                        }
+                    }
+                }
+            }
+        },
+        "/headlines/{users}": {
+            "get": {
+                "description": "get headline of currently logged in user, or users specified in path\n",
+                "parameters": [
+                    {
+                        "name": "users",
+                        "description": "optional comma separated lsit of users",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserValue"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/headline": {
+            "put": {
+                "description": "update headline of currently logged in user",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "description": "new headline",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "headline": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UserValue"
+                        }
+                    }
+                }
+            }
+        },
+        "/email/{users}": {
+            "get": {
+                "description": "get email of currently logged in user, or users specified in path\n",
+                "parameters": [
+                    {
+                        "name": "users",
+                        "description": "optional comma separated lsit of users",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserValue"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/email": {
+            "put": {
+                "description": "update email of currently logged in user",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "description": "new email",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UserValue"
+                        }
+                    }
+                }
+            }
+        },
+        "/zipcode/{users}": {
+            "get": {
+                "description": "get zipcode of currently logged in user, or users specified in path\n",
+                "parameters": [
+                    {
+                        "name": "users",
+                        "description": "optional comma separated lsit of users",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserValue"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/zipcode": {
+            "put": {
+                "description": "update zipcode of currently logged in user",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "description": "new zipcode",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "zipcode": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UserValue"
+                        }
+                    }
+                }
+            }
+        },
+        "/picture/{users}": {
+            "get": {
+                "description": "get picture of currently logged in user, or users specified in path\n",
+                "parameters": [
+                    {
+                        "name": "users",
+                        "description": "optional comma separated lsit of users",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserValue"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/picture": {
+            "put": {
+                "description": "update picture of currently logged in user",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "description": "new picture",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "picture": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UserValue"
+                        }
+                    }
+                }
+            }
+        },
+        "/password": {
+            "put": {
+                "description": "update password of currently logged in user",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "in": "body",
+                        "description": "new password",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dummy server passwords are never changed. \nNeverthless, this endpoint will return OK and a message.\n(Your implementation should update the password and return an appropraite message.)\n",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AuthOK": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "string"
+                }
+            }
+        },
+        "Articles": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "img": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Comments"
+                    }
+                }
+            }
+        },
+        "Comments": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                }
+            }
+        },
+        "UserValue": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
