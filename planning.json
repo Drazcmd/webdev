@@ -13,7 +13,7 @@
 	{ "name": "Draft Back-End", "due": 20, "id": "draftback"},
 	{ "name": "Integrated Web App", "due": 24, "id": "integrated"},
 	{ "name": "Final Full Web App", "due": 29, "id": "final" },
-	{ "name": "COMP531 Draft Review", "due": 14, "id": "draftreview"},
+	{ "name": "COMP531 Draft Review", "due": 11, "id": "draftreview"},
 	{ "name": "COMP531 Front-End Review", "due": 18, "id": "frontreview"},
 	{ "name": "COMP531 Paper and Presentation", "due":27, "id":"paper"}
 	],
