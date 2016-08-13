@@ -32,20 +32,19 @@
 
         <h2 class="ui header">{{ vm.assignmentName }}</h2>
         <div class="ui transition right floated text item" ng-show="vm.assignmentId">
-          <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} {{ vm.getDueTime(vm.assignmentId) }}<br/>          
-          Turnin repo: <strong>COMP431-{{ vm.repoSYY }}:hw{{vm.hwid}}-{{ vm.assignmentId }}</strong>
+          <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} {{ vm.getDueTime(vm.assignmentId) }}
+          <br/>
+          <a target=new_window href="https://webdev-rice.herokuapp.com/">https://webdev-rice.herokuapp.com/</a>
         </div>
 
         <div class="ui message transition" ng-show="!vm.assignmentId">
           <ul>
-            <li>Assignments will be collected using Turnin.</li>
-            <li>Each assignment page has the associated repo, they are <em>case sensitive</em></li>
-            <li>Even if you are enrolled in COMP531 still use the COMP431 repository name for submission</li>
-            <li><a href="https://docs.rice.edu/confluence/display/ITDIY/Using+the+'turnin'+command+to+manage+homework">Turnin instructions</a></li>
-            <li>In-class exercises are also collected via Turnin with repo 
-                <strong>COMP431-{{ vm.repoSYY }}:inclass-#</strong> with the class number for # (i.e., the numeric value in <em>Topic</em> on the <a href="#/schedule">Schedule page)</a></li>
-            <li>You can view your Turnin repo by going to your NetID path 
-            <a href="https://svn.rice.edu/r/COMP431/turnin/{{ vm.repoSYY }}/&lt;netid&gt;">https://svn.rice.edu/r/COMP431/turnin/{{ vm.repoSYY }}/&lt;netid&gt;</a></li>
+            <li>All assignments will be collected by submitting a git URL to a webapp.</li>
+            <li>If you do not have a github account, create one for free: <a target=new-window href="https://github.com">https://github.com</a></li>
+            <li>Your git repo should contain a top level folder appropriately 
+            named for each assignment, i.e., inclass-# or hw#</li>
+            <li>Webapp for submissions: <a target=new_window href="https://webdev-rice.herokuapp.com/">https://webdev-rice.herokuapp.com/</a></li>
+            <li>The webapp will complain report an error if you do not follow the directory naming guideline, i.e., if you try to submit for inclass-3 but do not have a top level directory inclass-3 in your repo then it will error.</li>
           </ul>
         </div>
 
@@ -54,11 +53,7 @@
 
         <div class="ui message transition" ng-include="vm.url"></div>
 
-        <a id="rubric"></a>        
-        <!--
-        <button ng-show="vm.assignmentId" ng-click="vm.showRubric = !vm.showRubric">
-        {{ vm.showRubric ? 'Hide' : 'Show' }} Rubric</button>
-        -->
+        <a id="rubric"></a>
 
         <table class="ui selectable inverted celled unstackable striped table" ng-show='vm.showRubric'>
           <thead>
