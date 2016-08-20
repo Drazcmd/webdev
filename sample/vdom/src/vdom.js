@@ -9,7 +9,7 @@
 'use strict'
 
 function h(tag, props, ...children) {
-    return { tag, props ? props : { }, 
+    return { tag, props: props ? props : { }, 
         children: Array.isArray(children[0]) ? children[0] : children }
 }
 
