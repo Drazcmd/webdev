@@ -2,19 +2,19 @@
     'use strict';
 
     var Globals = {
-        lastUpdated: '5/29/2016'
+        lastUpdated: '8/20/2016',
+        piazza: 'https://piazza.com/class/is3j293rbvv6wv'
     }
     
     angular
-    .module('CoursePageApp', ['ngRoute', 'ngAnimate'])
-    .config(config)
-    .service('JsonDataService', JsonDataService)
-    .service('AppValues', AppValues)
-    
-    .controller('MainCtrl', MainCtrl)
-    .controller('AssignmentCtrl', AssignmentCtrl)
-    .controller('ScheduleCtrl', ScheduleCtrl)
-    
+        .module('CoursePageApp', ['ngRoute', 'ngAnimate'])
+        .config(config)
+        .service('JsonDataService', JsonDataService)
+        .service('AppValues', AppValues)
+        
+        .controller('MainCtrl', MainCtrl)
+        .controller('AssignmentCtrl', AssignmentCtrl)
+        .controller('ScheduleCtrl', ScheduleCtrl)
     ;
     
     function config($routeProvider, $locationProvider) {
@@ -131,13 +131,16 @@
 
     }
     
-    MainCtrl.$inject = ['$route', '$routeParams', '$location', 'AppValues']
-    function MainCtrl($route, $routeParams, $location, AppValues) {
+    MainCtrl.$inject = ['$route', '$routeParams', '$location', 'AppValues', 'JsonDataService']
+    function MainCtrl($route, $routeParams, $location, AppValues, JsonDataService) {
         var vm = this;
         vm.$route = $route;
         vm.$location = $location;        
         vm.$routeParams = $routeParams;
         vm.lastUpdated = Globals.lastUpdated
+        vm.piazza = Globals.piazza
+        vm.syllabus531 = () => `COMP-531-Syllabus-${AppValues.year}${AppValues.term}.pdf`
+        vm.syllabus431 = () => `COMP-431-Syllabus-${AppValues.year}${AppValues.term}.pdf`
         vm.getTerm = function() {
             return AppValues.long
         }
@@ -151,7 +154,7 @@
     }
 
     function AppValues() {
-        return { syy: '?', long: '??' }
+        return { syy: '?', long: '??', year: '????', term: '???' }
     }
     
     function JsonDataService($http, AppValues) {
@@ -185,8 +188,11 @@
 
         $http.get('planning.json').success(function(data) {
             srv.firstDayOfClass = moment(data.class.firstDay)
+            console.log('loading appvalues')
             AppValues.syy = data.class.term.substring(0,1) + data.class.year.substring(2)
             AppValues.long = data.class.term + ' ' + data.class.year
+            AppValues.term = data.class.term
+            AppValues.year = data.class.year
             srv.sessions.length = 0;
             angular.forEach(data.sessions, function(row) {
                 srv.sessions.push(row);                
