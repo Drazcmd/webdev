@@ -6,8 +6,9 @@
 	{"item":"page contains a form", "pts":1 },
 	{"item":"There are input text areas for the following: account name, display name, email address, phone number, date of birth, zipcode, password, password confirmation", "pts":5 },
 	{"item":"password and password confirmation should be password type", "pts":1 },
+	{"item":"only users aged 18 or older on the date of registration are valid", "pts": 3},
 	{"item":"hidden field contains the current timestamp in millis then the form is submitted", "pts":5 },
-	{"item":"clear button to empty fields", "pts":5 },
+	{"item":"clear button to empty fields", "pts":2 },
 	{"item":"submit button executes JavaScript validation function before submitting form", "pts":5 },
 	{"item":"each field is validated for correctness: account name", "pts":5 },
 	{"item":"each field is validated for correctness: email address", "pts":5 },
@@ -28,7 +29,7 @@
 {"section":"Style", "items":[
 	{"item":"Code is properly formatted (indentation, spacing)", "pts": 2 },
 	{"item":"function and variable names are descriptive", "pts":2 },
-	{"item":"attribute values are quoted", "pts":2 },
+	{"item":"attribute values are double-quoted", "pts":2 },
 	{"item":"appropriate use of whitespace", "pts": 2 },
 	{"item":"code is not complex", "pts": 2 },
 	{"item":"code 'smells' right", "pts": 10 }
