@@ -6,11 +6,12 @@
 	{"item":"table with grid of cards", "pts":5 },
 	{"item":"table is styled with non-trivial CSS", "pts": 10},
 	{"item":"sufficient number of cards to require scrolling (minimum of 3 rows and 2 columns)", "pts":5 },
-	{"item":"each card has image, text, or both.  Half of cards have images.", "pts":5 },
+	{"item":"each card has image, text, or both.  About half of cards have images.", "pts":5 },
 	{"item":"each image card updates image at random interval, time is different for each card", "pts": 10 },
 	{"item":"each image card contains a single button to start/stop the interval", "pts": 15 },
 	{"item":"Link to navigate to the Profile page", "pts":2 }
 ]},
+
 {"section":"Profile Page", "items":[
 	{"item":"correct doctype element", "pts":1 },
 	{"item":"html and head elements", "pts":1},
