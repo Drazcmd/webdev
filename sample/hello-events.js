@@ -11,7 +11,6 @@ function clickMe(element) {
 	
 	// horrible overloading of a function
 	if (element && element.id == "clickMeBox") {
-		console.log('... ')
 		changeResponse("You "
 			+ (box.checked ? "" : "un")
 			+ "checked the box");
@@ -30,6 +29,11 @@ function changeResponse(msg) {
 function appendResponse(msg) {
 	var e = document.getElementById("response");
 	e.innerHTML = e.innerHTML + "<br/>" + msg;
+	var nlines = (e.innerHTML.match(/br/g) || []).length
+	if (nlines > 5) {
+		var idx = e.innerHTML.indexOf('br')
+		e.innerHTML = e.innerHTML.substring(idx + 3)
+	}
 }
 
 window.onload = function() {
@@ -120,7 +124,7 @@ window.onload = function() {
 		if (e.charCode) {
 			appendResponse('CharCode: ' + e.charCode + ' -> ' + String.fromCharCode(e.charCode))
 			if (e.charCode == 100) {
-				console.log('ho!')
+				console.log('you got it!', e.charCode)
 				e.preventDefault()
 			}
 		}

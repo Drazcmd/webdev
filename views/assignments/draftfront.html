@@ -1,13 +1,16 @@
-<h1 style="color: red;">NOT UP TO DATE</h1>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
+<div onload="prettyPrint()">
 <p>
-In this assignment you will develop the frontend design of your web application.  (In a following assignment you will implement the functionality of the frontend.)
+In this assignment you will develop the frontend design of your web application.  
+(In a following assignment you will implement the functionality of the frontend.)
 </p>
 
 <p>Our social networking web application will consist of three main views.  When an un-logged-in
 user navigates to our site they will be greeted with the "landing" page, where they can log in
-or register a new account.  This page we developed in the first assignment.
+or register a new account.  This page we partially developed in the first assignment.
 After a user has logged in, they will be taken to the "main" page which contains the 
-user's feed (consisting of the most recent posts by the user and the users the current user is following), a list of the users the current user is following, and a link to the "profile" page which allows a user
+user's feed (consisting of the most recent articles by the user and the users the current user is following), a list of the users the current user is following, and a link to the "profile" page which allows a user
 to change their profile picture and other pertinent information.  These last two pages we began developing
 in the second assignment.
 </p>
@@ -21,16 +24,17 @@ their profile page from the main page, as well as a log out button.
 </p>
 
 <p>We now add more features to our main page.  We started with the user's feed, which is a collection 
-of cards, each of text or both text and an image.  For this assignment we no longer require the images to change.
+of cards, each of text or both text and an image.  
+For this assignment we no longer require the images to change and therefore do not want the pause/resume buttons.
 We need a button to log the user out of our application.  
-We should be displaying the user's profile picture some where on the page, and in addition to
+We should be displaying the user's profile picture somewhere on the page, and in addition to
 this, each user will have a "status" headline.  The status headline for the current user should be
 prominently displayed.  The headline is a short one line message, such as "I'm learning JavaScript!" as
-opposed to a "post" which can be longer in length and include posted images.
+opposed to an "article" which can be longer in length and include posted images.
 As mentioned above we will have a list of users being followed.
-This list will have user profile pictures, the  display names (or account names) of the followed users,
-and the status headlines of the followed users.  For now these can all be hard coded, and we only need
-a few examples of each.  The goal is to get an idea of what the final working page will look like.
+This list will have user profile pictures, the display names (or account names) of the followed users,
+and the status headlines of the followed users.  For now these should all be hard coded, and we only need
+a few examples of each (i.e., 3 or more).  The goal is to get an idea of what the final working page will look like.
 </p>
 
 <h3>Landing Page Requirements</h3>
@@ -48,7 +52,7 @@ The page should have
 	of text nothing more.</li>
 </ul>
 
-<p>Write unobtrusive JavaScript.  Therefore accompanying the html page
+<p>Write <b>unobtrusive</b> JavaScript.  Therefore, accompanying the html page
 we will have <code>index.js</code> which contains the JavaScript functionality
 needed for the landing page.</p>
 
@@ -59,8 +63,8 @@ be visited and commented on by members of the class.</p>
 
 <p>The "main" page is saved as <code>main.html</code> 
 and contains a collection of cards.  These cards will be referred to
-as "posts."  For now we continue to use hard coded text and images
-for each post as we did in the previous assignment.  Each card should 
+as "articles."  For now we continue to use hard coded text and images
+for each article as we did in the previous assignment.  Each card should 
 have text or both an image and text.
 </p>
 <p>In addition to a collection of cards displayed on the main page as the feed (which can be single or multi-column), there are the following requirements</p>
@@ -68,18 +72,18 @@ have text or both an image and text.
 	<li>Button or link to navigate to the profile page</li>
 	<li>Button or link to log out, which navigates to the landing page (index.html)</li>
 	<li>Each card has text, or text and an image (images do not change periodically, no pause/resume buttons)</li>
-	<li>There should be at least 4 cards, at least two have images.</li>
+	<li>There should be at least 8 cards, at least four have images.</li>
 	<li>Each card has a button to leave a comment.  But the button currently does nothing.</li>
-	<li>Each card has a button to edit the post.  But the button currently does nothing.</li>
-	<li>A search box, which will be used to search for posts, but the box currently does nothing on user input.</li>
-	<li>There is an area for a user to add a new post, this can be an editable div, a textarea, or some other tag.  But the area currently does nothing on user input.</li>
-	<li>There is a button to "post" the post.  But the button currently does nothing.</li>
-	<li>There is a button to "cancel" the post.  This button should clear the new post text.</li>
+	<li>Each card has a button to edit the article.  But the button currently does nothing.</li>
+	<li>A search box, which will be used to search for articles, but the box currently does nothing on user input.</li>
+	<li>There is an area for a user to add a new article, this can be an editable div, a textarea, or some other tag.  But the area currently does nothing on user input.</li>
+	<li>There is a button to "post" the article.  But the button currently does nothing.</li>
+	<li>There is a button to "cancel" writing the new article.  This button should clear the new article text.</li>
 	<li>There is a button to upload an image (Hint: input type='file').  But the button currently does nothing after a file is chosen.</li>
 	<li>The user's display name and profile picture are shown.  These can be hard coded.</li>
 	<li>The user's status headline is shown.  The status headline can be hard coded.</li>
 	<li>There is a button to update the user's status headline.  The button should update the status headline, but on refresh there is no persistence required, i.e., it can return to the original value.</li>
-	<li>Sidebar with a list of at least 3 followed users.  The list should include a picture, name, and status headline for each user.  These can all be hard coded.</li>
+	<li>Sidebar listing at least 3 followed users.  The list should include a picture, name, and status headline for each user.  These can all be hard coded.</li>
 	<li>Text field and button to add a user to the following list.  
 		But the button currently does nothing.</li>
 	<li>Each followed user has a button to unfollow.  But the button currently does nothing.</li>
@@ -93,8 +97,8 @@ be visited and commented on by members of the class.</p>
 <p>The "profile" page is where a user can update their profile picture and account information.</p>
 
 <ul>
-	<li>The current display name, email address, phone number, and zipcode are displayed</li>
-	<li>There are fields to update each user piece of user information along with a field to update the user's password</li>	
+	<li>The current display name, email address, phone number, date of birth, and zipcode are displayed</li>
+	<li>There are fields to update each user piece of user information along with a field to update the user's password.  Birth date can not be changed.</li>	
 	<li>Show the user's current profile picture</li>
 	<li>There is a button to upload a new profile picture.  But the button currently does nothing after a file is chosen.</li>
 	<li>There is a button to update the user's values based on user input.  The button validates
@@ -106,17 +110,37 @@ be visited and commented on by members of the class.</p>
 <p>The profile page should be styled and "look good" -- your site will 
 be visited and commented on by members of the class.</p>
 
+<h2>Example</h2>
+
+<p><a target="_blank" href="data/wireframe.pdf">Here's a wireframe</a> for a site that satisfies the above requirements.  Remember this is just an example,
+your solution does not need to look like this one.</p>
+
 <h2>Publication</h2>
 
 <p>
-For your site to be reviewed by other members of the class you will need to publish it.  We will be 
-using Heroku for hosting our web applications.  Follow the <a target="_blank" href="data/heroku.html">Heroku instructions</a>
-(also used for inclass-7) to create an account on Heroku and get your site hosted.
+In adition to submitting your repo for grading, for your site to be reviewed by other members of the class you will need to publish it.  
+We will be using Surge for hosting our web applications (it's free).
 </p>
+<p>We will use npm tooling for accessing surge (although you can upload directly as well).  Here’s an example package:
+<a href="https://www.clear.rice.edu/comp431/sample/surge-example.zip">surge-example.zip</a> which
+is hosted at <a hef="http://chivalrous-credit.surge.sh/" target="_blank">http://chivalrous-credit.surge.sh/</a>.
+Download the zip and unpack it.  Then:
+</p>
+<pre class="prettyprint lang-bash">
+# get surge installed
+npm install
 
-<p>Verify the look and feel and functionality of your site as hosted on Heroku.  
-Be sure to update your site on Heroku as the final step of your submission.  You are allowed to continue
-to improve your Heroku site after you submit, but if your site is not available when students go to
+# host your files locally
+npm start
+
+# deploy to surge
+npm run deploy
+</pre>
+<p>Verify the look and feel and functionality of your site as hosted on Surge.  
+Be sure to update your site on Surge as the final step of your submission.  
+You should not further update your Surge
+deployment after you have submitted your assignment.
+Note that if your site is not available when students go to
 review it then you will not receive any feedback.</p>
 
 <p>Again, the purpose of this assignment is to consolidate the layout, look, and feel of
@@ -126,33 +150,22 @@ to much of the site.</p>
 
 <h2>What to submit</h2>
 
-<p>When following the <a target="_blank" href="data/heroku.html">Heroku instructions</a>, 
-you will be "git pushing" from your <code>frontend</code> directory.  When your site is 
-complete and you are ready to submit, "copy" your files to the <code>hw3-draffront</code> directory.
-Do <b>NOT</b> submit to Turnin a directory that contains the <em>hidden</em> <code>.git</code> directory -- be sure to 
-copy only the files you intend to submit.  You can use <code>ls -a</code> so see all files/paths within a directory.
-</p>
-
 <p>Include in your hw3 submission a file named README.json that has the following
 contents (replaced with *your* values of course)</p>
 <pre style="border: 1px solid black; padding: 0.5em;">
 { 
      "netid": "sep1",
-  "frontend": "https://ricebookapp.herokuapp.com"
+  "frontend": "https://ricebook.surge.sh"
 }
 </pre>
 
-<p>Again we write unobtrusive JavaScript and CSS.  Your submission directory should look like this (no .git directory)</p>
-
-<p><a target="_blank" href="data/wireframe.pdf">Here's a wireframe</a> for a site that satisfies the above requirements.  Remember this is just an example,
-your solution does not need to look like this one.</p>
-
+<p>Again we write unobtrusive JavaScript and CSS.  Your submission directory should look like this (no .git directory and no node_modules directory)</p>
 
 <!-- ******************************** -->
 <div class="ui list"><div class="item">
 	<i class="folder icon"></i>
 	<div class="content">
-		<div class="header">hw3-draftfront</div>
+		<div class="header">hw3</div>
 
 		<div class="list">
 
@@ -160,6 +173,16 @@ your solution does not need to look like this one.</p>
 				<i class="file text outline icon"></i>
 				<div class="content"><div class="description">README.json</div></div>
 	 		</div>
+
+			<div class="item">
+				<i class="file text outline icon"></i>
+				<div class="content"><div class="description">package.json</div></div>
+	 		</div>
+
+			<div class="item">
+				<i class="folder icon"></i>
+				<div class="content"><div class="header">dist</div>
+				<div class="list">
 
 			<div class="item">
 				<i class="file text outline icon"></i>
@@ -197,6 +220,8 @@ your solution does not need to look like this one.</p>
 				<div class="content"><div class="description">styles.css</div></div>
 			</div>
 
+			</div></div></div>
+
 	 	</div>
  	</div>
  </div></div>
@@ -207,3 +232,4 @@ that all three of your pages should have the same "look and feel" which is why o
 </p>
 
  <!-- ******************************** -->
+</div>

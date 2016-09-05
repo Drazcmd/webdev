@@ -1,13 +1,13 @@
 [
 {"section":"Overall", "items": [
     {"item":"README.json file contains netid and URL to frontend site", "pts":5},    
-    {"item":"site is viewable on Heroku", "pts":5},
+    {"item":"site is viewable on Surge", "pts":5},
     {"item":"All three pages share a look-and-feel", "pts":10},
     {"item":"Correct HTML header including doctype, html, author meta tag in head", "pts":3},    
     {"item":"Submitted file structure is appropriate, e.g., similar to example", "pts":2}    
 ]},
 {"section":"Landing Page (index.html)", "items": [
-    {"item":"Registration fields with validation ala hw1-simple (form GETs to main page)", "pts": 3},
+    {"item":"Registration fields with validation ala hw1 (form GETs to main page)", "pts": 3},
     {"item":"Username and password login fields", "pts":3},
     {"item":"Login button performs simple validation", "pts":4},
     {"item":"Login an button navigates to main page", "pts":2},
@@ -17,12 +17,12 @@
     {"item":"user status headline is present", "pts":2},
     {"item":"ability to update the status headline, e.g., text field and button, but status headline is not required to be persistant to reload", "pts": 5},
     {"item":"user profile picture is displayed on page", "pts":2},
-    {"item":"layout of at least 4 cards (do not use table)", "pts":5},
+    {"item":"layout of at least 8 cards (do not use table)", "pts":5},
     {"item":"layout of page is responsive to changing width of browser", "pts": 5},
-    {"item":"each card contains author, timestamp, body (at least two with images)", "pts": 2},
+    {"item":"each card contains author, timestamp, text (at least four with images)", "pts": 2},
     {"item":"each card has button to edit and button to comment, buttons perform no action", "pts": 2},
-    {"item":"area to type a new post ", "pts":2},
-    {"item":"button to post and button to cancle, buttons perform no required actions", "pts":2},
+    {"item":"area to type a new article ", "pts":2},
+    {"item":"button to post and button to cancel, buttons perform no required actions", "pts":2},
     {"item":"button to upload an image, but no functionality after image is chosen", "pts":2},
     {"item":"button or link to profile page", "pts":2},
     {"item":"button or link to logout, navigates to landing page (index.html)", "pts":2},
@@ -35,13 +35,12 @@
 {"section":"Profile Page (profile.html)", "items":[
     {"item":"user's current profile information is displayed", "pts":2},
     {"item":"button to update the profile picture, but button performs no action after a file is chosen", "pts":2},
-    {"item":"Update button validates each non-empty input field", "pts": 2 },
+    {"item":"Update button validates each non-empty input field, date-of-birth is not updatable", "pts": 2 },
     {"item":"Update changes the current values that are displayed", "pts":2 },
     {"item":"Link to return to the Main page", "pts":2 },
     {"item":"Profile page is styled", "pts":3}
 ]},
 {"section":"Demerits", "items": [
-
     {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
     {"item":"variable not appropriately scoped (i.e., missing var, or var in wrong scope)", "pts": 10},
