@@ -63,7 +63,7 @@ describe(`Mocha+Chai Inclass Fetch Exercise for "${inclass.author}"`, () => {
 
     it('getLargest should give me the id of the article with the most number of words', (done) => {
         inclass.getLargest(sample)
-        .then(r => { expect(r).to.equal(longest); done() })
+        .then(r => { expect(parseInt(r).to.equal(parseInt(longest)); done() })
         .catch(done)
     })
 
