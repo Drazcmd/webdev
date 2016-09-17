@@ -350,6 +350,25 @@
                 }
             }
         },
+        "/dob": {
+            "get": {
+                "description": "get date of birth in milliseconds of currently logged in user\n",
+                "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserValue"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/picture/{users}": {
             "get": {
                 "description": "get picture of currently logged in user, or users specified in path\n",
