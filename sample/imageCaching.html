@@ -19,20 +19,19 @@ window.onload = function() {
 		'https://upload.wikimedia.org/wikipedia/commons/c/ce/Rice_University_-_Arboretum.JPG'
 	];
 
-	// var imgList = [];
-	// images.forEach(function(src) {
+	// var imgList = images.map(function(src) {
 	// 	var img = new Image();
-	// 	img.src=src
-	// 	imgList.push(img)
+	// 	img.src = src
+	// 	return img
 	// })
 
 	var now = Date.now()
 	var el = document.getElementById("image");
+	var span = document.getElementById("timer")
 	setInterval(function() {		
 		el.src = images[idx++ % images.length]
-		
 		var elapsed = Date.now() - now;
-		document.getElementById("timer").innerHTML = elapsed		
+		span.innerHTML = elapsed		
 		now = Date.now();
 	}, 1000)
 
