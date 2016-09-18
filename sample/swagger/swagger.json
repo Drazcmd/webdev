@@ -41,6 +41,9 @@
         "/logout": {
             "put": {
                 "description": "log out",
+                "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" }
+               ],
                 "responses": {
                     "200": {
                         "description": "Successful log out"
@@ -90,6 +93,7 @@
             "get": {
                 "description": "get articles for currently logged in user, optionally one article by id\n",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "id",
                         "description": "optional id of article to fetch",
@@ -113,6 +117,7 @@
             "put": {
                 "description": "update an article, add a comment, or update a comment\n",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "id",
                         "description": "optional id of article to modify or comment on",
@@ -151,6 +156,7 @@
             "post": {
                 "description": "add a new article",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "text",
                         "description": "new article cotent",
@@ -180,11 +186,12 @@
             "get": {
                 "description": "get headline of currently logged in user, or users specified in path\n",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "users",
                         "description": "optional comma separated lsit of users",
                         "in": "path",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -205,6 +212,7 @@
             "put": {
                 "description": "update headline of currently logged in user",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "payload",
                         "in": "body",
@@ -234,6 +242,7 @@
             "get": {
                 "description": "get email of currently logged in user, or users specified in path\n",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "users",
                         "description": "optional comma separated lsit of users",
@@ -259,6 +268,7 @@
             "put": {
                 "description": "update email of currently logged in user",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "payload",
                         "in": "body",
@@ -288,6 +298,7 @@
             "get": {
                 "description": "get zipcode of currently logged in user, or users specified in path\n",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "users",
                         "description": "optional comma separated lsit of users",
@@ -313,6 +324,7 @@
             "put": {
                 "description": "update zipcode of currently logged in user",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "payload",
                         "in": "body",
@@ -338,10 +350,30 @@
                 }
             }
         },
+        "/dob": {
+            "get": {
+                "description": "get date of birth in milliseconds of currently logged in user\n",
+                "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserValue"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/picture/{users}": {
             "get": {
                 "description": "get picture of currently logged in user, or users specified in path\n",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "users",
                         "description": "optional comma separated lsit of users",
@@ -367,6 +399,7 @@
             "put": {
                 "description": "update picture of currently logged in user",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "payload",
                         "in": "body",
@@ -396,6 +429,7 @@
             "put": {
                 "description": "update password of currently logged in user",
                 "parameters": [
+                    { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
                         "name": "payload",
                         "in": "body",

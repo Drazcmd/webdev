@@ -43,19 +43,20 @@ develop your own back-end server and connect your front-end web app to it.</p>
 after a successful login.  Cookie management is handled entirely by the server and
 browser, no front-end logic is required.</p>
 
-<p>There are three access mechanisms to use the dummy server</p>
+<p>There are four access mechanisms to use the dummy server</p>
 <ol>
   <li>Use a command line utility, such as <code>curl</code></li>
   <li>Use a browser plugin like 
   <a target=_blank href="https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?hl=en-US">Advanced REST Client</a> or 
   <a target=_blank href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en-US">Postman</a></li>
+  <li>Use the <a href="/sample/swagger/#/default" target=_blank>swagger user interface</a></li>
   <li>Use your server connected front-end web app</li>
 </ol>
 
 <h4>Using CURL to communicate with the server</h4>
 <p>Before you start implementing your front-end connection, try using curl to connect to the server.  In particular, let's change our status headline.  We'll start by getting the current status</p>
 <pre class="prettyprint lang-bash">
-curl https://webdev-dummy.herokuapp.com/status
+curl https://webdev-dummy.herokuapp.com/headlines
 </pre>
 <p>Ah ha! We need to login first!</p>
 <pre class="prettyprint lang-bash">
@@ -66,14 +67,14 @@ curl -H 'Content-Type: application/json' https://webdev-dummy.herokuapp.com/logi
 This performs a <code>POST</code> (the data flag makes it a post by default) to the <code>/login</code> endpoint.  The payload is JSON, we inform the server it's JSON with the content-type header.  Be sure to pass properly formed JSON, this means keys are quoted.  The <code>-i</code> flag shows us the response headers.  If successful, we should see two <code>Set-Cookie</code> statements in the header.  We now pass those two authentication cookies when communicating with the server:</p>
 <pre class="prettyprint lang-bash">
 curl -H 'Content-Type: application/json' --cookie 'sessionId=12345; hash=222333444' \
-    https://webdev-dummy.herokuapp.com/status
+    https://webdev-dummy.herokuapp.com/headlines
 </pre>
 <p>You should get back your current status headline from this <code>GET</code> request.  Now we change it:</p>
 <pre class="prettyprint lang-bash">
 curl -H 'Content-Type: application/json' --cookie 'sessionId=12345; hash=222333444' \
-    https://webdev-dummy.herokuapp.com/status -X PUT -d '{ "status":"A new headline!" }'
+    https://webdev-dummy.herokuapp.com/headline -X PUT -d '{ "headline":"A new headline!" }'
 </pre>
-<p>Status updating is an atomic action.  Therefore we use the <code>PUT</code> verb instead of the default <code>POST</code>.  Notice that we again pass JSON as the payload (the <code>-d</code> flag).  The server should respond with the updated status message.  We can then reverify by the previous <code>GET</code> request.
+<p>Headline updating is an atomic action.  Therefore we use the <code>PUT</code> verb instead of the default <code>POST</code>.  Notice that we again pass JSON as the payload (the <code>-d</code> flag).  The server should respond with the updated headline message.  We can then reverify by the previous <code>GET</code> request.
 </p>
 
 <h4>Using a browser based REST client to communicate with the server</h4>
@@ -90,13 +91,17 @@ we login to the server with our netid and three-word-passphrase</p>
 <img src="../images/dummy-login.png">
 <p>Look for the cookies in the response</p>
 <img src="../images/dummy-cookie.png">
-<p>Send these cookies on all future requests.  For example, here's changing the status headline</p>
+<p>Send these cookies on all future requests.  For example, here's changing the status headline (note that "status" should be replaced by "headline" in the image below)</p>
 <img src="../images/dummy-status.png">
 
 <a name="api">
 <h3>Dummy Server API</h3>
-<table>
 
+<p>
+Here's the <a href="/sample/swagger/#/default" target=_blank>swagger UI</a>.
+</p>
+
+<table>
      <tr>
           <th>endpoint</th><th>verb</th><th>payload</th><th>response</th><th>description</th>
      </tr>
@@ -128,41 +133,36 @@ we login to the server with our netid and three-word-passphrase</p>
      </tr>
 
      <tr class="double">
-          <td>/posts/:id*?</td><td>GET</td><td>If specificed, :id is a postId or username</td>
-          <td>{ posts: [ { id: 1, author: Scott, ... }, { ... } ] }</td>
-          <td>A requested post, all requested posts by a user, or array of posts in the loggedInUser's feed</td>
+          <td>/articles/:id*?</td><td>GET</td><td>If specificed, :id is a postId or username</td>
+          <td>{ articles: [ { id: 1, author: Scott, ... }, { ... } ] }</td>
+          <td>A requested article, all requested articles by a user, or array of articles in the loggedInUser's feed</td>
      </tr>
 
      <tr>
-          <td>/posts/:id</td><td>PUT</td><td>:id is a post id<br/>
+          <td>/articles/:id</td><td>PUT</td><td>:id is a post id<br/>
           { body: message, commentId: optional }</td>
-          <td>{ posts: [{ id: 1, author: Scott, ..., comments: [ ... ] }]</td>
-          <td>Update the post :id with a new body if commentId is not supplied.  
-               Forbidden if the user does not own the post.
-          If commentId is supplied, then update the requested comment on the post, if owned.  If commentId is -1, then a new comment is posted with the body message.</td>
+          <td>{ articles: [{ id: 1, author: Scott, ..., comments: [ ... ] }]</td>
+          <td>Update the article :id with a new body if commentId is not supplied.  
+               Forbidden if the user does not own the article.
+          If commentId is supplied, then update the requested comment on the article, if owned.  If commentId is -1, then a new comment is posted with the body message.</td>
      </tr>
 
      <tr>
-          <td>/post</td><td>POST</td><td>
+          <td>/article</td><td>POST</td><td>
           { body: message, img: &lt;file&gt; } img is optional</td>
-          <td>{ posts: [{ id: 1, author: Scott, ..., comments: [] } ]}</td>
-          <td>Add a new post for the loggedInUser, date and id are determined by server.  Optional image upload -- <a href="#upload"><b>see below</b></a>.</td>
+          <td>{ articles: [{ id: 1, author: Scott, ..., comments: [] } ]}</td>
+          <td>Add a new article for the loggedInUser, date and id are determined by server.  Optional image upload -- <a href="#upload"><b>see below</b></a>.</td>
      </tr>
 
      <tr class="double">
-          <td>/statuses/:users?</td><td>GET</td><td>none<br>:users is a comma separated list of user names</td>
-          <td>{ statuses: [ {username:Scott, status:Happy}, { ... } ] }</td>
-          <td>Get the statuses for multiple users</td>
+          <td>/headlines/:users?</td><td>GET</td><td>none<br>:users is a comma separated list of user names</td>
+          <td>{ headlines: [ {username:Scott, status:Happy}, { ... } ] }</td>
+          <td>Get the headlines for multiple users</td>
      </tr>
      <tr>
-          <td>/status</td><td>GET</td><td>none<br></td>
-          <td>{ statuses: [{username:Scott, status:Happy}]}</td>
-          <td>Get the status for the loggedInUser</td>
-     </tr>
-     <tr>
-          <td>/status</td><td>PUT</td><td>{ status: Happy }</td>
-          <td>{ statuses: [{username: Scott, status: Happy }]}</td>
-          <td>Update the status for the loggedInUser</td>
+          <td>/headline</td><td>PUT</td><td>{ status: Happy }</td>
+          <td>{ headlines: [{username: Scott, status: Happy }]}</td>
+          <td>Update the headline for the loggedInUser</td>
      </tr>
 
      <tr class="double">
@@ -186,7 +186,7 @@ we login to the server with our netid and three-word-passphrase</p>
           <td>{ username: :user, email: emailAddress }</td>
           <td>get the email address for the requested user</td>
      </tr>
-     <tr>
+     <tr> 
           <td>/email</td><td>PUT</td><td>{ email: newEmailAddress }</td>
           <td>{ username: loggedInUser, email: newEmailAddress }</td>
           <td>update the email addres for the loggedInUser</td>
@@ -201,6 +201,12 @@ we login to the server with our netid and three-word-passphrase</p>
           <td>/zipcode</td><td>PUT</td><td>{ zipcode: newZipCode }</td>
           <td>{ username: loggedInUser, zipcode: newZipCode }</td>
           <td>update the zipcode for the loggedInUser</td>
+     </tr>
+
+     <tr>
+          <td>/dob</td><td>GET</td><td>{ dob: date of birth }</td>
+          <td>{ username: loggedInUser, dob: milliseconds }</td>
+          <td>get the date of birth in milliseconds for the requested user</td>
      </tr>
 
      <tr class="double">

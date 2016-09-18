@@ -40,6 +40,7 @@
     }
 
     exports.inclass = {
+        author: undefined,
         countWords, countWordsSafe, getLargest
     }
 

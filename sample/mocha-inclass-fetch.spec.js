@@ -7,29 +7,33 @@
 // expect is behavior driven development (bdd) style assertions
 const expect = chai.expect;
 
-describe(`Mocha+Chai Inclass Fetch Exercise for "${inclass.author}"`, function() {
+describe(`Mocha+Chai Inclass Fetch Exercise for "${inclass.author}"`, () => {
     const baseURL = 'https://webdev-dummy.herokuapp.com'
     const sample = `${baseURL}/sample`
 
     let longest = null
 
-    const getLargest = (done) => {
+    const findLargest = (done) => {
         if (!longest) {
-            inclass.countWords(sample).then(r => {
-                Object.keys(r).forEach(key => {
-                    if (!longest) longest = key
-                    if (r[key] > r[longest]) {
-                        longest = key
-                    }
+            try {
+                inclass.countWords(sample).then(r => {
+                    Object.keys(r).forEach(key => {
+                        if (!longest) longest = key
+                        if (r[key] > r[longest]) {
+                            longest = key
+                        }
+                    })
                 })
-            })
-            .then(done)
+                .then(done)
+            } catch (e) {
+                done()
+            }
         } else {
             done()
         }
     }
 
-	beforeEach((done) => getLargest(done))
+	beforeEach((done) => findLargest(done))
 
     it('author should be defined', () => {
         expect(inclass.author).to.be.ok
@@ -59,7 +63,7 @@ describe(`Mocha+Chai Inclass Fetch Exercise for "${inclass.author}"`, function()
 
     it('getLargest should give me the id of the article with the most number of words', (done) => {
         inclass.getLargest(sample)
-        .then(r => { expect(r).to.equal(longest); done() })
+        .then(r => { expect(parseInt(r).to.equal(parseInt(longest)); done() })
         .catch(done)
     })
 

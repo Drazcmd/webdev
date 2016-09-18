@@ -57,6 +57,7 @@
     {"item":"dead code, e.g., commented or unreachable code", "pts": 5},
     {"item":"code makes unchecked assumption", "pts": 5},
     {"item":"non-CSS styling", "pts": 5},
+    {"item":"use of JavaScript alert instead of on page notification", "pts": 5},
 
     {"item":"inefficient algorithm", "pts": 5},
     {"item":"poor implementation", "pts": 5},
