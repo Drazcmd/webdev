@@ -369,9 +369,9 @@
                 }
             }
         },
-        "/picture/{users}": {
+        "/avatars/{users}": {
             "get": {
-                "description": "get picture of currently logged in user, or users specified in path\n",
+                "description": "get avatar of currently logged in user, or users specified in path\n",
                 "parameters": [
                     { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
@@ -395,9 +395,9 @@
                 }
             }
         },
-        "/picture": {
+        "/avatar": {
             "put": {
-                "description": "update picture of currently logged in user",
+                "description": "update avatar of currently logged in user",
                 "parameters": [
                     { "name":"Authorization", "in":"header", "description":"credential sessionId and hash as json", "required": true, "type":"string", "format":"string" },
                     {
@@ -408,7 +408,7 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "picture": {
+                                "avatar": {
                                     "type": "string"
                                 }
                             }
