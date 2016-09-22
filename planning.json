@@ -8,7 +8,7 @@
 	{ "name": "Simple Page", "due": 3, "id": "simple" },
 	{ "name": "Dynamic Page", "due": 6, "id": "dynamic" },
 	{ "name": "Draft Front-End", "due": 9, "id":"draftfront" },
-	{ "name": "JavaScript Game", "due": 12, "id": "jsgame" },
+	{ "name": "JavaScript Game", "due": 14, "id": "jsgame" },
 	{ "name": "Front-End App", "due": 16, "id": "frontend"},
 	{ "name": "Draft Back-End", "due": 20, "id": "draftback"},
 	{ "name": "Integrated Web App", "due": 24, "id": "integrated"},
