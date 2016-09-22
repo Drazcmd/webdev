@@ -1,10 +1,11 @@
 [
 {"section":"Merits", "items": [
+    {"item":"game is hosted and playable on surge", "pts": 5},
     {"item":"included screenshot of game in action", "pts": 5},    
     {"item":"game is playable in Chrome", "pts":5 },
     {"item":"no lingering console messages", "pts":5 },
     {"item":"game is primarily visually based with moving or transforming graphics", "pts":10 },
-    {"item":"game utilizes mouse for primary interaction", "pts":10 },
+    {"item":"game utilizes mouse for primary interaction", "pts":5 },
     {"item":"unobtrusive JavaScript and CSS", "pts":10 },
     {"item":"single player game, playable in about 10 minutes or less", "pts":10 },
     {"item":"game has some unique aspect which makes the game your own", "pts":10 },
@@ -17,6 +18,7 @@
 ]},
 {"section":"Demerits", "items": [
     {"item":"game was not approved", "pts": 50},
+    {"item":"submission does not properly include README.json", "pts":25},
 
     {"item":"game crashes", "pts": 10},
     {"item":"bug or error in game during load with Chrome", "pts": 10},
