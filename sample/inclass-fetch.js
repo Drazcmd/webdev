@@ -23,6 +23,12 @@
 // Navigate to mocha-inclass-fetch.html to see if your implementation
 // provides the expected results.
 //
+// Note that during the validation of the tests the browser will be
+// directed to download invalid URLs which will result in error messages
+// in the console:
+//     GET https://webdev-dummy.herokuapp.com/badURL 404 (Not Found)
+// this is expected and is not an error with your code.
+//
 (function(exports) {
 
     'use strict'
