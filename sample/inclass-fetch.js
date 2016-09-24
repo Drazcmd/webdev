@@ -28,15 +28,23 @@
     'use strict'
 
     function countWords(url) {
-        throw new Error('Implement me!')
+        // IMPLEMENT ME
+        return fetch(url)
+            .then(res => {
+                // return an object { articleId: wordCount }
+                return { 1: 2, 3: 4, 5: 6 }
+            })
     }
 
     function countWordsSafe(url) {
-        throw new Error('Implement me!')
+        // IMPLEMENT ME
+        return countWords(url)
     }
 
     function getLargest(url) {
-        throw new Error('Implement me!')
+        // IMPLEMENT ME
+        return countWords(url)
+            .then(res => 5)
     }
 
     exports.inclass = {
