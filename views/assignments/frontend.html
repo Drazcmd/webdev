@@ -1,4 +1,4 @@
-<h1 style="color: red;">NOT UP TO DATE</h1>
+<h1 style="color: red;">NOT UP TO DATE 10/5/2016</h1>
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
 <style>
@@ -20,9 +20,9 @@ We start with our draft frontend application that contains three views:
 Remember that when tackling any large task our best approach is to divide and conquer.  For 
 this assignment there are three major portions:
 <ol>
-	<li>Angularizing the three views into a single page application (SPA)</li>
-	<li>Writing unit tests for the desired Controller functionality and mocking the dummy server endpoints</li>
-	<li>Implementing Controllers for our site and connecting to the dummy server</li>
+	<li>Using React+Redux to transform the three views into a single page application (SPA)</li>
+	<li>Writing unit tests for the desired controller functionality and mocking the dummy server endpoints</li>
+	<li>Implementing logic for our site and connecting to the dummy server</li>
 </ol>
 <p>Additionally we want to peform test driven development as we implement our webapp.  Therefore
 before we implement anything we will first write tests for our functionality.  In this
@@ -31,34 +31,49 @@ way the desired behavior will drive our implementation and design.</p>
 <p>Perhaps the most important part of this assignment is the integration of your frontend webapp with
 a backend server that supplies data.</p>
 
-<h2>Angularization</h2>
+<h2>React and Redux</h2>
+
 
 <p>Using Angular views and routing, refactor our three separate html files, index.html, main.html, and profile.html,
-into a SPA.  This means index.html will contain an ng-view which will, upon routing, point to login.html, main.html or profile.html, suitably refactored.  The file structure of your web app should follow that 
-of the <a target="_blank" href="sample/RiceBookApp">RiceBookApp</a> example where we have a top level index page, an app directory, and then subdirectories for each component such as posts or users, etc.  Each subdirectory would have at least a view html file, a controller js file, and possibly a spec js file (see below).  You should also have a separate js file for your services.  Remember: one controller, factory, or service per file.</p>
-
-<p>
-As you begin the Angularization of your site, focus on the routing and delegation of sections of the web app to controllers. 
-Recall that a controller is in charge of a single view and controllers should have as small of a scope as possible.
-This will mean that for sharing information between controllers we will use a service, for example the User service might
-be used to keep track of the currently logged in user.
+into a SPA.  This means index.html will contain a div for the application to mount and a script tag for the JavaScript application bundle.  For navigating between the three views you may use ReactRouting but a more simple approach is to have a "location" state variable and then selectively display a Component based on the value.  For example,
+<pre class="prettyprint lang-javascript">
+if (location == MAIN_PAGE) {
+	&lt;Main .../&gt;
+} else if (location == PROFILE_PAGE) {
+	&lt;Profile .../&gt;
+} else {
+	&lt;Landing .../&gt;
+}
+</pre>
+The file structure of your web app should have separate directories for each "section" of your application,
+see below for an example file structure.
+Remember to make your files small, ideally with only a single Component within, or at least a single concern.
 </p>
 
-<p><a target=_blank href="http://plnkr.co/edit/EEBZXvZ5ZdrgEaQk4Xas?p=preview">Here is an example that should help you get started with 
-routing and communicating with the dummy server.</a></p>
+<p>
+As you being transforming your three pages into a React site, focus on the navigation
+fo your site from page to page.  Keep the dummy data in your views.  After you have
+a working React site with static data, then we can implement the data flow using Redux.
+</p>
+
+<p><a target=_blank href="https://jsbin.com/jeliroluni/edit?js,output
+">Here is an example that should help you get started communicating with the dummy server.</a></p>
 
 <h3>Test Driven Development</h3>
 
 <p>We will exercise test driven development instead of writing the implementation of our web app first and testing later.
-Write Jasmine unit tests for the desired behavior and we'll use Karma for the execution of the test suite.  
-For portions of your webapp that you have already implemented, go back and write tests for them.  
-For new functionality, write tests first and then implement.
+Write Mocha unit tests for the desired behavior and execute the test suite as we develop.
 </p>
 
 <h4>Unit Tests</h4>
 
-<p>We will have a Status or User controller that is in charge of allowing the user to update their status.  It also displays the
-user's status on the page.  For our first test we will simulate the user entering a new status message, which will
+<p>Every user interaction point should be validated.  Most user interactions involve
+making an AJAX call to the server to update data.  In our test environment we will
+not want to contact the real server, and therefore want to intercept the AJAX requests 
+and provide our own mocked response.
+
+
+  For our first test we will simulate the user entering a new status message, which will
 be sent to the server for persistence.  The test code might be similar to</p>
 <pre class="prettyprint lang-javascript">
 it('should update the status message', function() {
