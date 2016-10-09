@@ -1,6 +1,29 @@
 [
 {"section":"Merits", "items": [   
+    {"item":"Can add a new article (text only)", "pts": 3},    
+    {"item":"New articles are persistent to log off and refresh", "pts":3},
+    {"item":"Can update a article", "pts":3},
+    {"item":"Can comment on a article", "pts":3},
+    {"item":"Comment is persistent", "pts":3},    
+    {"item":"Can update a comment", "pts":3},
+    {"item":"updates to comments and articles are persistent", "pts":3},
+    {"item":"No hard coded data for status, profile picture, or articles: data comes from server", "pts":4},
+    {"item":"Little or no use of jQuery or direct DOM access (use Angular)", "pts":3},
+    {"item":"Directory structure follows components, i.e., separation of concerns", "pts":3},
+    {"item":"JavaScript source is appropriately divided into separate files by component", "pts":3},    
+    {"item":"Unit test for updating status headline", "pts":3},
+    {"item":"Unit test of the article filter", "pts":3},
+    {"item":"Unit test for adding a new article", "pts":3},
+    {"item":"Unit test for editing a article", "pts":3},
+    {"item":"Unit test for commenting on a article", "pts":3},
+    {"item":"Unit test for editing a comment", "pts":3},    
+    {"item":"Unit test for logging in a valid user", "pts":3},
+    {"item":"Unit test for invalid login", "pts":3},
+    {"item":"Unit test for logging out a user", "pts":3},
+    {"item":"Unit test of User service to share data between controllers", "pts":3},
 
+
+    
     {"item":"README.json file with netid, frontend, and backend URLs", "pts":1},
     {"item":"Frontend: Site is fully functioning: login, status, posts, followers, profile, image uploads", "pts":5},
     {"item":"Frontend: Site deployed to Heroku", "pts":1},
