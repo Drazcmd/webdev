@@ -29,23 +29,23 @@ def put(endpoint):
         sys.exit(1)
     return json.loads(r.text)
 
-def getPosts(postId=None):
-    endpoint = '/posts'
-    if postId is not None:
-        endpoint = (endpoint + "/%d") % postId
-    return checkPosts(get(endpoint))
+def getArticles(articleId=None):
+    endpoint = '/articles'
+    if articleId is not None:
+        endpoint = (endpoint + "/%d") % articleId
+    return checkArticles(get(endpoint))
 
-def checkPosts(result):
-    if "posts" not in result:
-        print(cc.FAIL + "ERROR: GET /posts did not have \"posts\" entry" + cc.ENDC)
+def checkArticles(result):
+    if "articles" not in result:
+        print(cc.FAIL + "ERROR: GET /articles did not have \"articles\" entry" + cc.ENDC)
         print(result)
         return []
     else:
-        return result["posts"]
+        return result["articles"]
 
-def addPost(body):
-    r = requests.post(config["backend"] + "/post", json={'body':body})
-    return checkPosts( json.loads(r.text) )
+def addArticle(body):
+    r = requests.post(config["backend"] + "/article", json={'body':body})
+    return checkArticles( json.loads(r.text) )
 
 def msg(message):
     print(cc.BLUE + message + cc.ENDC)
@@ -70,55 +70,55 @@ r = get("/")
 msg("GET /")
 pp.pprint(r)
 
-# GET /posts
-posts = getPosts()
-msg("GET /posts")
-pp.pprint(posts)
+# GET /articles
+articles = getArticles()
+msg("GET /articles")
+pp.pprint(articles)
 
-if len(posts) < 3:
-    print(cc.FAIL + ("FAIL: Expected at least 3 posts from GET /posts but found %d " % len(posts)) + cc.ENDC)
+if len(articles) < 3:
+    print(cc.FAIL + ("FAIL: Expected at least 3 articles from GET /articles but found %d " % len(articles)) + cc.ENDC)
 else:
-    print(cc.GREEN + ("OK: GET /posts returned %d posts, expecting at least 3" % len(posts)) + cc.ENDC)
+    print(cc.GREEN + ("OK: GET /articles returned %d articles, expecting at least 3" % len(articles)) + cc.ENDC)
 
 ######################################
-# add a new post
+# add a new article
 body = "Hello World!"
-newPosts = addPost(body)
-msg("POST /post -d " + body)
-pp.pprint(newPosts)
+newArticles = addArticle(body)
+msg("POST /article -d " + body)
+pp.pprint(newArticles)
 
-if len(newPosts) is not 1:
-    print(cc.FAIL + ("FAIL: Expected 1 new post added but found %d posts" % len(newPosts)) + cc.ENDC)
+if len(newArticles) is not 1:
+    print(cc.FAIL + ("FAIL: Expected 1 new article added but found %d articles" % len(newArticles)) + cc.ENDC)
 else:
-    newPostId = newPosts[0]['id']
-    print(cc.GREEN + ("OK: POST /post returned one new post with id=%d" % newPostId) + cc.ENDC)
-    if newPosts[0]['body'] != body:
-        print(cc.FAIL + ("FAIL: Post did not have the correct body message: %s vs %s" % (newPosts[0]['body'], body)) + cc.ENDC)
+    newArticleId = newArticles[0]['id']
+    print(cc.GREEN + ("OK: POST /article returned one new article with id=%d" % newArticleId) + cc.ENDC)
+    if newArticles[0]['body'] != body:
+        print(cc.FAIL + ("FAIL: Article did not have the correct body message: %s vs %s" % (newArticles[0]['body'], body)) + cc.ENDC)
     else:
-        print(cc.GREEN + ("OK: post body was correct") + cc.ENDC)
+        print(cc.GREEN + ("OK: article body was correct") + cc.ENDC)
     ######################################
-    # get that new post by itself
-    getNewPost = getPosts(newPostId)
-    msg("GET /posts/%d" % newPostId)
-    pp.pprint(getNewPost)
-    if len(getNewPost) is not 1:
-        print(cc.FAIL + ("FAIL: Expected to get the one post that was added but found %d posts" % len(getNewPost)) + cc.ENDC)
+    # get that new article by itself
+    getNewArticle = getArticles(newArticleId)
+    msg("GET /articles/%d" % newArticleId)
+    pp.pprint(getNewArticle)
+    if len(getNewArticle) is not 1:
+        print(cc.FAIL + ("FAIL: Expected to get the one article that was added but found %d articles" % len(getNewArticle)) + cc.ENDC)
     else:
-        print(cc.GREEN + ("OK: GET /posts/%d got the new post" % newPostId) + cc.ENDC)
-        if getNewPost[0]['body'] != newPosts[0]['body'] or newPosts[0]['body'] != body:
-            print(cc.FAIL + ("FAIL: Post did not have the correct body message: %s" % getNewPost[0]['body']) + cc.ENDC)
+        print(cc.GREEN + ("OK: GET /articles/%d got the new article" % newArticleId) + cc.ENDC)
+        if getNewArticle[0]['body'] != newArticles[0]['body'] or newArticles[0]['body'] != body:
+            print(cc.FAIL + ("FAIL: Article did not have the correct body message: %s" % getNewArticle[0]['body']) + cc.ENDC)
         else:
-            print(cc.GREEN + ("OK: post body was correct") + cc.ENDC)
+            print(cc.GREEN + ("OK: article body was correct") + cc.ENDC)
 
 ######################################
-# confirm that we only added one post
-posts2 = getPosts()
-msg("GET /posts")
-pp.pprint(posts2)
-if len(posts2) is not len(posts) + 1:
-    print(cc.FAIL + ("FAIL: Expected one new post added but found %d + 1 = %d" % (len(posts), len(posts2))) + cc.ENDC)
+# confirm that we only added one article
+articles2 = getArticles()
+msg("GET /articles")
+pp.pprint(articles2)
+if len(articles2) is not len(articles) + 1:
+    print(cc.FAIL + ("FAIL: Expected one new article added but found %d + 1 = %d" % (len(articles), len(articles2))) + cc.ENDC)
 else:
-    print(cc.GREEN + ("OK: GET /posts returned one additional post") + cc.ENDC)
+    print(cc.GREEN + ("OK: GET /articles returned one additional article") + cc.ENDC)
 
 ######################################
 print(cc.YELLOW + ('Testing stubs...') + cc.ENDC)

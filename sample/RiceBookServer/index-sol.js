@@ -1,39 +1,38 @@
-var express = require('express')
-var bodyParser = require('body-parser')
 
-var app = express()
-app.use(bodyParser.json())
-app.get('/post', getPost)
-app.post('/post', addPost)
-app.get('/', hello)
+const express = require('express')
+const bodyParser = require('body-parser')
 
-var posts = [
-  { id:1, author:'Scott', body:'This is my first post'},
-  { id:2, author: 'Max', body:"This is Max's post"},
-  { id:3, author: 'Leo', body:"This is Leo's post"}
+const articles = [
+     { id:1, author:'Scott', text:'This is my first article'},
+     { id:2, author: 'Max', text:"This is Max's article"},
+     { id:3, author: 'Leo', text:"This is Leo's article"}
 ]
 
-function addPost(req, res) {
-    console.log('Payload received', req.body)    
-    var newPost = { id: posts.length+1, author:req.connection.remoteAddress, body:req.body.body }
-    posts.push(newPost)
-    res.send(newPost)
+const addArticle = (req, res) => {
+     console.log('Payload received', req.body)    
+     const newArticle = { 
+          id: articles.length+1, 
+          author:req.connection.remoteAddress, 
+          text:req.body.text
+     }
+     articles.push(newArticle)
+     res.send(newArticle)
 }
 
-function getPost(req, res) {
-	res.send({ posts: posts })
-}
+const getArticles = (req, res) => res.send({ articles: articles })
 
-function hello(req, res) {
-    res.send({hello:'world'})
-}
+const hello = (req, res) => res.send({ hello: 'world' })
+
+const app = express()
+
+app.use(bodyParser.json())
+app.get('/articles', getArticles)
+app.post('/article', addArticle)
+app.get('/', hello)
 
 // Get the port from the environment, i.e., Heroku sets it
-var port = process.env.PORT || 3000
-
-//////////////////////////////////////////////////////
-var server = app.listen(port, function() {
-     console.log('Server listening at http://%s:%s', 
-               server.address().address,
-               server.address().port)
+const port = process.env.PORT || 3000
+const server = app.listen(port, () => {
+     const addr = server.address()
+     console.log(`Server listening at http://${addr.address}:${addr.port}`)
 })

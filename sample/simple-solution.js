@@ -23,7 +23,7 @@ function server(req, res) {
      console.log('Request content-type  :', req.headers['content-type'])
      console.log('Request payload       :', req.body)
 
-     var payload = { 'hello': 'world' } // default response
+     var payload = null
      res.setHeader('Content-Type', 'application/json')
      res.statusCode = 200
 
@@ -38,7 +38,11 @@ function server(req, res) {
      	payload = { username: data.username, result: 'success'}
      } else if (req.method == 'PUT' && req.url == '/logout') {
      	payload = 'OK'
+     } else if (req.method == 'GET' && req.url == '/') {
+        payload = { 'hello': 'world' } // default response
+     } else {
+        res.statusCode = 400
      }
 
-     res.end(JSON.stringify(payload))
+     res.end(payload ? JSON.stringify(payload) : null)
 }
