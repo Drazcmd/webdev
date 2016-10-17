@@ -44,7 +44,7 @@ def checkArticles(result):
         return result["articles"]
 
 def addArticle(body):
-    r = requests.post(config["backend"] + "/article", json={'body':body})
+    r = requests.post(config["backend"] + "/article", json={'text':body})
     return checkArticles( json.loads(r.text) )
 
 def msg(message):
@@ -92,8 +92,8 @@ if len(newArticles) is not 1:
 else:
     newArticleId = newArticles[0]['id']
     print(cc.GREEN + ("OK: POST /article returned one new article with id=%d" % newArticleId) + cc.ENDC)
-    if newArticles[0]['body'] != body:
-        print(cc.FAIL + ("FAIL: Article did not have the correct body message: %s vs %s" % (newArticles[0]['body'], body)) + cc.ENDC)
+    if newArticles[0]['text'] != body:
+        print(cc.FAIL + ("FAIL: Article did not have the correct body message: %s vs %s" % (newArticles[0]['text'], body)) + cc.ENDC)
     else:
         print(cc.GREEN + ("OK: article body was correct") + cc.ENDC)
     ######################################
@@ -105,10 +105,10 @@ else:
         print(cc.FAIL + ("FAIL: Expected to get the one article that was added but found %d articles" % len(getNewArticle)) + cc.ENDC)
     else:
         print(cc.GREEN + ("OK: GET /articles/%d got the new article" % newArticleId) + cc.ENDC)
-        if getNewArticle[0]['body'] != newArticles[0]['body'] or newArticles[0]['body'] != body:
-            print(cc.FAIL + ("FAIL: Article did not have the correct body message: %s" % getNewArticle[0]['body']) + cc.ENDC)
+        if getNewArticle[0]['text'] != newArticles[0]['text'] or newArticles[0]['text'] != body:
+            print(cc.FAIL + ("FAIL: Article did not have the correct text message: %s" % getNewArticle[0]['text']) + cc.ENDC)
         else:
-            print(cc.GREEN + ("OK: article body was correct") + cc.ENDC)
+            print(cc.GREEN + ("OK: article text was correct") + cc.ENDC)
 
 ######################################
 # confirm that we only added one article
@@ -123,10 +123,10 @@ else:
 ######################################
 print(cc.YELLOW + ('Testing stubs...') + cc.ENDC)
 # Stubs
-for e in [ "/status", "/statuses", "/statuses/"+config['netid'], "/email", "/email/"+config['netid'], "/zipcode", "/zipcode/"+config['netid'], "/pictures", "/pictures/" + config['netid'] ]:
+for e in [ "/headlines", "/headlines/"+config['netid'], "/email", "/email/"+config['netid'], "/zipcode", "/zipcode/"+config['netid'], "/avatars", "/avatars/" + config['netid'] ]:
     msg("GET " + e)
     pp.pprint(get(e))
-for e in [ "/status", "/email", "/zipcode", "/picture" ]:
+for e in [ "/headline", "/email", "/zipcode", "/avatar" ]:
     msg("PUT " + e)
     pp.pprint(put(e))
 
