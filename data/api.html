@@ -140,28 +140,28 @@ Here's the <a href="/comp431/sample/swagger/#/default" target=_blank>swagger UI<
 
      <tr>
           <td>/articles/:id</td><td>PUT</td><td>:id is a post id<br/>
-          { body: message, commentId: optional }</td>
+          { text: message, commentId: optional }</td>
           <td>{ articles: [{ id: 1, author: Scott, ..., comments: [ ... ] }]</td>
-          <td>Update the article :id with a new body if commentId is not supplied.  
+          <td>Update the article :id with a new text if commentId is not supplied.  
                Forbidden if the user does not own the article.
-          If commentId is supplied, then update the requested comment on the article, if owned.  If commentId is -1, then a new comment is posted with the body message.</td>
+          If commentId is supplied, then update the requested comment on the article, if owned.  If commentId is -1, then a new comment is posted with the text message.</td>
      </tr>
 
      <tr>
           <td>/article</td><td>POST</td><td>
-          { body: message, img: &lt;file&gt; } img is optional</td>
+          { text: message, img: &lt;file&gt; } img is optional</td>
           <td>{ articles: [{ id: 1, author: Scott, ..., comments: [] } ]}</td>
           <td>Add a new article for the loggedInUser, date and id are determined by server.  Optional image upload -- <a href="#upload"><b>see below</b></a>.</td>
      </tr>
 
      <tr class="double">
           <td>/headlines/:users?</td><td>GET</td><td>none<br>:users is a comma separated list of user names</td>
-          <td>{ headlines: [ {username:Scott, status:Happy}, { ... } ] }</td>
+          <td>{ headlines: [ {username:Scott, headline:Happy}, { ... } ] }</td>
           <td>Get the headlines for multiple users</td>
      </tr>
      <tr>
-          <td>/headline</td><td>PUT</td><td>{ status: Happy }</td>
-          <td>{ headlines: [{username: Scott, status: Happy }]}</td>
+          <td>/headline</td><td>PUT</td><td>{ headline: Happy }</td>
+          <td>{ headlines: [{username: Scott, headline: Happy }]}</td>
           <td>Update the headline for the loggedInUser</td>
      </tr>
 
