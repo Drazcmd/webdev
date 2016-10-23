@@ -17,7 +17,7 @@
     {"item":"Main: Non-logged in users cannot navigate to the main view or profile view", "pts":3},
     {"item":"Main: for articles with comments, comments are shown", "pts": 3},
     {"item":"Main: Search bar filters displayed articles by author and text, but not article id or article date", "pts":3},
-    {"item":"Profile: shows the user's current profile values (email, zipcode, dob, password, avatar)", "pts": 3},
+    {"item":"Profile: shows the user's current profile values (email, zipcode, dob, display the avatar picture)", "pts": 3},
     {"item":"Profile: link back to the main page", "pts":2},
 
 {"item":"Test Actions: resource should be a resource (i.e., mock a request)", "pts": 2},
