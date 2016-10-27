@@ -28,19 +28,17 @@ td {
 <h2>Getting Started with Heroku</h2>
 
 <p>
-So far we've been hosting our pages on our local machine and viewing them directly with our web browser.
-This is fine until we want to share our creations with others.  To do this we deploy our web site, later
-to be a web application, to the cloud. 
-We will be using <a href="https://www.heroku.com" target="_blank">Heroku</a> because of their free tier
+For hosting our frontend application we have been using static hosting from surge.
+For our backend application 
+we will be using <a href="https://www.heroku.com" target="_blank">Heroku</a> because of their free tier
 and overall simplicity in usage.
-Later in the class we will talk about alternative hosting solutions.
 </p>
 
 <p>First you will need to sign up for an account.  We will be using some plugins which
 technically may cost money if you exceed the free tier.  Therefore they require a credit card, but so long 
-as you stay in the free tier they will not charge you -- I have never been charged.  
+as you stay in the free tier they will not charge you -- I have <em>never</em> been charged.  
 After you have an account and are signed in you need to download the Heroku Toolbelt.  
-If you do not already have a Git client installed, they bundle one for you.  We use Git to talk to Heroku.
+We use Git to talk to Heroku.
 </p>
 
 <p>You will need to be logged in to Heroku to proceed: </p>
@@ -50,54 +48,42 @@ heroku login
 
 <h3>Local Setup</h3>
 
-<p>Now is the time when we want to organize our workflow.  Each class session we submit an inclass exercise.  
-We also submit our homework assignments.  Both of these should be distinct from our working directory where
-we develop our code and run our application.  The primary reason for this is that the .git directory and other
-modules that we will later install are not necessary to Turnin and only make the Turnin process more painful.
-Therefore I recommend you have the following directory structure:
-</p>
-<img src="../images/structure.png">
-<p>The workflow is then to develop your application in the working directory <code>frontend</code> and when you are ready to Turnin, you
-copy your files to the appropriate Turnin directory.</p>
-<p>Copy your <code>hw1-simple</code> and <code>hw2-dynamic</code> files
-to this new <code>frontend</code> directory.  We need to create 
-one additional file named <code>Procfile</code> which is done below.
-</p>
+<p>Remember to have node_modules in your .gitignore file for every git repo you use.
+You can use my 
+<a href="https://github.com/skotep/comp431/blob/master/.gitignore" target=_blank>gitignore</a> as an example.
 
-<p>To deploy to Heroku start by navigating to <code>frontend</code>.
+<p>To deploy to Heroku start by navigating to the directory of your backend application.
+In this directory you should be able to start your server, i.e., it's the directory with package.json.</p>
+<p>
 You will want to come up with a name for your application.  Note that 
-later in the course we will create new applications so as to not "stomp" over previous homework submissions.  So the name you pick here will not necessarily be the final name of your final social networking app (and we can always change the name later).  <b>In the example below, I have named my application <code>ricebookapp</code>, which should be replaced with your chosen name, or leave blank and Heroku will assign a name for you.</b> 
-These names are world unique, therefore your name may have already been chosen, so pick another or let Heroku give you a name.</p>
+later in the course we will create new applications so as to not "stomp" over previous assignments. 
+So the name you pick here will not necessarily be the final name of your final social networking app (and we can always change the name later).  <b>In the example below, I have named my application <code>ricebookapp</code>, which should be replaced with your chosen name, or leave blank and Heroku will assign a name for you.</b> 
+These names are globally unique, therefore your name may have already been chosen, so pick another or let Heroku give you a name.</p>
 <pre class="prettyprint lang-bash">
-cd frontend
 git init
 heroku create ricebookapp
-echo web: bin/start-nginx -f > Procfile
-git add Procfile index.html main.html main.js
+echo web: npm start > Procfile
+git add .
 git commit -m 'initial commit'
-heroku buildpacks:set https://github.com/skotep/nginx-buildpack.git
 git push heroku master
 heroku ps:scale web=1
 </pre>
 <p>Now your soon to be app is hosted and running on Heroku.  
 Navigate to, e.g., <a href="https://ricebookapp.herokuapp.com" target="_blank">https://ricebookapp.herokuapp.com</a> to see it.</p>
 
-<p>What did these steps do?  We started by creating a new git repository.  We then created a new Heroku application that was tied to it.  (The order of these operations matters because if you create the Heroku app first then it will not be attached to the git repo.  If you did this, then to fix it execute <code>heroku git:remote -a ricebookapp</code>)  Next we defined the command that Heroku will execute to start our application (Procfile).  Notice that it executes "start-nginx" which implies we have an Nginx server running that will surface
-our (static) front-end application (we'll talk more about Nginx later in the course).  Next we add all of our files to the git repo.  We commit the changes.  We then tell Heroku that we'll be using Nginx for our application (as opposed to node, ruby, python, etc).  Finally we push to the remote Heroku git master.  Heroku builds our application and spins up the Nginx server.</p>
+<p>What did these steps do?  We started by creating a new git repository.  We then created a new Heroku application that was tied to it.  (The order of these operations matters because if you create the Heroku app first then it will not be attached to the git repo.  If you did this, then to fix it execute <code>heroku git:remote -a ricebookapp</code>)  Next we defined the command that Heroku will execute to start our application (Procfile).  Notice that it executes "npm start" 
+Next we add all of our files to the git repo.  
+We commit the changes.  
+Finally we push to the remote Heroku git master.  Heroku builds our application and spins up the Node server.</p>
 
-<p>For inclass-7 submit a file named README.json that has the following
+<p>For the inclass exercise, submit a file named README.json that has the following
 contents (replaced with *your* values of course)</p>
 <pre style="border: 1px solid black; padding: 0.5em;">
 { 
      "netid": "sep1",
-  "frontend": "https://ricebookapp.herokuapp.com"
+  "backend": "https://ricebookapp.herokuapp.com"
 }
 </pre>
 <hr>
-<p>
-Note that we will continue to use this <code>frontend</code> directory as we develop our web application but
-will submit from separate hw# directories for our assignments.  Those hw# directories should only have 
-our "content" i.e., will not include the hidden <code>.git</code> directory.
-</p>
 <hr>
 
