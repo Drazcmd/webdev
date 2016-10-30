@@ -45,6 +45,7 @@
     {"item":"Valid test coverage report included in submission", "pts":3}
 ]},
 {"section":"Demerits", "items": [
+    {"item":"late submission 10pts per day", "pts": 10},
      
     {"item":"did not follow Redux tutorial in implementation details", "pts": 25},
     {"item":"stateful component", "pts":25},
