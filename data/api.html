@@ -149,7 +149,7 @@ Here's the <a href="/comp431/sample/swagger/#/default" target=_blank>swagger UI<
 
      <tr>
           <td>/article</td><td>POST</td><td>
-          { text: message, img: &lt;file&gt; } img is optional</td>
+          { text: message } image is optional, see below</td>
           <td>{ articles: [{ id: 1, author: Scott, ..., comments: [] } ]}</td>
           <td>Add a new article for the loggedInUser, date and id are determined by server.  Optional image upload -- <a href="#upload"><b>see below</b></a>.</td>
      </tr>
@@ -216,7 +216,7 @@ Here's the <a href="/comp431/sample/swagger/#/default" target=_blank>swagger UI<
      </tr>
      <tr>
           <td>/avatar</td><td>PUT</td>
-          <td>{ img: &lt;file&gt; }</td>
+          <td>see below</td>
           <td>{ username: loggedInUser, avatar: pictureURL }</td>
           <td>Update the avatar address for the loggedInUser. <a href="#upload"><b>See below</b></a></td>
      </tr>
