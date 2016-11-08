@@ -1,8 +1,10 @@
 const expect = require('chai').expect
 const fetch = require('isomorphic-fetch')
 
+const port = process.env.PORT || 3000
+
 const resource = (method, endpoint, payload) => {
-	const url = `http://localhost:3000/${endpoint}`
+	const url = `http://localhost:${port}/${endpoint}`
 	const options = { method, headers: { 'Content-Type': 'application/json' }}
 	if (payload) options.body = JSON.stringify(payload)
 	return fetch(url, options).then(r => {

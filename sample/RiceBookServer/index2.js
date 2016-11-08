@@ -6,7 +6,7 @@ const app = express()
 app.use(logger('default'))
 app.use(bodyParser.json())
 
-//require('./app_server/posts.js').setup(app)
+//require('./src/articles.js')(app)
 require('./src/hello.js')(app)
 
 // Get the port from the environment, i.e., Heroku sets it
@@ -15,3 +15,4 @@ const server = app.listen(port, () => {
      const addr = server.address()
      console.log(`Server listening at http://${addr.address}:${addr.port}`)
 })
+
