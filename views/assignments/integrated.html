@@ -1,4 +1,4 @@
-<h1 style="color: red;">NOT UP TO DATE</h1>
+<!-- <h1 style="color: red;">NOT UP TO DATE</h1> -->
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
 <style>
@@ -38,17 +38,17 @@ tr.double {
 <p>
 In this assignment you will integrate your frontend and backend web applications.
 </p>
-Currently the backend server only supports status messages and posts, and these are
+Currently the backend server only supports headlines and articles, and these are
 stored as inmemory data structures.  Heroku requires our server to reboot every day.
-Therefore posts and status updates are not persistant day to day.
+Therefore articles and headlines are not persistant day to day.
 Our solution for this is to use a database to persist state.  
-The 'M' in a MEAN application stands for MongoDB which is our database of choice for this assignment.
+We will use MongoDB as our database of choice for this assignment.
 </p>
 <p>In addition to adding a persistent document store, we
 will implement the bulk of the functionality for our backend server.
 The only thing we do not implement in this assignment is the handling of uploading images.
-Therefore we continue to accept only text-only posts and do not implement 
-the functionality of <code>PUT /picture</code> in this assignment.
+Therefore we continue to accept only text-only articles and do not implement 
+the functionality of <code>PUT /avatar</code> in this assignment.
 </p>
 <p>
 The final piece of this assignment is to direct our frontend webapp to use our backend
@@ -61,8 +61,8 @@ server instead of the dummy server, thereby integrating our social networking ap
 be taken in any order.  I divide up the problem into:
 <ol>
   <li>Authentication (login, logout, new user registration, password changing)</li>
-  <li>Integrating status and posts with mongo</li>  
-  <li>Edit posts, add comments, edit comments</li>
+  <li>Integrating headlines and articles with mongo</li>  
+  <li>Edit articles, add comments, edit comments</li>
   <li>Profile editing of email and zipcode</li>
   <li>Add, remove, and list followed users</li>
 </ol>
@@ -72,11 +72,13 @@ of the assignment in any order.</p>
 
 <p>
 Follow these <a target=_blank href="data/database.html">database instructions</a> 
-for setting up your MongoDB instance and connecting it to your backend server.
+for setting up your MongoDB instance and connecting it to your backend server
+if you have not already completed this as part of an inclass assignment.
 </p>
 
 <!-- ******************************************************************** -->
 <h3>Aside on Middleware</h3>
+
 <p>Node is all about middleware.  Middleware are functions inserted between the server and the endpoint handler that have three arguments, request, response, and next, which is a "pointer" to the next piece of middleware or endpoint.  In <code>index.js</code> we see examples of functions in the request-reponse pipeline with two arguments, request and response.  These are endpoints -- they do not have a <code>next</code> function to pass on to.  A middleware function might look like this:</p>
 <pre class="prettyprint lang-javascript">
 function isLoggedIn(req, res, next) {   
@@ -91,7 +93,7 @@ function isLoggedIn(req, res, next) {
     app.put('/logout', isLoggedIn, logout)
 </pre>
 <p>we can chain together as many pieces of middleware as we want.</p>
-<p>Here isLoggedIn is placing on the request object the currently logged in user information.  This
+<p>Here <code>isLoggedIn</code> is placing on the request object the currently logged in user information.  This
 way the currently logged in user will be accessible from downstream endpoint functions.</p>
 <p>You are encouraged to add the isLoggedIn middleware to ensure that users are properly logged in before 
 using your service.  If you work on the other endpoints before authentication, then you can still have
@@ -110,15 +112,15 @@ This will assure that all requests are made by authenticated clients.<p>
 <pre class="prettyprint lang-javascript">
 // this is profile.js which contains all user profile 
 // information except passwords which is in auth.js
-exports.setup = function(app) {
-    app.get('/statuses/:users*?', isLoggedIn, getStatuses)
+moodule.exports = (app) => {
+    app.get('/headlines/:users*?', isLoggedIn, getHeadlines)
 }
 </pre>
 The API for the endpoints is the same as for the dummy server 
 (i.e., this way we don't need to change any of the frontend code).  That api is found here
 <center><a target="_blank" href="data/api.html#api">Backend API list of endpoints</a></center>
 <p>We will implement all of the endpoints except <code>GET /sample</code> and
-<code>PUT /picture</code>.  Additionally, we still only accept new posts with text only, no pictures.
+<code>PUT /avatar</code>.  Additionally, we still only accept new articles with text only, no pictures.
 </p>
 <p>
 If we were doing TDD then we would write tests for each function before we write the implementation.  
@@ -128,11 +130,11 @@ for this assignment.  Additionally, we already have a working frontend with end-
 which can serve us well in testing our backend functionality.  (But again, unit testing the 
 backend separately is the preferred approach.)
 </p>
-<p>Previously our status and post endpoints used an in-memory data structure
+<p>Previously our headline and article endpoints used an in-memory data structure
 for storage.  Now we change these to use our mongodb document store.
 Follow the inclass slides and exercises as examples for how to do this.
 I would perform the implementation file by file, i.e., all of <code>profile.js</code>
-then <code>following.js</code> then <code>post.js</code> and finally <code>auth.js</code> --
+then <code>following.js</code> then <code>article.js</code> and finally <code>auth.js</code> --
 but you can implement in any order you desire.
 <p>
 
@@ -191,32 +193,32 @@ Here is an example that attempts to create unique session keys for users
 </p>
 <pre class="prettyprint lang-javascript">
 // this is in auth.js
-var _sessionUser = {}
-var _cookieKey = 'sid'
+const sessionUser = {}
+const cookieKey = 'sid'
 
 function login(...) {
 
     // get the record from the database by username
-    var userObj = getUser(...username...)
+    const userObj = getUser(...username...)
 
     // "security by obscurity" we don't want people guessing a sessionkey
-    var sessionKey = md5(mySecretMessage + new Date().getTime() + userObj.username)
-    _sessionUser[sessionKey] = userObj
+    const sessionKey = md5(mySecretMessage + new Date().getTime() + userObj.username)
+    sessionUser[sessionKey] = userObj
 
     // this sets a cookie
-    res.cookie(_cookieKey, sessionKey, { maxAge: 3600*1000, httpOnly: true})
+    res.cookie(cookieKey, sessionKey, { maxAge: 3600*1000, httpOnly: true})
 </pre>
 <p>we store the session key in a cookie for the user.  Note that the sessionUser
 map really should be a <em>least recently used</em> (LRU) map, otherwise it is a potential memory hog!
-Later we will migrate this to use a distributed memory store as to alleviate this difficulty.  For now
-just use an inmemory map as shown here.</p>
+Later we will migrate this to use a distributed memory store to alleviate this difficulty.  For now
+just use an inmemory map as shown here and don't worry about LRU.</p>
 
 <h4>isLoggedIn</h4>
 <p>Now we can update the <code>isLoggedIn</code> middleware to grab the cookie from the request (if it exists),
-and lookup in _sessionUser the corresponding user, adding it to the request object for the downstream endpoints.  
+and lookup in sessionUser the corresponding user, adding it to the request object for the downstream endpoints.  
 If there is none, or the cookie did not exist, then the user is not logged in and we should respond with a 401 Unauthorized.
 </p>
-<p>When a user logs out, remove their sessionKey from the _sessionUser map and clear/delete the cookie in the response object.</p>
+<p>When a user logs out, remove their sessionKey from the sessionUser map and clear/delete the cookie in the response object.</p>
 
 
 
@@ -229,12 +231,12 @@ From that lecture you should recognize that it's your backend that needs to supp
 Look again at that lecture to find what response headers should look like.</p>
 
 <p>The frontend and backend have different origins.  When running locally you might have the 
-frontend running through the python server on port 8080 and the backend served up on port 3000.
+frontend running on port 8080 and the backend served up on port 3000.
 Therefore we need to enable CORS for the AJAX calls to complete without the browser rejecting them.  
 You'll want to create a middleware function that adds these response headers to every request.  
 <em>If</em> you were to only use it on some requests, then you could put the middleware in the middle of an endpoint call:</p>
 <pre class="prettyprint lang-javascript">
-app.get('/posts', enableCORS, getPosts)
+app.get('/articles', enableCORS, getArticles)
 </pre>
 but we want to add middleware to <em>all</em> calls, and therefore instead have 
 <pre class="prettyprint lang-javascript">
@@ -246,22 +248,14 @@ See the lecture on security for the inclass exercise enabling CORS.</p>
 <p>You should enable CORS globally: whatever origin requests data, you should allow a response.  I.e., 
 <u>you should not hardcode a domain.</u></p>
 
-<h3>Sending text-only posts from the frontend</h3>
+<h3>Sending text-only articles from the frontend</h3>
 
-<p>Note that our <code>POST /post</code> endpoint will only be accepting
+<p>Note that our <code>POST /article</code> endpoint will only be accepting
 text at the current moment.  I.e., no picture uploads.  Therefore the frontend
-application needs to be modified to not send formData.  For example,
-if we already had a method <code>addPost</code> in <code>$resource</code>
-then we would rename it <code>addPostFull</code> and make a new <code>addPost</code></p>
-<pre class="prettyprint lang-javascript">
-  addPostFull  : { method: 'POST', 
-     headers:{'Content-Type': undefined},
-     transformRequest: resourceUploadFile, 
-     params: {endpoint: 'post'    } 
-  },
-  addPost  : { method: 'POST', params: {endpoint: 'post'    } },
-</pre>
-<p>this way we can easily switch back to the formData upload for the final assignment
+application needs to be modified to <em>not</em> send formData.  For example,
+if we already had a method <code>addArticle</code> 
+then we would rename it <code>addArticleWithImage</code> and make a new <code>addArticle</code>.
+This way we can easily switch back to the formData upload for the final assignment
 when image uploading is enabled on the backend.</p>
 
 <h3>Integrating with the Frontend</h3>
@@ -276,18 +270,17 @@ Now adjust your locally running frontend to access your deployed backend on Hero
 Again, verify that your frontend is functional. 
 </p>
 <p class="warning">
-Do NOT push your updated frontend to Heroku using the same app name as for the previous assignment.
+Do NOT push your updated frontend to Surge using the same app name as for the previous assignment.
+Do NOT push your updated backend to Heroku using the same app name as for the previous assignment.
 </p>
 <p>Your "working" frontend talking to the dummy server is being used for reviews.
 So as to not disrupt the review process (i.e., you would have unhappy users) 
-create a <em>new</em> Heroku application name for your frontend.  
-You can do this by typing "<code>heroku create newappname</code>" be sure
+create a <em>new</em> Heroku application name for your backend and use a different
+url for your frontend.  
+For Heroku, you can do this by typing "<code>heroku create newappname</code>" be sure
 to change "newappname" to either your desired name for your application
-or leave blank and Heroku will assign you a name.  Recall that for the frontend
-app we needed to additionally set the buildpack, 
-be sure to <a href="data/heroku.html" target=_blank>review the instructions</a> that we used before.
-</p>
-<p>After you have your new frontend app setup locally, push it to Heroku.  
+or leave blank and Heroku will assign you a name.</p>
+<p>After you have your new frontend app setup locally, push it to Surge.  
 Now verify that your newly deployed frontend is functional with your deployed backend.
 Your old frontend app should be unchanged and continue to talk to the dummy server.
 </p>
@@ -305,12 +298,13 @@ setup.  In this way we control our rollout and can identify problems and their s
 <pre style="border: 1px solid black; padding: 0.5em;">
 { 
      "netid": "sep1",
-  "frontend": "https://ricebookapp.herokuapp.com",
+  "frontend": "https://ricebookapp.surge.sh",
    "backend": "https://ricebookserver.herokuapp.com"
 }
 </pre>
 <p>replace "ricebookapp" and "ricebookserver" with the names of your frontend and backend applications, and replace "sep1" with your netID.
-The "frontend" entry shoudl be your <em>new</em> frontend application different from the one submitted in the previous assignment.</p>
+The "frontend" entry shoudl be your <em>new</em> frontend application different from the one submitted in the previous assignment.
+Same with the "backend" entry.</p>
 
 <p>Verify again that your deployed frontend application works with your backend server.  
 An automated grading robot will use your deployed frontend app and it's interoperability with the backend server when grading.
@@ -320,111 +314,47 @@ An automated grading robot will use your deployed frontend app and it's interope
 <ul>
     <li>A file <code>README.json</code> that has your frontend and backend URLs along with netid</li>
     <li>Newly deployend frontend webapp that communicates with deployed backend</li>
-    <li>Backend implements <strong>all</strong> endpoints, except <code>/sample</code>, only has a stub for <code>PUT /picture</code>, 
-        and does not need to accept posts with pictures.</li>
+    <li>Backend implements <strong>all</strong> endpoints, except <code>/sample</code>, only has a stub for <code>PUT /avatar</code>, 
+        and does not need to accept articles with pictures.</li>
     <li>Each password entry has a unique salt, i.e., a new salt is generated for each new password</li>
-    <li>Content (status, profile info, followers, posts, etc) is only viewable by logged in users</li>
+    <li>Content (headline, profile info, followers, articles, etc) is only viewable by logged in users</li>
     <li>When users logout then must login again to view content (i.e., be sure to delete the cookie)</li>
-    <li>Your test user account can login with the three-word-passphrase for the dummy server previously supplied (this will be used by the gradebot)</li>
-    <li>There are at least 10 preloaded posts viewable by <em>your</em> test user</li>    
-    <li>There are at least 3 comments on the posts viewable by <em>your</em> test user, at least two comments on one post and one comment on a different post.</li>
-    <li><b>The is NO requirement on the authors of the posts returned to the frontend.  I.e., GET /posts can return all the posts in the database for <em>this</em> assignment.</b></li>
+    <li>Your test user account can login with the three-word-passphrase for the dummy server previously supplied (this will be used by the gradebot) -- i.e., be sure to register your test user an account!</li>
+    <li>There are at least 10 preloaded articles viewable by <em>your</em> test user</li>    
+    <li>There are at least 3 comments on the articles viewable by <em>your</em> test user, at least two comments on one article and one comment on a different article.</li>
+    <li><b>The is NO requirement on the authors of the articles returned to the frontend.  I.e., GET /articles can return all the articles in the database for <em>this</em> assignment.</b></li>
 </ul>
 
 <h2>What to submit</h2>
 
-<p>Your submission directory might look something like this</p>
+<p>Similar to the previous assignment,
+you will submit both your
+frontend and backend applications.
+Your submission directory might look something like this</p>
 
-<div class="ui list"><div class="item">
-    <i class="folder icon"></i>
-    <div class="content">
-        <div class="header">hw{{vm.hwid}}-{{vm.assignmentId}}</div>
-
-        <div class="list">
-
-            <div class="item">
-                <i class="file text outline icon"></i>
-                <div class="content"><div class="description">README.json</div></div>
-            </div>
-
-
-        <div class="item">
-            <i class="folder icon"></i><div class="content"><div class="header">frontend</div>
-            <div class="list">
-
-            <div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">index.html</div></div></div>
-
-            <div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">jasmine.html</div></div></div>
-            <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">karma.conf.js</div></div></div>
-
-            <div class="item">
-                <i class="file image outline icon"></i>
-                <div class="content"><div class="description">styles.css</div></div>
-            </div>
-
-                    <div class="item">
-                        <i class="folder outline icon"></i><div class="content">coverage</div>
-                    </div>
-
-            <div class="item">
-                <i class="folder outline icon"></i>
-                <div class="content"><div class="header">e2e</div>
-            </div> </div>
-
-            <div class="item">
-                <i class="folder outline icon"></i>
-                <div class="content"><div class="header">e2e-results</div>
-            </div> </div>
-
-            <div class="item">
-                <i class="folder outline icon"></i><div class="content"><div class="header">app</div></div>
-            </div>
-            </div> <!-- end list -->
-    </div></div>   
-
-    <div class="item">
-        <i class="folder icon"></i><div class="content"><div class="header">backend</div>
-        
-        <div class="list">
+<pre>
+hw7
+|-- README.json
+|-- frontend
+|   |-- ...
+|   `-- e2e
+|       |-- ...
+|       `-- results.xml
+|-- backend
+    |-- index.js
+    |-- mocha.opts
+    |-- package.json
+    |-- results.xml
+    `-- src
+        |-- auth.js
+        |-- articles.js
+        |-- articles.spec.js
+        |-- following.js
+        |-- profile.js
+        `-- profile.spec.js
+</pre>
 
 
-            <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">index.js</div></div></div>
-            <div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">package.json</div></div></div>
-
-
-            <div class="item">
-                <i class="folder icon"></i><div class="content"><div class="header">app_server</div>
-                <div class="list">
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">auth.js</div></div></div>
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">db.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">model.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">following.js</div></div></div>
-
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.spec.js</div></div></div>
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.spec.js</div></div></div>
-
-                </div>
-            </div></div>
-
-            <div class="item">
-                <i class="folder icon"></i><div class="content"><div class="header">testresults</div>
-                <div class="list">
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">TEST-ValidatePostFunctionality.xml.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">TEST-ValidateStatusFunctionality.xml.js</div></div></div>
-                </div>
-            </div></div>
-        </div>
-        </div>
-    </div>  
-            
- </div></div>
 
 
 <!-- ******************************** -->

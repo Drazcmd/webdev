@@ -28,8 +28,8 @@
     {"item":"End-to-End Test: JUnitXML test results for frontend", "pts":1},
 
     {"item":"Backend: Site is hosted on Heroku", "pts":1},
-    {"item":"Backend: GET /headlines returns a status messages", "pts":1},
-    {"item":"Backend: PUT /headline updates the status message GET /headlines returns", "pts":1},
+    {"item":"Backend: GET /headlines returns the headline message for the default logged in user", "pts":1},
+    {"item":"Backend: PUT /headline updates the headline message GET /headlines returns", "pts":1},
     {"item":"Backend: GET /headlines/:users returns default headline messages one for each requested user", "pts":1},
     {"item":"Backend: GET /articles returns at least three articles", "pts":1},
     {"item":"Backend: POST /article returns a newly added article, and adds article to results for GET /articles", "pts":1},
@@ -67,6 +67,7 @@
     {"item":"did not use fetch or wrapped fetch (aka resource) for AJAX calls", "pts": 10},
     {"item":"state mutation", "pts": 10},
     {"item":"submitted .git or node_modules directory", "pts":10},
+    {"item":"submitted bundle.js file", "pts":10},
     
     {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
