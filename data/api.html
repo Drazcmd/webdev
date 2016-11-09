@@ -136,14 +136,14 @@ loggedin user's information is returned.
 
      <tr class="double">
           <td>/articles/:id*?</td><td>GET</td><td>If specificed, :id is a postId or username</td>
-          <td>{ articles: [ { id: 1, author: Scott, ... }, { ... } ] }</td>
+          <td>{ articles: [ { _id: 1, author: Scott, ... }, { ... } ] }</td>
           <td>A requested article, all requested articles by a user, or array of articles in the loggedInUser's feed</td>
      </tr>
 
      <tr>
           <td>/articles/:id</td><td>PUT</td><td>:id is a post id<br/>
           { text: message, commentId: optional }</td>
-          <td>{ articles: [{ id: 1, author: Scott, ..., comments: [ ... ] }]</td>
+          <td>{ articles: [{ _id: 1, author: Scott, ..., comments: [ ... ] }]</td>
           <td>Update the article :id with a new text if commentId is not supplied.  
                Forbidden if the user does not own the article.
           If commentId is supplied, then update the requested comment on the article, if owned.  If commentId is -1, then a new comment is posted with the text message.</td>
@@ -152,7 +152,7 @@ loggedin user's information is returned.
      <tr>
           <td>/article</td><td>POST</td><td>
           { text: message } image is optional, see below</td>
-          <td>{ articles: [{ id: 1, author: Scott, ..., comments: [] } ]}</td>
+          <td>{ articles: [{ _id: 1, author: Scott, ..., comments: [] } ]}</td>
           <td>Add a new article for the loggedInUser, date and id are determined by server.  Optional image upload -- <a href="#upload"><b>see below</b></a>.</td>
      </tr>
 
