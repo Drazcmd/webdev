@@ -1,23 +1,45 @@
 ////////////////////////////////
 // Upload files to Cloudinary //
 ////////////////////////////////
-var multer = require('multer')
-var stream = require('stream')
-var cloudinary = require('cloudinary')
+const multer = require('multer')
+const stream = require('stream')
+const cloudinary = require('cloudinary')
+
+if (!process.env.CLOUDINARY_URL) {
+     process.env.CLOUDINARY_URL="cloudinary:// get value from heroku"
+}
 
 // multer parses multipart form data.  Here we tell
 // it to expect a single file upload named 'image'
-var uploadImage = multer().single('image')
+const uploadImage = multer().single('image')
 
-exports.uploadImage = uploadImage
+function putImage(req, res) {
 
-exports.setup = function(app) {
-	
-	// this provides a form.  This is uneeded because
-	// we have the upload on the frontend already.
-	app.get('/image', getImage)
+	// body-parser provides us the textual formData
+	// which is just title in this case
+	const publicName = req.body.title
 
-	app.post('/image', uploadImage, putImage)
+	const uploadStream = cloudinary.uploader.upload_stream(result => {    	
+		// create an image tag from the cloudinary upload
+		const image = cloudinary.image(result.public_id, {
+			format: "png", width: 100, height: 130, crop: "fill" 
+		})
+		// create a response to the user's upload
+		res.send(`Uploaded: ${result.url}<br/><a href="${result.url}">${image}</a>`);
+	}, { public_id: publicName })
+
+	// multer can save the file locally if we want
+	// instead we do not instruct multer to save the file
+	// and have the file in memory.
+	// multer provides req.file and within is the byte buffer
+
+	// we create a passthrough stream to pipe the buffer
+	// to the uploadStream for cloudinary.
+	const s = new stream.PassThrough()
+	s.end(req.file.buffer)
+	s.pipe(uploadStream)
+	s.on('end', uploadStream.end)
+	// and the end of the buffer we tell cloudinary to end the upload.
 }
 
 function getImage(req, res) {
@@ -35,33 +57,15 @@ function getImage(req, res) {
 	);
 }
 
-function putImage(req, res) {
+function setup(app) {
+	
+	// this provides a form.  This is uneeded because
+	// we have the upload on the frontend already.
+    // but I provide it here for the inclass exercise example
+	app.get('/image', getImage)
 
-	// body-parser provides us the textual formData
-	// which is just title in this case
-	var publicName = req.body.title
-
-	var uploadStream = cloudinary.uploader.upload_stream(function(result) {    	
-		// create an image tag from the cloudinary upload
-		var image = cloudinary.image(result.public_id, {
-			format: "png", width: 100, height: 130, crop: "fill" 
-		})
-		// create a response to the user's upload
-		res.send('Done:<br/> <a href="' + result.url + '">' + image + '</a>');
-	}, { public_id: publicName })	
-
-	// multer can save the file locally if we want
-	// instead we do not instruct multer to save the file
-	// and have the file in memory.
-	// multer provides req.file and within is the byte buffer
-
-	// we create a passthrough stream to pipe the buffer
-	// to the uploadStream for cloudinary.
-	var s = new stream.PassThrough()
-	s.end(req.file.buffer)
-	s.pipe(uploadStream)
-	s.on('end', uploadStream.end)
-	// and the end of the buffer we tell cloudinary to end the upload.
-
+	app.post('/image', uploadImage, putImage)
 }
+
+module.exports = { putImage, uploadImage, setup }
 
