@@ -26,7 +26,7 @@
     {"item":"Frontend: Suitable message when trying to add user that does not exist", "pts":3 },
     {"item":"Backend: Enabled CORS correctly, no hardcoded address or glob", "pts":5},
     {"item":"Backend: MongoDB has at least three collections: users, articles, profiles", "pts":10},    
-    {"item":"Backend: In memory map for session handling", "pts":5},
+    {"item":"Backend: In memory map or redis for session handling", "pts":5},
     {"item":"Backend: Session id is stored as httpOnly cookie", "pts":3},
     {"item":"Backend: User passwords are hashed and salted using md5 or encrypted with bcrypt", "pts":3}, 
     {"item":"Backend: User can change password, they get a new salt", "pts": 3 },
