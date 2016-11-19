@@ -187,6 +187,7 @@ GET /posts/5099803df3f4948bd2f98391
 For the commentId you get to choose what to do.  A "global" value probably is not a good idea because
 it may collide across different servers.  Instead you might consider something unique, such as the hash of the author &amp; timestamp which assumes that an individual user will only be connected to one server and making one post at a time -- which I think is a reasonable assumption to make.  The commentId therefore is a String not a number.  Again, it doesn't matter what it is, it is just for us to use when looking up and identifying a particular comment for editing.</p>
 
+<a name="init" />
 <h2>Initializing the Database</h2>
 
 <p>We start with an empty database of users, posts, and profile information.  But to visualize your site we would like some sample 
