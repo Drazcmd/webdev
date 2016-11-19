@@ -83,7 +83,7 @@ function setup(app) {
 // 
 // then to use in profile.js do (see comment in getImage about the string 'avatar')
 //     const uploadImage = require('./uploadCloudinary')
-//     app.post('/avatar', uploadImage('avatar'), uploadAvatar)
+//     app.put('/avatar', uploadImage('avatar'), uploadAvatar)
 //
 ///////////////////////////////////////////////////////////////////////////////
 

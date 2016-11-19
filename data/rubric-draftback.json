@@ -41,7 +41,7 @@
     {"item":"Backend: GET /zipcode/:user? returns default zipcode for requested user, or default user", "pts": 1},
     {"item":"Backend: PUT /zipcode updates value for default user", "pts": 1},
     {"item":"Backend: GET /avatars/:user? returns default url for requested user, or default user", "pts": 1},
-    {"item":"Backend: PUT /email updates value for default user", "pts": 1},
+    {"item":"Backend: PUT /avatar updates value for default user", "pts": 1},
 
     {"item":"Backend: Stub: GET /dob", "pts": 1},
     {"item":"Backend: Stub: POST /login", "pts": 1},

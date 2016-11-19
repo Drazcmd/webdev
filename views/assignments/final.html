@@ -1,4 +1,4 @@
-<h1 style="color: red;">NOT UP TO DATE</h1>
+<!-- <h1 style="color: red;">NOT UP TO DATE</h1> -->
 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/src/prettify.css">
 <style>
@@ -25,10 +25,10 @@ code, pre {
 In this assignment you will deliver your multi-user web application.  
 The objectives are:</p>
 <ul>  
-  <li>generate a unified feed of posts for a user based on their followed users</li>  
-  <li>add a third-party authentication option</li>
+  <li>generate a unified feed of articles for a user based on their followed users</li>  
   <li>add a redis caching store for session management</li>  
-  <li>permit users to upload profile pictures and posts with pictures</li>
+  <li>permit users to upload profile avatars and articles with pictures</li>
+  <li>add a third-party authentication option with account linking</li>
 </ul>
 
 <!-- ********************************************************************** -->
@@ -36,122 +36,60 @@ The objectives are:</p>
 
 <h2>A User's Feed</h2>
 
-<p>Each logged in user has a feed which is the collection of their posts and their followers posts.  
-When the user requests <code>GET /posts</code> we therefore need to return this joined set.  A poor 
+<p>Each logged in user has a feed which is the collection of their articles and their follower's articles.  
+When the user requests <code>GET /articles</code> we therefore need to return this joined set.  A poor 
 algorithm would be the following</p>
 <pre class="prettyprint lang-javascript">
-var userObj = getUser(req.user)
-var posts = []
-posts.addAll(getPostsByAuthor(userObj.username))
-userObj.following.forEach(function(user) {
-    posts.addAll(getPostsByAuthor(user))
-})
+const userObj = getUser(req.user)
+const articles = [userObj.username, 
+    ...userObj.following].reduce((o, user) => 
+        o.concat(getArticlesByAuthor(user)), [])
 </pre>
-<p>(Note there is no addAll() function.)  This is bad because it adds all posts for all time
-to the result set (posts) and additionally makes multiple requests to the database.
-Instead we want one query to the database that retrieves posts for all users and only those
-posts that are recent.  I.e., we would prefer something like</p>
+<p>This is bad because it adds all articles for all time
+to the result set (articles) and additionally makes multiple requests to the database.
+Instead we want one query to the database that retrieves articles for all users and only those
+articles that are recent.  I.e., we would prefer something like</p>
 <pre class="prettyprint lang-javascript">
-var userObj = getUser(req.user)
-var usersToQuery = [ userObj.username ]
-usersToQuery.addAll(userObj.following)
-var posts = getPostsByAuthors({ authors: usersToQuery, limit: 10 })
+const userObj = getUser(req.user)
+const usersToQuery = [ userObj.username, ...userObj.following ]
+const articles = getArticlesByAuthors({ authors: usersToQuery, limit: 10 })
 </pre>
-<p>where the query will preferentially grab the 10 most recent posts by all of the users in the array.
+<p>where the query will preferentially grab the 10 most recent articles by all of the users in the array.
 In this way the client will make one request to get the user's feed and it will be relatively small in size.
-To retrieve the next set of posts after the initial 10, we would implement pagination on the query.
+To retrieve the next set of articles after the initial 10, we would implement pagination on the query.
 You'll want to look at the MongoDB/<a href="http://mongoosejs.com/docs/queries.html" target=_blank>mongoose</a> documentation,
-and write only one query to the database, and return only the desired data.  The sorting of posts (most recent first) can be
+and write only one query to the database, and return only the desired data.  The sorting of articles (most recent first) can be
 done either by MongoDB (better) or by the server (not terrible).</p>
 </p>
 
-<h2>Third-Party Authentication</h2>
-
-<p>Following an in class exercise add an option for third party authentication.  It is
-your pick as to which third party you partner with.  It can be Twitter, Facebook, Google, etc, 
-any OAuth or OAuth2 provider should work.  
-You should use either Request (OAuth) or PassportJS (OAuth or OAuth2) as middleware for authentication.</p>
-
-<p>On your landing page next to the register and login buttons have an additional button
-to login with the third party.  When a user logs in this way you do not know what user
-account they are linked to in our system.  Perhaps you can try looking up the user by their
-email address.  Nevertheless we will need some way to distinguish third part authenticated
-users from normal password users.  Therefore add an additional field to your User model
-to capture this.  When a user logs using third party authentication, if you do not already
-have a user record for them (i.e., by email or by looking up username+third party)
-then create a new record in the document store with no salt, no password, but with a username
-and with an identifier for the third party.
-E.g., I might have username="sep1" and auth="rice" to signify this is the Rice OAuth service for the netid sep1.
-Notice that we may now have username conflicts between "sep1" registered with a password and "sep1"
-with OAuth.  Perhaps we would link these accounts together?  But doing that without
-user confirmation can be problematic (what if the user owning sep1@rice does not own sep1 on our site?).
-Therefore we might instead choose to uniquly identify the username, e.g., "sep1@rice" 
-to prevent username conflicts with an already registered sep1 on our site.
-This way a user can always log in with third party auth and still use our site as if they 
-were a regular user.</p>
-
-<h4>Account Linking</h4>
-<p>
-But perhaps the accounts do belong to the same user?
-</p>
-<p>
-Add to your profile page a way for a user to link their accounts together.
-For example, on the profile page there would be a "Link Account" button 
-which if they are logged in using the third party, they would be able to login with a username 
-and password for our site.  If they are logged into our site, then it would direct them
-to login with the third party.  After the user has logged in the second time,
-we merge the two accounts together.
-This means we need to search to see if there was already the second User record
-and delete it if it exists.  I.e., if I logged in as sep1 and then as sep1@rice
-but then wanted to link the accounts together, then I would delete the sep1@rice record,
-and merge the followed users together.
-For the sep1 record I would add the additional auth information, 
-perhaps the field would be <code>auth = [ rice: sep1, google: skotep, facebook: scott ]</code> so that I can 
-link multiple third party accounts.  Later when a user logs in using the third party, 
-we need a MongoDB query that searches this new auth field to find the account in addition
-to searching by username.
-</p>
-<p>If we can link accounts then we should also allow users to unlink accounts, which should be straightforward.
-In this case we would only delete the OAuth account, we would not generate a new User record for it, i.e.,
-if I unlink my @rice then auth becomes: <code>[ google: skotep, facebook: scott ]</code> but
-no sep1@rice User record will be generated separately.</p>
-
-
-<p style="
-    background-color: #fe0;
-    padding: 0.5em;
-    width: 80%;
-    border-radius: 1em;
-    border: 1px solid black;
-    text-align: center;    
-    margin: auto;
-">
-<b>Tip!</b><br/> Complete all other parts of the assignment before you work on linking accounts.</p>
 
 <h2>Session Management</h2>
 
-<p>When a user logs in (using our site's auth or a third party) we register
-with them a session identifier.  This session id we store in a cookie for the user,
+<p>When a user logs in we register
+with them a session identifier.  This session id is stored in a cookie for the user,
 and in a map from session id to user on our server.  This way all subsequent
 requests from the user will be identifiable as them without requiring them
 to log in again.</p>
-<p>Following an in class exercise, move the in memory sessionId-to-user map 
+<p>Following an inclass exercise, move the in-memory sessionId-to-user map 
 to a Redis caching store.  In this way if we have multiple backend
 servers, they will share the memory of the session id lookup and not
 require users to login multiple times.</p>
-<p>Run these commands to add Redis</p>
+<p>Run these commands to add Redis (i.e., following the inclass exercise)</p>
 <pre class="prettyprint lang-bash">
 heroku addons:create heroku-redis:hobby-dev
 heroku plugins:install heroku-redis
 npm install redis --save
-heroku config | grep REDIS
+heroku config
 </pre>
 <p>
-The last line provides you your Redis URL.  Put this in .env or .env.json to access locally.
+From the last line you can find your Redis URL.
 Here is some code to get you started using Redis:
 </p>
 <pre class="prettyprint lang-javascript">
-var redis = require('redis').createClient(process.env.REDIS_URL)
+if (!process.env.REDIS_URL) {
+    process.env.REDIS_URL = 'redis:// put your redis url here'
+}
+const redis = require('redis').createClient(process.env.REDIS_URL)
 
 // This sets the key-value pair (sid, userObj)
 redis.hmset(sid, userObj)
@@ -160,6 +98,8 @@ redis.hmset(sid, userObj)
 redis.hgetall(sid, function(err, userObj) {
   console.log(sid + ' is mapped to ' + userObj)
 })
+// these commands might be outdated -- check the redis documentation!
+// userObj must be an object, not a string or an array.
 </pre>
 <p>To log into your Redis server and flush the cache (i.e., delete all entires)
 to the following:</p>
@@ -195,113 +135,104 @@ Multer is a node.js middleware for handling <code>multipart/form-data</code>, wh
 <pre class="prettyprint lang-bash">
 npm install cloudinary multer --save
 heroku addons:create cloudinary:starter
-heroku config | grep CLOUDINARY
+heroku config
 </pre>
 <p>
 The addon for Cloudinary requires billing information for Heroku -- again you will not be charged
 if you stay in the free tier.  If you can not get Cloudinary to work through the Heroku plugin
 you can go to their site and register directly.  We need the Cloudinary url, which is what
-the last line above provides.  Store the Cloudinary url in your local environemnt (.env or .env.json).
+the last line above provides.
 </p>
-<center>Download the <a href="https://www.clear.rice.edu/comp431/sample/uploadCloudinary.js">Cloudinary starter</a> presented in class.</center>
+<center>Download the <a href="https://www.clear.rice.edu/comp431/sample/uploadCloudinary.js">Cloudinary starter</a> 
+presented in class.</center>
 <p>
-Require this file in your <code>index.js</code> which will add a <code>GET /image</code> endpoint.  
-Using your browser, navigate to <a href="http://localhost:3000/image" target=_blank>http://localhost:3000/image</a>
-and try uploading an image.</p>
-
-<p>That was an example to get you started.  Now implement the <code>PUT /picture</code> endpoint
+Follow the in class exercise to demo the functionality.  Then implement the <code>PUT /avatar</code> endpoint
 and validate it works using your frontend.
-You also need to implement adding posts with text and images.  
+You also need to implement adding articles with text and images.  
 You will use the same middleware <code>uploadImage</code> for both uploads.
 </p>
+
+<h2>Third-Party Authentication</h2>
+
+<p>Following an inclass exercise, add an option for third party authentication.  It is
+your pick as to which third party you partner with.  It can be Twitter, Facebook, Google, etc, 
+any OAuth or OAuth2 provider should work.  
+You should use either Request (OAuth) or PassportJS (OAuth or OAuth2) as middleware for authentication.</p>
+
+<p>On your landing page next to the register and login buttons have an additional button
+to login with the third party.  When a user logs in this way you do not know what user
+account they are linked to in our system.  Perhaps you can try looking up the user by their
+email address.  Nevertheless we will need some way to distinguish third part authenticated
+users from normal password users.  Therefore add an additional field to your User model
+to capture this.  When a user logs using third party authentication, if you do not already
+have a user record for them (i.e., by email or by looking up username+third party)
+then create a new record in the document store with no salt, no password, but with a username
+and with an identifier for the third party.
+E.g., I might have username="sep1" and auth="rice" to signify this is the Rice OAuth service for the netid sep1.
+Notice that we may now have username conflicts between "sep1" registered with a password and "sep1"
+with OAuth.  Perhaps we would link these accounts together?  But doing that without
+user confirmation can be problematic (what if the user owning sep1@rice does not own sep1 on our site?).
+Therefore we might instead choose to uniquly identify the username, e.g., "sep1@rice" 
+to prevent username conflicts with an already registered sep1 on our site.
+This way a user can always log in with third party auth and still use our site as if they 
+were a regular user.</p>
+
+<h4>Account Linking</h4>
+<p>
+But perhaps the accounts do belong to the same user?
+</p>
+<p>
+Add to your profile page a way for a user to link their accounts together.
+For example, on the profile page there would be a "Link Account" button 
+which if they are logged in using the third party, they would be able to login with a username 
+and password for our site.  If they are logged into our site, then it would direct them
+to login with the third party.  After the user has logged in the second time,
+we merge the two accounts together.
+This means we need to search to see if there was already the second User record
+and delete it if it exists.  I.e., if I logged in as sep1 and then as sep1@rice
+but then wanted to link the accounts together, then you would delete the sep1@rice record,
+and merge the followed users together.
+For the sep1 record you would add the additional auth information, 
+perhaps the field would be <code>auth = [ rice: sep1, google: skotep, facebook: scott ]</code> so that I can 
+link multiple third party accounts.  Later when a user logs in using the third party, 
+we need a MongoDB query that searches this new auth field to find the account in addition
+to searching by username.
+</p>
+<p>If we can link accounts then we should also allow users to unlink accounts, which should be straightforward.
+In this case we would only delete the OAuth account, we would not generate a new User record for it, i.e.,
+if I unlink my @rice then auth becomes: <code>[ google: skotep, facebook: scott ]</code> but
+no sep1@rice User record will be generated separately.</p>
+
+
+<p style="
+    background-color: #fe0;
+    padding: 0.5em;
+    width: 80%;
+    border-radius: 1em;
+    border: 1px solid black;
+    text-align: center;    
+    margin: auto;
+">
+<b>Tip!</b><br/> Complete all other parts of the assignment before you work on linking accounts.</p>
 
 <h1>Requirements</h1>
 
 <ul>
-  <li>User feed includes posts from logged in user and their followers</li>
-  <li>Third-Party Authentication Login</li>
+  <li>User feed includes articles from logged in user and their followers</li>
   <li>Redis caching store for session management</li>
-  <li>Users can update their profile picture</li>
-  <li>Users can create posts with images</li>  
+  <li>Users can update their profile avatar</li>
+  <li>Users can create articles with images and text</li>  
   <li>All data is persistent to server reboots</li>
+  <li>Third-Party Authentication Login</li>
+  <li>Third-Party Authentication Account Linking and Unlinking</li>
 </ul>
 
 <p>Your submission should include your final frontend and backend applications as well as your
-README.json file with URLs to your Heroku hosted sites.  This is your <em>final</em> submission everything should work "out of the box".
+README.json file with URLs to your Surge and Heroku hosted sites.  
+This is your <em>final</em> submission everything should work "out of the box".
 An automated robot will grade sections of your assignment.
 </p>
-<p>Your submission directory might look something like this</p>
-
-<div class="ui list"><div class="item">
-    <i class="folder icon"></i>
-    <div class="content">
-        <div class="header">hw-final</div>
-        <div class="list">
-
-            <div class="item">
-                <i class="file text outline icon"></i>
-                <div class="content"><div class="description">README.json</div></div>
-            </div>
-
-            <div class="item">
-              <i class="folder icon"></i>
-              <div class="content">
-                <div class="header">frontend</div>
-                    <div class="list">
-                        <div class="item">
-                            <i class="file outline icon"></i>                            
-                                <div class="content"><div class="description">...</div></div>
-                        </div>
-                    </div>
-              </div>
-            </div>
-
-
-    <div class="item">
-        <i class="folder icon"></i><div class="content"><div class="header">backend</div>
-        
-        <div class="list">
-
-
-            <div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">.env or .env.json</div></div></div>
-            <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">index.js</div></div></div>
-            <div class="item"><i class="file text outline icon"></i><div class="content"><div class="description">package.json</div></div></div>
-
-
-            <div class="item">
-                <i class="folder icon"></i><div class="content"><div class="header">app_server</div>
-                <div class="list">
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">auth.js [all login/session logic]</div></div></div>
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">db.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">model.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">following.js</div></div></div>
-
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">posts.spec.js</div></div></div>
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.js</div></div></div>
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">profile.spec.js</div></div></div>
-
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">cloudinary.js [renamed from uploadCloundary and stripped of the setup() export -- keep your code clean!]</div></div></div>
-
-                </div>
-            </div></div>
-
-            <div class="item">
-                <i class="folder icon"></i><div class="content"><div class="header">testresults</div>
-                <div class="list">
-                    <div class="item"><i class="file outline icon"></i><div class="content"><div class="description">...</div></div></div>
-                </div>
-            </div></div>
-        </div>
-        </div>
-    </div>  
-            
- </div></div>
-
+<p>Your submission directory will look similar to that of the previous assignments.</p>
 
 <!-- ******************************** -->
 <!-- ******************************** -->

@@ -1,34 +1,45 @@
 [
 {"section":"Merits", "items": [    
     {"item":"README.txt file with netid, frontend and backend URLs", "pts": 2},
-    {"item":"AutoGrader: all backend functionality is present as per previous assignment", "pts":20},
+    {"item":"AutoGrader: all backend functionality is present as per previous assignment", "pts":15},
     {"item":"Frontend: user interface and style", "pts":5},
     {"item":"Frontend: fully functional as per previous assignments", "pts":10},
     {"item":"User's feed is provided by an efficient MongoDB query and only returns the 10 most recent posts", "pts": 15},
-    {"item":"User can login with third-party authentication", "pts": 10 },    
-    {"item":"Session is stored in a Redis cache store", "pts": 10 },
-    {"item":"Make post with text and image", "pts": 5},
-    {"item":"Update profile picture", "pts": 5},
+    {"item":"User can login with third-party authentication", "pts": 15 },    
+    {"item":"Session is stored in a Redis cache store", "pts": 5 },
+    {"item":"Post article with text and image", "pts": 5},
+    {"item":"Update profile avatar", "pts": 5},
     {"item":"Uploaded images are persistent to dyno reboots, i.e., use Cloudinary", "pts": 5},
     {"item":"JavaScript source is appropriately divided into separate files by component", "pts": 3 },
-    {"item":"Link and unlink third-party logins with local accounts", "pts": 10 }
+    {"item":"Link and unlink third-party logins with local accounts", "pts": 15 }
 ]},
 {"section":"Demerits", "items": [
+    {"item":"late submission 10pts per day", "pts": 10},
 
-    {"item":"expensive service call, such as loadPosts after the initial load", "pts":5},
-    {"item":"did not follow John Papa's Angular Style Guide", "pts":25},
-    {"item":"unapproved third party module", "pts": 20},
-    {"item":"code smells bad or has some issue", "pts": 10},
+    {"item":"did not follow Redux tutorial in implementation details", "pts": 25},
+    {"item":"stateful component", "pts":25},
+    {"item":"business logic in component", "pts":20},
+    {"item":"non-functional approach, e.g., for-loop, for-in, while", "pts": 15},
+    {"item":"fat React component instead of simple function", "pts": 15},
+    {"item":"did not use fetch or wrapped fetch (aka resource) for AJAX calls", "pts": 10},
+    {"item":"state mutation", "pts": 10},
     {"item":"submitted .git or node_modules directory", "pts":10},
+    {"item":"submitted bundle.js file", "pts":10},    
+
+    {"item":"expensive service call, such as loadarticles after the initial load", "pts":5},
+    {"item":"unapproved third party module", "pts": 20},
+    
+    {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
-    {"item":"variable not appropriately scoped (i.e., missing var, or var in wrong scope)", "pts": 10},
-    {"item":"fat Angular Controller", "pts":10},
+    {"item":"variable not appropriately scoped (i.e., in wrong scope)", "pts": 10},
     {"item":"did not properly separate concerns", "pts": 10},
     {"item":"user interface not obvious to use", "pts": 10},
     {"item":"a non-server error is thrown", "pts": 8},
-    {"item":"lingering console message", "pts": 5},
+    {"item":"lingering console message (outside possible React/Redux warnings)", "pts": 5},
+    {"item":"Redux logging left on", "pts": 5},
+    {"item":"usage of forceUpdate in React component", "pts": 5},
     {"item":"bad variable name", "pts": 5},
-
+    
     {"item":"bad datastructure choice or usage", "pts": 5},
     {"item":"inappropriate use of new", "pts": 5},
     {"item":"improper use of comments", "pts": 5},
@@ -61,11 +72,11 @@
     {"item":"excessive use of DOM ids", "pts": 3},
     {"item":"missing clear abstraction usage opportunity", "pts": 3},
 
-    {"item":"for loop used instead of more appropriate functional style", "pts": 3},
-    {"item":"variable not appropriately initialized", "pts": 3},
-    {"item":"did not use shortcut for boolean, i.e., if (bool == true) should be if (bool)", "pts": 3},
-    {"item":"inappropriate character in filename, e.g., space", "pts": 3},
-    {"item":"a 'what' comment, e.g., // set var to 0", "pts": 3},
+    {"item":"for loop used instead of more appropriate functional style", "pts": 2},
+    {"item":"variable not appropriately initialized", "pts": 2},
+    {"item":"did not use shortcut for boolean, i.e., if (bool == true) should be if (bool)", "pts": 2},
+    {"item":"inappropriate character in filename, e.g., space", "pts": 2},
+    {"item":"a 'what' comment, e.g., // set var to 0", "pts": 2},
 
     {"item":"multi-line comment where // should be used instead", "pts": 1},
     {"item":"long comment at end of line instead of on separate line", "pts": 1}
