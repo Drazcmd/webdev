@@ -28,7 +28,7 @@ function login() {
 
 var articlesToPost;
 function getArticles(cookie) {	
-	request({ url: cred.dummy_url + '/', method: 'GET', json:true }, function(err, res, body) {
+	request({ url: cred.dummy_url + '/articles', method: 'GET', json:true }, function(err, res, body) {
 		if (err) {
 			console.error("There was an error grabbing articles from the dummy server", err)
 			process.exit(1)
