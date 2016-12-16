@@ -9,11 +9,16 @@ a new account on our social networking service.  Now we create a semi-functional
 <p>The main page will contain the user's feed.  The feed consists of all of the user's posted articles along with all of the articles of the users that they are following.  In this assignment we make a web page that 
 displays a semi-static feed.  The dynamic aspect is that the images in the articles will periodically change.</p>
 <ul>            
-  <li>Use a <code>&lt;table&gt;</code> to layout a regular grid of &quot;cards&quot;, with at least two columns.  There should be a sufficient number of rows so that scrolling down (in the main window of the browser) is necessary to view them all.</li>
-  <li>Each card should either be an image, a block of text, or both.   
-  About half of the cards should have images.  For the text you can use <em>lorem ipsum</em> text.</li>
-  <li>For each card that contains an image, use an <code>interval</code> to periodically cycle through different images.  The interval times should be a different random number of seconds between 1 and 5 inclusive for each card.</li>
-  <li>Each image card contains a button labeled "Stop" to stop the interval for that card.  Once stopped, the button label changes to "Start" and should then start the interval when clicked.  All intervals are started by default.  When restarting an interval there should be a new random delay time for that interval.</li>
+  <li>Use a <code>&lt;table&gt;</code> to layout a regular grid of &quot;cards&quot;, with at least two columns.  
+  There should be a sufficient number of rows so that scrolling down (in the main window of the browser) is necessary to view them all.</li>
+  <li>Each card should either be a block of text or an image with a block of text.   
+  About half of the cards should have images.  For the text you can use <em>lorem ipsum</em> text.  Sample images can also be found online.</li>
+  <li>For each card that contains an image, use an <code>interval</code> to periodically cycle through different images.
+  Each card should have a distinct set of images.  
+  The interval times should be a different random number of seconds between 1 and 5 inclusive for each card.</li>
+  <li>Each image card contains a button labeled "Stop" to stop the interval for that card.  
+      Once stopped, the button label changes to "Start" and should then start the interval when clicked.  
+      All intervals are started by default.  When restarting an interval there should be a new random delay time for that interval.</li>
   <li>There should be a link to navigate to the user's profile page</li>
   <li>The table should be non-trivially styled using CSS</li>
 </ul>
@@ -24,7 +29,7 @@ A "trivial" style would be only setting, e.g., the border of the table.  Instead
 
 <h4>Profile Page Requirements</h4>
 
-<p>The profile page will allow the user to update their profile.  Do not use a form for this page.
+<p>The profile page will allow the user to update their profile.  Do <em>not</em> use a form for this page.
 The page should contain the following:</p>
 <ul>  
   <li>display name</li>
@@ -41,10 +46,14 @@ The page should contain the following:</p>
   <label for="zipcode">Zip Code: <input id="zipcode" type="text" size="5">77005</label>
 </div>
 <p>The page will load with hardcoded values for each field.  The submit button
-will determine which fields have changed and provide an alert to the user informing
-which fields are being updated.  When the alert closes the updated values are displayed,
+will determine which fields have changed and provide a message to the user informing
+which fields are being updated.  When the message closes the updated values are displayed,
 the input fields should all be cleared.  Be sure to validate the inputs (and perform password match) and
-alert the user of incorrect entries before updating values on the screen.</p>
+inform the user of incorrect entries before updating values on the screen.</p>
+
+<p><b>Do not use JavaScript alerts for passing information to the user.</b>  Alerts pause execution
+and are therefore "not nice" to use.  Instead you could use a <code>div</code> or <code>span</code>
+that appears with informational messages.</p>
 
 <p>Style the profile page (you may include styles in the same file as for the main page).</p>
 
@@ -52,47 +61,19 @@ alert the user of incorrect entries before updating values on the screen.</p>
 
 <h2>What to submit</h2>
 
-<p>
-For this assignment you should write <em>unobtrusive</em> JavaScript and CSS.  Therefore you will have two html files, two js files, and one css file in your submission:</p>
+<p>For this assignment you should write unobtrusive JavaScript and CSS. 
+    Therefore you will have two html files, two js files, and one css file in your submission, 
+    which might look something like this</p>
 
-<div class="ui list"><div class="item">
-    <i class="folder icon"></i>
-    <div class="content">
-        <div class="header">hw2</div>
-        <div class="list">
-
-            <div class="item">
-                <i class="file text outline icon"></i>
-                <div class="content"><div class="description">main.html</div></div>
-            </div>
-
-            <div class="item">
-                <i class="file text outline icon"></i>
-                <div class="content"><div class="description">main.js</div></div>
-            </div>
-
-            <div class="item">
-                <i class="file text outline icon"></i>
-                <div class="content"><div class="description">profile.html</div></div>
-            </div>
-
-            <div class="item">
-                <i class="file text outline icon"></i>
-                <div class="content"><div class="description">profile.js</div></div>
-            </div>
-
-            <div class="item">
-                <i class="file text outline icon"></i>
-                <div class="content"><div class="description">styles.css</div></div>
-            </div>
-
-        </div>
-    </div>
-</div>
+<pre>
+hw2
+|-- main.html
+|-- main.js
+|-- profile.html
+|-- profile.js
+`-- styles.css
+</pre>
 
 <!-- ******************************** -->
-
-</p>
-
 
 
