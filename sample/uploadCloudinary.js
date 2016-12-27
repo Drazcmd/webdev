@@ -9,14 +9,14 @@ if (!process.env.CLOUDINARY_URL) {
      process.env.CLOUDINARY_URL="cloudinary:// get value from heroku"
 }
 
-const doUpload = (publicName, req, res, next) => {
+const doUpload = (publicId, req, res, next) => {
 
 	const uploadStream = cloudinary.uploader.upload_stream(result => {    	
          // capture the url and public_id and add to the request
          req.fileurl = result.url
          req.fileid = result.public_id
          next()
-	}, { public_id: req.body[publicName]})
+	}, { public_id: req.body[publicId]})
 
 	// multer can save the file locally if we want
 	// instead of saving locally, we keep the file in memory
@@ -35,9 +35,9 @@ const doUpload = (publicName, req, res, next) => {
 // it to expect a single file upload named 'image'
 // Read this function carefully so you understand
 // what it is doing!
-const uploadImage = (publicName) => (req, res, next) =>
+const uploadImage = (publicId) => (req, res, next) =>
      multer().single('image')(req, res, () => 
-               doUpload(publicName, req, res, next))
+               doUpload(publicId, req, res, next))
 
 ///////////////////////////////////////////////////////////////////////////////
 // These three functions are examples to validate that uploading works

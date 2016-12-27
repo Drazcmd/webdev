@@ -8,12 +8,12 @@
 	{ "name": "Simple Page", "due": 3, "id": "simple" },
 	{ "name": "Dynamic Page", "due": 6, "id": "dynamic" },
 	{ "name": "JavaScript Game", "due": 9, "id": "jsgame" },
-	{ "name": "Draft Front-End", "due": 13, "id":"draftfront" },
+	{ "name": "Draft Front-End", "due": 14, "id":"draftfront" },
 	{ "name": "Front-End App", "due": 18, "id": "frontend"},
 	{ "name": "Draft Back-End", "due": 22, "id": "draftback", "full": true},
 	{ "name": "Integrated Web App", "due": 26, "id": "integrated", "full": true},
-	{ "name": "Final Full Web App", "due": 29, "id": "final" , "full": true},
-	{ "name": "COMP531 Draft Review", "due": 15, "id": "draftreview"},
+	{ "name": "Final Full Web App", "due": 28, "id": "final" , "full": true},
+	{ "name": "COMP531 Draft Review", "due": 16, "id": "draftreview"},
 	{ "name": "COMP531 Front-End Review", "due": 24, "id": "frontreview"},
 	{ "name": "COMP531 Paper and Presentation", "due": 27, "id":"paper"}
 	],
@@ -49,6 +49,6 @@
 	{ "day": 25, "topic": "service APIs", "exercise": "cloudinary", "offset": 3 },
 	{ "day": 26, "topic": "integrating/presentations", "exercise": "reflections", "offset": 3 },
 	{ "day": 27, "topic": "presentations", "exercise": "critique", "offset": 3 },
-	{ "day": 28, "topic": "<no class> final project due", "exercise": "<no class>", "offset": 4 }
+	{ "day": 28, "topic": "<no class> final project due", "exercise": "<no class>", "offset": 5 }
 	]
 }

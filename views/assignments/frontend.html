@@ -10,54 +10,26 @@ code, pre {
 
 <p>
 In this assignment you will partially implement and test the frontend of your web application.  
-We start with our draft frontend application that contains three views: 
+We start with our draft frontend application that contains three views integrated
+into a single page application (SPA) 
 <ul>
   <li>landing page with registration and login</li>
   <li>main page with articles, followers, and status message</li>
   <li>profile page for a user to upload a new profile picture and edit their data</li>
 </ul>
 Remember that when tackling any large task our best approach is to divide and conquer.  For 
-this assignment there are three major portions:
+this assignment there are two major portions:
 <ol>
-	<li>Using React+Redux to transform the three views into a single page application (SPA)</li>
 	<li>Writing unit tests of the desired functionality and mocking the dummy server endpoints</li>
 	<li>Implementing logic for our site and connecting to the dummy server</li>
 </ol>
+</p>
 <p>Additionally we want to peform test driven development as we implement our webapp.  Therefore
 before we implement anything we will first write tests for our functionality.  In this
 way the desired behavior will drive our implementation and design.</p>
 
 <p>Perhaps the most important part of this assignment is the integration of your frontend webapp with
 a backend server that supplies data.</p>
-
-<h2>React and Redux</h2>
-
-<p>Using React for the views, refactor your three separate html files, index.html, main.html, and profile.html,
-into a SPA.  This means index.html will contain a div for the application to mount and a script tag for the JavaScript application bundle.  For navigating between the three views you may use React Router but a more simple approach is to have a "location" state variable and then selectively display a Component based on the value.  For example,
-<pre class="prettyprint lang-javascript">
-if (location == MAIN_PAGE) {
-	&lt;Main .../&gt;
-} else if (location == PROFILE_PAGE) {
-	&lt;Profile .../&gt;
-} else {
-	&lt;Landing .../&gt;
-}
-</pre>
-and "links" in your app will dispatch updates to the location state variable.
-</p>
-<p>
-The file structure of your web app should have separate directories for each "section" of your application,
-see below for an example file structure.
-Remember to make your files small, ideally with only a single Component within, or at least a single concern.
-</p>
-
-<p>
-As you being transforming your three pages into a React site, focus on the navigation
-of your site from page to page before implementing the details of each page.  
-Keep the dummy data in your views.  After you have
-a working React site with static data, then you can implement the data flow using Redux.
-</p>
-
 <p><a target=_blank href="https://jsbin.com/jeliroluni/edit?js,output
 ">Here is an example that should help you get started communicating with the dummy server.</a></p>
 
@@ -195,7 +167,9 @@ There is no hardcoded data in your frontend.
 The currently logged in user's headline, profile picture, collection of articles,
 list of followers, and profile information all come from the dummy server.</p>
 <ul>
-	<li>Landing view: User can log in with netID and three-word-passphrase, if successful then redirect to the Main view, otherwise inform user of incorrect login</li>
+	<li>Landing view: User can log in with netID and three-word-passphrase, 
+		if successful then redirect to the Main view, otherwise inform user of 
+		incorrect login</li>
 	<li>Main view: When a user logs out it redirects to the Landing view</li>
 	<li>Main view: Link to profile page redirects to the Profile view</li>
 	<li>Main view: headline for user is displayed</li>
@@ -253,7 +227,10 @@ mounts Components.  Instead we only want to test our specific business logic tha
 	      <li>should filter displayed articles by the search keyword</li>
 	 </ul></li>
 </ul>
-<p>Include your coverage results in your submission</p>
+<p>Include your coverage results in your submission.
+Create a XML unit report that demonstrates
+your tests ran and did not fail.
+</p>
 
 <p>Most of the above tests validate the logic code, i.e., your Redux
 code, not your React code.  This implication is supported
@@ -274,14 +251,13 @@ target=_blank>this</a> one if you want.
 
 <!-- ******************************** -->
 <pre>
-.
+hw{{vm.hwid}}
 |-- .babelrc
 |-- .eslintrc
 |-- .gitignore
 |-- coverage
 |   `-- ...
 |--- dist
-|    |-- bundle.js
 |    |-- index.html
 	 `-- ....
 |-- istanbul.yaml

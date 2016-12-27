@@ -5,16 +5,17 @@ In this assignment you will create a JavaScript game to be played in a browser t
 
 <h4>Requirements</h4>
 <ul>
-<li>Your game idea is approved by confirmation from the instructor by a post on piazza (be sure to include as much description for your game as possible).</li>
+<li>Your game idea is approved by confirmation from the instructor through a post on piazza (be sure to include as much description for your game as possible).</li>
 <li>Write unobstrusive JavaScript and CSS, i.e., separate js, css, and html to files with their respective content.</li>
 <li>Playable by a single player alone</li>
 <li>Playable in a short sitting, i.e., 10 minutes or less</li>
-<li>A visual game, i.e., the game should involve moving graphics and should use the mouse to interact.  Some keyboard usage is permissible.</li>
-<li>Includes a "score" that is updated as the user plays</li>
+<li>A visual game, i.e., the game should involve moving graphics and should use the mouse to interact (think about playing the game on a phone).  
+	Some keyboard usage is permissible.</li>
+<li>includes a "score" that is updated as the user plays</li>
 <li>includes a metric that is not the score, but is otherwise useful for ranking the player or providing
 	information for usage in statistical analysis (think click-through rates, page pauses, etc)</li>
 <li>Has a dynamic aspect to it, e.g., difficulty becomes harder or easier, perhaps at random or as the user progresses in the game</li>
-<li>include something unique about you in the game, i.e., make the game your own not just a clone of tic-tac-toe or whack-a-mole</li>
+<li>include something unique in the game, i.e., make the game your own not just a generic clone of tic-tac-toe or whack-a-mole</li>
 <li>include a 250x250 screenshot of the game in action named <code>screenshot.png</code>.</li>
 <li>Record the score and metrics as cookies.  In this way, when the page is refreshed, 
 	the best score and metric values (or perhaps statistics of them) 
@@ -25,7 +26,7 @@ In this assignment you will create a JavaScript game to be played in a browser t
 <pre style="border: 1px solid black; padding: 0.5em;">
 { 
     "netid": "sep1",
-	"title": "Flying Bug",
+    "title": "Flying Bug",
     "site": "http://flyingbug.surge.sh/"
 }
 </pre>
@@ -33,7 +34,9 @@ In this assignment you will create a JavaScript game to be played in a browser t
 
 <h4>Example Ideas</h4>
 <p>
-Below are some example ideas for games that you might create.  Remember the Rice Honor code: you write the code yourself do not copy the code for a game from the internet.  There are <em>lots</em> of games out there, take a look on the iPhone or Android app store, and you are free to search for inspiration (just remember the honor code).
+Below are some example ideas for games that you might create.  Remember the Rice Honor code: you write the code 
+yourself do not copy the code for a game from the internet.  There are <em>lots</em> of games out there, take a 
+look on the iPhone or Android app store, and you are free to search for inspiration (just remember the honor code).
 </p>
 <ul>
 	<li>tic-tac-toe (don't pick this one)</li>
@@ -43,7 +46,7 @@ Below are some example ideas for games that you might create.  Remember the Rice
 	<li>hangman</li>
 	<li>duck hunt</li>
 	<li>space invaders</li>
-	<li>an arithmetic game</li>
+	<li>an arithmetic game (e.g., what is 8 x 17?)</li>
 	<li>memory</li>
 	<li>race game</li>
 	<li>maze game</li>
@@ -73,11 +76,20 @@ Below are some example ideas for games that you might create.  Remember the Rice
 	<li>Number of times the Pause button is clicked</li>
 	<li>Number of times the Reset button is clicked</li>
 </ul>
-<p><u>Remember to be creative and make the game your own.</u></p>
+<p><u>Remember to be creative and make the game your own!</u></p>
 
 <div class="ui section divider"></div>
 
 <p>
-Your solution will contain at least one HTML file, one CSS file, and one JavaScript file.  
+Your solution will contain at least one HTML file (named <code>index.html</code>), one CSS file, and one JavaScript file.  
 Depending on the complexity of your game you may have more than one of each of these files.
 </p>
+
+<p>Your submission should look something like this:
+<pre>
+hw{{vm.hwid}}
+|-- index.html
+|-- ...
+|-- ...css
+`-- ...js
+</pre>
