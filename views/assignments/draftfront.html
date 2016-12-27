@@ -95,11 +95,13 @@ const Reducer = (state =  {
 	visibilityFilter: 'SHOW_ALL'
 }, action) => {
 </pre>
-<p>In this way we separate our concerns between business logic and data.</p>
+<p>In this way we separate our concerns between business logic and data.
+	You can grab sample articles from 
+	<a href="https://webdev-dummy.herokuapp.com/sample?q=10" target=_blank>here</a>.</p>
 
 <h3>Landing View Requirements</h3>
 
-<p>This is the first view users will see when they navigate to your site.
+<p>The "landing" view is the first view users will see when they navigate to your site.
 	It should have the following</p>
 <ul>
 	<li>Registration fields to make a new account as described in the previous assignment.
@@ -128,18 +130,17 @@ const Reducer = (state =  {
 	<li>There should be at least 8 cards, at least four have images.</li>
 	<li>Each card has a button to leave a comment.  But the button currently does nothing.</li>
 	<li>Each card has a button to edit the article.  But the button currently does nothing.</li>
-	<li>A search box, which will be used to search for articles, but the box currently does nothing on user input.</li>
+	<li>A search box, that filters the displayed articles by text or author, but not date or article id</li>
 	<li>There is an area for a user to add a new article, this can be an editable div, a textarea, or some other tag.  But the area currently does nothing on user input.</li>
-	<li>There is a button to "post" the article.  But the button currently does nothing.</li>
+	<li>There is a button to "post" the article which adds the article to the top of the displayed feed and clears the text area.  The new article is not persistent.</li>
 	<li>There is a button to "cancel" writing the new article.  This button should clear the new article text.</li>
 	<li>There is a button to upload an image (Hint: input type='file').  But the button currently does nothing after a file is chosen.</li>
 	<li>The user's display name and profile picture are shown.  These can be hard coded.</li>
 	<li>The user's status headline is shown.  The status headline can be hard coded.</li>
 	<li>There is a button to update the user's status headline.  The button should update the status headline, but on refresh there is no persistence required, i.e., it can return to the original value.</li>
 	<li>Sidebar listing at least 3 followed users.  The list should include a picture, name, and status headline for each user.  These can all be hard coded.</li>
-	<li>Text field and button to add a user to the following list.  
-		But the button currently does nothing.</li>
-	<li>Each followed user has a button to unfollow.  But the button currently does nothing.</li>
+	<li>Text field and button to add a user to the following list.  For non-empty text, the follower is added to the sidebar with an arbitrary (i.e., hard coded) image and headline message</li>
+	<li>Each followed user has a button to unfollow which removes that user from the list</li>
 </ul>
 
 <h3>Profile View Requirements</h3>
@@ -152,8 +153,7 @@ const Reducer = (state =  {
 	<li>Show the user's current profile picture</li>
 	<li>There is a button to upload a new profile picture.  But the button currently does nothing after a file is chosen.</li>
 	<li>There is a button to update the user's values based on user input.  The button validates
-	each of the fields that are changed and then updates the displayed value as in the previous assignment.
-	However, there is no notification alert.</li>
+	each of the fields that are changed and then updates the displayed value as in the previous assignment.</li>
 	<li>There is a button or link to navigate back to the main page</li>
 </ul>
 

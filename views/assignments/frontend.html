@@ -14,29 +14,27 @@ We start with our draft frontend application that contains three views integrate
 into a single page application (SPA) 
 <ul>
   <li>landing page with registration and login</li>
-  <li>main page with articles, followers, and status message</li>
-  <li>profile page for a user to upload a new profile picture and edit their data</li>
+  <li>main page with articles, followers, and headline message</li>
+  <li>profile page for a user to upload a new profile picture and edit their user data</li>
 </ul>
 Remember that when tackling any large task our best approach is to divide and conquer.  For 
 this assignment there are two major portions:
 <ol>
-	<li>Writing unit tests of the desired functionality and mocking the dummy server endpoints</li>
-	<li>Implementing logic for our site and connecting to the dummy server</li>
+	<li>Writing unit tests of the desired functionality and mocking the dummy server endpoints.</li>
+	<li>Implementing logic for our site and connecting to the dummy server.</li>
 </ol>
+<a target=_blank href="https://jsbin.com/jeliroluni/edit?js,output">
+Here is an example that should help you get started communicating with the dummy server.</a>
 </p>
-<p>Additionally we want to peform test driven development as we implement our webapp.  Therefore
-before we implement anything we will first write tests for our functionality.  In this
-way the desired behavior will drive our implementation and design.</p>
-
-<p>Perhaps the most important part of this assignment is the integration of your frontend webapp with
-a backend server that supplies data.</p>
-<p><a target=_blank href="https://jsbin.com/jeliroluni/edit?js,output
-">Here is an example that should help you get started communicating with the dummy server.</a></p>
 
 <h3>Test Driven Development</h3>
 
-<p>We will exercise test driven development instead of writing the implementation of our web app first and testing later.
-Write Mocha unit tests for the desired behavior and execute the test suite as we develop.
+<p>We will exercise test driven development 
+	instead of writing the implementation of our web app first and testing later.
+Therefore before we implement anything we will first write tests for our functionality.  In this
+way the desired behavior will drive our implementation and design.
+Start by writing Mocha unit tests for the desired behavior and 
+execute the test suite as we develop.
 </p>
 
 <h4>Unit Tests</h4>
@@ -48,18 +46,19 @@ and provide our own mocked response.
 </p>
 <p>
 For our first test we will simulate the user entering a new status message, which will
-be sent to the server for persistence.  We completed  similar task as part of an inclass exercise.
+be sent to the server for persistence.  We completed a similar task as part of an inclass exercise.
 Note that in the inclass exercise we were not using React.  Therefore we had to insert values into
-the text inputs before executing the updateHeadline function.  In your React+Redux application we test
+the text inputs before executing the updateHeadline function.  
+In your React+Redux application we test
 separately the React view and the Redux action.</p>
 
-<p>We want to mock calls to fetch.  If you are using Karma
+<p>We want to mock calls to fetch which is our engine for AJAX.  If you are using Karma
 to run your tests, then webpack can alias isomorphic-fetch
 to mock-fetch.  Otherwise if you use Mocha directly
 then we need to substitute in the runtime mock-fetch
 for the fetch coming from isomorphic-fetch, which is 
-supplied by node-fetch.  Here I provide you
-an example of doing this using mockery:</p>
+supplied by node-fetch.  In the following I provide you
+an example of doing this using <code>mockery</code></p>
 <pre class="prettyprint lang-javascript">
 import { expect } from 'chai'
 import mockery from 'mockery'
@@ -118,6 +117,12 @@ it('should update the status message', (done) => {
 We use mockery to substitute mock-fetch in place of node-fetch.
 node-fetch is called by isomorphic-fetch.  The "fetch" we
 use in resource comes from isomorphic-fetch.</p>
+<p><strong>The order is important!</strong>  <code>require</code>
+contains a cached map of name to JavaScript module.  When we <code>require('./actions')</code>
+it proceeds to load <code>isomorphic-fetch</code> which then loads
+<code>node-fetch</code>.  If we have not already applied the mock, then the "real"
+module is loaded and we cannot override it.  Instead we apply the mock first
+so that when node-fetch is later called, our mock is supplied instead.</p>
 <p>
 Above we have mocked the resource calls to the dummy server
 and supply a hardcoded result to the client code.  (The client
@@ -134,64 +139,39 @@ Instructions on getting started with the dummy server are at the top of the API 
 we need to implement the desired functionality so that the tests
 pass.  In this way we also assure that all of the code we write is covered by our test cases.
 I.e., we should get high marks for code coverage with no extra effort and no need to later refactor our
-code so that it will be testable -- this again is a benefit of test driven development.</p>
+code so that it will be testable -- this again is a benefit of test driven development.
+The list of functionality is provided below.
+</p>
 
 <p>Once we are completed with the connections to the dummy server
- we can manually verify that our site works as expected because we already tested and implemented
-the status and followers functionality, the site should therefore be fully functional in these two areas.  Perform
+ we can manually verify that our site works as expected, we will have confidence in this because we already tested and implemented
+the headline and followers functionality, the site should therefore be fully functional in these two areas.  Perform
 live user testing by logging in with your account, changing your headline message, and then logging in with your test user
-account and verify that the headline message is indeed persistent.
+account and verify that the headline message is indeed persistent.  
 </p>
 
 <h3>For next time...</h3>
 <p>
-In the next assignment we will implement the missing functionality of updating
-data on the server along with uploading of images for articles, 
-editing the user profile, and new user registation.
+In the next assignment we will implement the missing functionality of editing and commenting
+articles, as well as uploading articles with images, or changing the profile avatar.
 </p>
 
 <h2>Requirements</h2>
 
-<p>Use Chrome as your standard supported browser.  Whereas you can use any browser you like for development, your assignment will be accessed using Chrome by the grading staff and therefore it behooves you that it works.
+<p>Use Chrome as your standard supported browser.  Whereas you can use any browser you like for development, 
+	your assignment will be accessed using Chrome by the grading staff and therefore it behooves you that it works.
 </p>
 <p>Host your submission on Surge.  
 Include the URL in a <code>README.json</code> file as before.  The deployed version of your code on Surge may be used during grading.  
-Therefore after you make your submission, please do not re-deploy to the same domain name until the next assignment.</p>
+Therefore after you make your submission, please do not re-deploy to the same Surge domain until the next assignment.</p>
 
 <p>Remember separation of concerns and write DRY modularized code.</p>
 
-<h3>Functionality</h3>
-<p>Below are the functional requirements for this assignment.  
-All of the data mentioned below comes from the dummy server.
-There is no hardcoded data in your frontend.
-The currently logged in user's headline, profile picture, collection of articles,
-list of followers, and profile information all come from the dummy server.</p>
-<ul>
-	<li>Landing view: User can log in with netID and three-word-passphrase, 
-		if successful then redirect to the Main view, otherwise inform user of 
-		incorrect login</li>
-	<li>Main view: When a user logs out it redirects to the Landing view</li>
-	<li>Main view: Link to profile page redirects to the Profile view</li>
-	<li>Main view: headline for user is displayed</li>
-	<li>Main view: ability to update headline for user using dummy server</li>
-	<li>Main view: display user's profile picture</li>
-	<li>Main view: sidebar shows followed users with profile pictures and headlines</li>
-	<li>Main view: list of articles from server with newest article first</li>
-	<li>Main view: each article has a list of comments displayed (you may want to show/hide them as in my solution)</li>
-	<li>Main view: search bar filters displayed articles by author or body, but not date or post id</li>
-	<li>Profile view: When a user logs out it redirects to the Landing view</li>
-	<li>Profile view: Link back to main page redirects to the Main view</li>
-	<li>Profile view: Display user's profile information including profile picture</li>
-</ul>
-<p>Note that nothing else needs to work right now.  I.e., we are only
-displaying the data from the server, the only data we have the ability
-to change is the user's headline.
-This means buttons for the other functionality still do not function.</p>
-
-<h3>Unit Test</h3>
+<h3>Unit Tests</h3>
 <p>Use Mocha and Karma to test your application.  Note that in principle we only test "our" code and not "framework" code.  Therefore we 
-do not need to test that a Redux's dispatch functions as advertised, or that ReactDOM properly
-mounts Components.  Instead we only want to test our specific business logic that we wrote.</p>
+do not need to test that Redux's <code>dispatch</code> function behaves as advertised, or that ReactDOM properly
+mounts cmponents.  Instead we only want to test our specific business logic that we wrote.</p>
+<p>You should have tests for each of the following, with the "it" descriptions as given</p>
 <ul>
 	 <li>Validate actions (these are functions that dispatch actions)<ul>
 		  <li>resource should be a resource (i.e., mock a request)</li>
@@ -227,10 +207,6 @@ mounts Components.  Instead we only want to test our specific business logic tha
 	      <li>should filter displayed articles by the search keyword</li>
 	 </ul></li>
 </ul>
-<p>Include your coverage results in your submission.
-Create a XML unit report that demonstrates
-your tests ran and did not fail.
-</p>
 
 <p>Most of the above tests validate the logic code, i.e., your Redux
 code, not your React code.  This implication is supported
@@ -241,11 +217,41 @@ There are only a couple of component tests listed above, where
 you will want to validate that the component is properly
 rendered and the desired functionality is present.</p>
 
+<h3>Implemented Functionality</h3>
+<p>Below are the functional requirements for this assignment.  
+All of the data mentioned below comes from the dummy server.
+There is <strong>no hardcoded data</strong> in your frontend.
+The currently logged in user's headline, profile picture, collection of articles,
+list of followers, and profile information all come from the dummy server.</p>
+<ul>
+	<li>Landing view: Register a new user, but new users cannot log in</li>
+	<li>Landing view: User can log in with netID and three-word-passphrase, 
+		if successful then redirect to the Main view, otherwise inform user of 
+		incorrect login</li>
+	<li>Main view: ability to update headline for user using dummy server, update is persisted to server</li>
+	<li>Main view: list of articles from server with newest article first</li>
+	<li>Main view: add user to followed users list (add that user's articles to feed)</li>
+	<li>Main view: remove user from followed users list (remove that users's articles from feed)</li>
+	<li>Main view: each article has a list of comments displayed (you may want to show/hide them as in my solution or some other means to make it user friendly)</li>
+	<li>Main view: search bar filters displayed articles by author or body, but not date or article id</li>
+	<li>Main view: ability to add new text-only articles by posting to server</li>
+	<li>Profile view: update on server the user profile email and zipcode after validation</li>
+	<li>Profile view: update on server the user password after validation, note that new password will not persist on server</li>
+</ul>
+<p>The functionality we are not implementing relates to image uploading and editing or commenting on articles,
+	which will be done in the next assignment.
+</p>
+
 <h2>What to submit</h2>
 
 <p>Be sure that you are not submitting or checking in node_modules, look for the .gitignore file
 in your repo, you can copy <a href="https://github.com/skotep/comp431/blob/master/.gitignore"
 target=_blank>this</a> one if you want.
+
+<p>Include your test coverage results in your submission.
+Additionally create a XML junit report that demonstrates your tests ran and did not fail.
+Karma should create the <code>coverage</code> and <code>junit</code> directories for you automatically.
+</p>
 
 <p>Your submission <em>might</em> look like this:</p>
 
@@ -256,11 +262,15 @@ hw{{vm.hwid}}
 |-- .eslintrc
 |-- .gitignore
 |-- coverage
-|   `-- ...
+|   |-- html
+|   |   `-- ...
+|   `-- lcov.info
 |--- dist
 |    |-- index.html
-	 `-- ....
-|-- istanbul.yaml
+|    `-- images
+|        `-- ...
+|-- junit
+|   `-- TESTS...xml 
 |-- karma.conf.js
 |-- mocha.opts
 |-- package.json
@@ -299,7 +309,8 @@ hw{{vm.hwid}}
 |   |       `-- profile.js
 |   |-- index.js
 |   |-- reducers.js
-|   `-- reducers.spec.js
+|   |-- reducers.spec.js
+|   `-- styles.css
 |-- tests.webpack.js
 `-- webpack.config.js
 </pre>

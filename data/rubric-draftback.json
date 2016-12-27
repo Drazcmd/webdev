@@ -1,31 +1,24 @@
 [
-{"section":"Merits", "items": [   
-
+{"section":"Merits", "items": [
     {"item":"README.json file with netid, frontend, and backend URLs", "pts":1},
 
-    {"item":"Frontend: Site deployed and operational on Surge", "pts":1},
-    {"item":"Frontend: Landing: register new users", "pts":2},
+    {"item":"Frontend: Site is hosted on Surge", "pts":1},
     {"item":"Frontend: Main: add new articles with text-only, or picture and text", "pts":10},
-    {"item":"Frontend: Main: new articles appear at top of feed when added and are persistent to refresh", "pts":3},
     {"item":"Frontend: Main: edit articles, add comments, edit comments, comments are persistent", "pts":10},
-    {"item":"Frontend: Main: add and remove followed users", "pts":6},
-    {"item":"Frontend: Main: Suitable message when trying to add user that does not exist", "pts":2},
-    {"item":"Frontend: Profile: update email and zipcode with validation", "pts":2},
-    {"item":"Frontend: Profile: upload new profile avatar", "pts":2},
-    {"item":"Frontend: Profile: update passowrd (but is non persistent on dummy server)", "pts":2},
+    {"item":"Frontend: Profile: upload new profile avatar", "pts":5},
 
     {"item":"End-to-End Test: Register new user", "pts":3},
     {"item":"End-to-End Test: login as test user", "pts":3},
     {"item":"End-to-End Test: Create new article and validate article appears in feed", "pts":3},
-    {"item":"End-to-End Test: Edit an article and validate changed article text", "pts":6},
+    {"item":"End-to-End Test: Edit an article and validate changed article text", "pts":10},
     {"item":"End-to-End Test: Update headline headline and verify change", "pts":3},
-    {"item":"End-to-End Test: Add the 'Follower' user and verify following count increases by one", "pts":2},
-    {"item":"End-to-End Test: Remove the Follower user and verify following count decreases by one, test should be safe, i.e., what if Follower is not being followed", "pts":2},
+    {"item":"End-to-End Test: Add the 'Follower' user and verify following count increases by one", "pts":3},
+    {"item":"End-to-End Test: Remove the Follower user and verify following count decreases by one, test should be safe, i.e., what if Follower is not being followed", "pts":3},
     {"item":"End-to-End Test: Search for special &quot;Only One Article Like This&quot; article and verify author", "pts":3},
-    {"item":"End-to-End Test: Update user email and verify", "pts":2},
-    {"item":"End-to-End Test: Update user zipcode and verify", "pts":2},
-    {"item":"End-to-End Test: Update user password and verify", "pts":2},
-    {"item":"End-to-End Test: JUnitXML test results for frontend", "pts":1},
+    {"item":"End-to-End Test: Update user email and verify", "pts":3},
+    {"item":"End-to-End Test: Update user zipcode and verify", "pts":3},
+    {"item":"End-to-End Test: Update user password and verify", "pts":3},
+    {"item":"End-to-End Test: valid JUnitXML test results for frontend", "pts":3},
 
     {"item":"Backend: Site is hosted on Heroku", "pts":1},
     {"item":"Backend: GET /headlines returns the headline message for the default logged in user", "pts":1},
@@ -33,7 +26,7 @@
     {"item":"Backend: GET /headlines/:users returns default headline messages one for each requested user", "pts":1},
     {"item":"Backend: GET /articles returns at least three articles", "pts":1},
     {"item":"Backend: POST /article returns a newly added article, and adds article to results for GET /articles", "pts":1},
-    {"item":"Backend: GET /articles/:id returns the desired article by article id", "pts":1},
+    {"item":"Backend: GET /articles/:idOrUser returns the desired article by article id or user", "pts":1},
     {"item":"Backend: implement GET /articles and GET /articles/:id as one endpoint not two", "pts": 1},
 
     {"item":"Backend: GET /email/:user? returns default email for requested user, or default user", "pts": 1},
@@ -54,7 +47,7 @@
 
     {"item":"Backend: Unit test to validate PUT /headline", "pts": 2},
     {"item":"Backend: Unit test to validate POST /article", "pts": 2},
-    {"item":"Backend: JUnitXML test results for backend", "pts":1}
+    {"item":"Backend: valid JUnitXML test results for backend", "pts":4}
 ]},
 {"section":"Demerits", "items": [
     {"item":"late submission 10pts per day", "pts": 10},

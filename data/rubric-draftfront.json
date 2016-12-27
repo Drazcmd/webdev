@@ -5,6 +5,7 @@
     {"item":"Single Page Application", "pts":2},
     {"item":"At least three views: landing, main, and profile", "pts":2},
     {"item":"Site has a consistent look and feel", "pts":2},
+    {"item":"Layout is responsive, for every view", "pts":2},
     {"item":"Landing: Users log in using any     username and password", "pts":2},
     {"item":"Landing: Users are appropriately notified of bad (i.e., missing) username or password when logging in", "pts":2},
     {"item":"Landing: Logging in takes user to the main view", "pts":2},
@@ -30,8 +31,7 @@
     {"item":"Profile: button to upload a new profile picture, opens file picker, but does not perform upload" ,"pts":2},
     {"item":"Profile: update button validates each non-empty input field, date-of-birth is not updatable", "pts":2},
     {"item":"Profile: update changes the current values that are displayed", "pts":5},
-    {"item":"Profile: link back to the main page", "pts":2},
-    {"item":"Separation of concerns, i.e., data.json files, small component files, separate action files", "pts":2}
+    {"item":"Profile: link back to the main page", "pts":2}
 ]},
 
 {"section":"Demerits", "items": [

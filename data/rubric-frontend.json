@@ -1,11 +1,6 @@
 [
 {"section":"Merits", "items": [
-    {"item":"README.json with deployed frontend web app url", "pts":2},
-    {"item":"Frontend web app is deployed and functional", "pts":5},
-    {"item":"Single Page Application", "pts":2},
-    {"item":"At least three views: landing, main, and profile", "pts":2},
-    {"item":"Site has a consistent look and feel", "pts":2},
-    {"item":"Layout is responsive, for every view", "pts":2},
+    {"item":"README.json file contains netid and URL to deployed frontend site", "pts":2},
 
 {"item":"Test Actions: resource should be a resource (i.e., mock a request)", "pts": 2},
 {"item":"Test Actions: resource should give me the http error", "pts": 2},
@@ -29,7 +24,22 @@
 {"item":"Test Reducer: should set the search keyword", "pts": 2},
 {"item":"Test Reducer: should filter displayed articles by the search keyword", "pts": 2},
 
-    {"item":"Valid test coverage report included in submission", "pts":3}
+    {"item":"Valid test coverage report included in submission", "pts":3},
+
+    {"item":"Landing: register new users", "pts":2},
+    {"item":"Landing: users can log in with netID and three-word-passphrase", "pts":5},
+    {"item":"Main: update headline persisting by dummy server", "pts":5},
+    {"item":"Main: add user to follower list, new user's articles shown in feed", "pts":5},
+    {"item":"Main: remove user from follower list, old user's articles are removed from feed", "pts":5},
+    {"item":"Main: Suitable message when trying to add user that does not exist", "pts":3},
+    {"item":"Main: each article has a list of comments displayed in a user friendly fashion", "pts":5},
+    
+    {"item":"Main: add new articles with text-only", "pts":10},
+    {"item":"Main: new articles appear at top of feed when added and are persistent to refresh", "pts":3},
+
+    {"item":"Profile: update email and zipcode with validation", "pts":5},
+    {"item":"Profile: update passowrd (but is non persistent on dummy server)", "pts":5}
+
 ]},
 {"section":"Demerits", "items": [
     {"item":"late submission 10pts per day", "pts": 10},

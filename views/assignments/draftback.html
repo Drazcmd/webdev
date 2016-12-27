@@ -34,7 +34,8 @@ tr.double {
 
 <div onload="prettyPrint()">
 <p>
-In this assignment you will begin developing your backend server and complete the implementation of your frontend web application.
+In this assignment you will begin developing your backend server and complete 
+the implementation of your frontend web application.
 Your frontend webapp from this assignment will be reviewed by your peers 
 to provide you user feedback.</p>
 
@@ -57,7 +58,7 @@ the headlines and articles endpoints, and provide stubs for a collection ofthe o
 <h2>Frontend</h2>
 
 <p>In the previous assignment we implemented the ability for users to login to our webapp,
-and pulled from the dummy server the user's status headline, their profile avastar,
+and pulled from the dummy server the user's status headline, their profile avatar,
 their feed of articles, and their list of followers.
 Now we add the missing functionality to create a fully functioning 
 social networking web application frontend.
@@ -68,9 +69,8 @@ For uploading images on articles as well as to upload profile avatars, see <stro
 
 <p>
 For this assignment we will use Selenium and write end-to-end tests to validate functionality of our web app.  
-You are still advised to perform test driven development (TDD) by writing the end-to-end tests first
-and then implement the missing functionality.
-During your development, serve your site locally and have Selenium run against it similar to the inclass exercise.
+Serve your frontend site locally and have Selenium run against your locally running frontend
+site similar to the inclass exercise.
 The required tasks for your end-to-end tests are listed in the requirements section below.
 </p>
 
@@ -104,7 +104,7 @@ For this assignment we will create stubs for all of the desired endpoints of our
 After the stubs are created, then we will implement selected functionality 
 in this assignment.
 
-<p>Here is the recommended breakout by endpoint for each source file in your backend server
+<p>Here is the recommended breakout by endpoint for each source file in your <em>backend</em> server
 <table>
      <tr><th>endpoint</th><th>verbs</th><th>source file</th></tr>  
      <tr><td>/login</td><td>POST</td><td>auth.js</td></tr>
@@ -203,12 +203,14 @@ the user "foo".
 the zipcode value returned by GET /zipcdode.</p>
 
 <p>Similar to the headline, we'll have an array for articles.  
-We should start with 3 hardcoded articles in this array.
+We should start with 3 hardcoded articles in this array,
+you can use the sample data provided from 
+<a href="https://webdev-dummy.herokuapp.com/sample?q=3" target=_blank>the dummy server</a>.
 When a new article is added, it should be added to this array.  
 An article has the following schema:
 <pre class="prettyprint lang-javascript">
 const article = {
-	id: int,
+	_id: int,
 	author: string,
 	text: string,
 	date: new Date(),
@@ -217,7 +219,7 @@ const article = {
 </pre>
 A new article will arrive with only the text in the payload.  The timestamp is the current time on the server,
 the author is the currently logged in user (some default value), 
-and the id is a unique value determined by the server (the length of the article array would be sufficient for now).  
+and the _id is a unique value determined by the server (the length of the article array would be sufficient for now).  
 The response to <code>POST /article</code>
 is an array of the newly added article, i.e., with it's timetsamp, author, and id values supplied.
 The newly added article will automatically be available in the list of all articles
@@ -231,7 +233,7 @@ Check that your backend works.  For example you can perform the following comman
 curl https://ricebookserver.herokuapp.com/articles
 # you should receieve 3 articles
 curl -H 'Content-Type: application/json' -d '{ "text": "My first message!" }' https://ricebookserver.herokuapp.com/articles
-# you should get a complete article back with id.  I assume the value is 12345, let's verify getById works:
+# you should get a complete article back with _id.  I assume the value is 12345, let's verify getById works:
 curl https://ricebookserver.herokuapp.com/articles/12345
 # you should get your new article again
 curl https://ricebookserver.herokuapp.com/articles
@@ -255,7 +257,7 @@ to pick your own name, or omit and Heroku will supply a name for you</p>
 git init
 heroku create ricebookserver
 echo web: node index.js > Procfile
-echo node_modules > .gitignore
+echo node_modules >> .gitignore
 echo npm-debug.log >> .gitignore
 git add .gitignore Procfile package.json index.js
 git commit -m 'initial commit'
@@ -276,7 +278,7 @@ git push heroku master
 <h2>Requirements</h2>
 
 <p>Similar to before, create a file <code>README.json</code> that has contents similar to what is below 
-(we will read this programmatically so please make sure you follow this style and it is proper json)</p>
+(we will read this programmatically so make sure you follow this style and it is proper json)</p>
 <pre style="border: 1px solid black; padding: 0.5em;">
 { 
      "netid": "sep1",
@@ -294,23 +296,17 @@ a backend data store.</p>
 <ul>
 	<li>Your frontend is deployed on Surge</li>
 	<li>All of the functionality in the previous assignment is assumed to be working in this assignment</li>
-	<li>Landing view: Register a new user, but new users cannot log in</li>
-	<li>Profile view: update email and zipcode with validation</li>
 	<li>Profile view: upload new profile avatar</li>
-	<li>Profile view: update password, but new password will not persist</li>	
-    <li>Main view: add a new article with text and no picture</li>
 	<li>Main view: <a href="data/api.html#upload" target=_blank>add a new article with both text and a picture</a></li>
     <li>Main view: edit articles authored by the logged in user</li>
     <li>Main view: add a new comment on an article</li>
     <li>Main view: edit comments authored by the logged in user</li>
-	<li>Main view: add user to followed users list</li>
-	<li>Main view: remove user from followed users list</li>
 	<li>Your completed and published frontend webapp will be viewed by your peers</li>
 </ul>
 
 <h3>End-to-End Tests</h3>
 
-<p>Your end-to-end tests will run against your web app running on your local python server.  Here are the tasks for your end-to-end test</p>
+<p>Your end-to-end tests will run against your web app running on your localhost.  Here are the tasks for your end-to-end test</p>
 
 <ul>
 	<li>Register a new user</li>
@@ -326,7 +322,8 @@ a backend data store.</p>
 	<li>Navigate to the profile view, Update the user's zipcode and verify</li>
 	<li>Navigate to the profile view, Update the user's password, verify a "will not change" message is returned</li>
 </ul>
-<p>Include a JUnitXML report of your end-to-end tests: <code>e2e/results.xml</code>
+<p>Include a XML juit report of your end-to-end tests: <code>e2e/results.xml</code>
+ -- note that you are responsible for the file contents to receive credit for your tests.
 </p>
 
 <h3>Backend</h3>
@@ -351,29 +348,44 @@ your implementation, so be sure you test your deployed server before you submit.
 </ul>
 <p>Inlucde a JUnitXML report of your backend unit tests.
 Using mocha add "-R xunit" and then pipe the results
-to a file, e.g., <code>results.xml</code>
+to a file, e.g., <code>results.xml</code> -- note that you are responsible for the file contents to receive credit for your tests.
 </p>
 
 <h2>What to submit</h2>
 
 <p>Your frontend and backend applications are each
-within their own directory.  You can use a single git repo
-for both applications.  In this case the frontend directory
-will be within the backend directory.  Otherwise have a git 
-repo just for submission of your homework with the two
-directories within.  For example it might look something like this:</p>
+within their own separate repository.  
+You will submit each separately.  It is your
+responsibility to correctly submit your frontend to the frontend submission selection
+and the backend to the backend submission selection on the grading site.
+Because the backend is hosted on Heroku, there is no "hw" directory in that repo.
+The README.json file should be same in both submissions.</p>
 
+Your frontend submission
+<pre>
+hw{{vm.hwid}}
+|-- .babelrc
+|-- .eslintrc
+|-- .gitignore
+|-- README.json
+|-- package.json
+|-- coverage
+|   `-- ...
+|-- e2e
+|   |-- ...
+|   `-- results.xml
+...
+</pre>
+
+Your backend submission might look like this
 <pre>
 .
 |-- README.json
-|-- frontend <== this is your frontend app similar to last assignment
-|   |-- ...
-|   `-- e2e
-|       |-- ...
-|       `-- results.xml
+|-- .gitignore
 |-- index.js
 |-- mocha.opts
 |-- package.json
+|-- Procfile
 |-- results.xml
 `-- src
     |-- auth.js
@@ -384,37 +396,11 @@ directories within.  For example it might look something like this:</p>
     `-- profile.spec.js
 </pre>
 
-<p>or like this</p>
-
-<pre>
-.
-|-- README.json
-|-- frontend <== this is your frontend app similar to last assignment
-|   |-- ...
-|   `-- e2e
-|       |-- ...
-|       `-- results.xml
-|-- backend
-    |-- index.js
-    |-- mocha.opts
-    |-- package.json
-    |-- results.xml
-    `-- src
-        |-- auth.js
-        |-- articles.js
-        |-- articles.spec.js
-        |-- following.js
-        |-- profile.js
-        `-- profile.spec.js
-</pre>
-
-
 <p>Note that I have placed the headline endpoints in <code>profile.js</code> as a look ahead to 
 the way in which we will be persisting the data: the headline of a user will be stored along
 with their other profile information.</p>
 
 <!-- ******************************** -->
-
 
 <hr>
 </div>
