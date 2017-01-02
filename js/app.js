@@ -121,7 +121,7 @@
             if (vm.srv && vm.srv.getAssignment(id)) {                   
                 duetime = vm.srv.getAssignment(id).duetime
             }
-            return duetime ? "before class at 2:30 PM" : "after class by 2 AM"
+            return duetime ? "before class at 2:30 PM" : "by 11:59 PM"
         }
 
         function scrollTo(anchor) {
@@ -164,7 +164,7 @@
         srv.sessions = []
         srv.assignments = {}
         
-        srv.getDueDate = function(sessionDay, offset) {
+        srv.getDueDate = function(sessionDay, offset, extra = 0) {
 
             if (!offset) {                
                 var session = srv.sessions.filter(function(s) { return s.day == sessionDay})            
@@ -178,7 +178,7 @@
             var week = Math.floor((sessionDay - 1) / 2);
             var dow = (sessionDay - 1) - 2 * week;
             return moment(srv.firstDayOfClass)
-                .add(week, 'weeks').add(dow * 2, 'days')
+                .add(week, 'weeks').add(dow * 2 + extra, 'days')
                 .format("ddd MM/DD")
         }
         

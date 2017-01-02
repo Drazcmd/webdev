@@ -23,7 +23,7 @@
         ng-click="vm.setAssignment(a.id)"
         ng-repeat="a in vm.srv.assignments">
         <div class="header">{{a.hwid ? a.hwid + ". " : ""}}{{a.name}}</div>
-        (due {{ vm.srv.getDueDate(a.due) }})</a>
+        (due {{ vm.srv.getDueDate(a.due, 0, 1) }})</a>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
 
         <h2 class="ui header">{{ vm.assignmentName }}</h2>
         <div class="ui transition right floated text item" ng-show="vm.assignmentId">
-          <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue) }} {{ vm.getDueTime(vm.assignmentId) }}
+          <em>due</em> {{ vm.srv.getDueDate(vm.assignmentDue, 0, 1) }} {{ vm.getDueTime(vm.assignmentId) }}
           <br/>
           <a target=new_window href="https://webdev-rice.herokuapp.com/">https://webdev-rice.herokuapp.com/</a>
         </div>
