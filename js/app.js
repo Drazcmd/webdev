@@ -3,7 +3,7 @@
 
     var Globals = {
         lastUpdated: '1/2017',
-        piazza: 'https://piazza.com/class/is3j293rbvv6wv'
+        piazza: 'https://piazza.com/class/ixmajtkz8dt2vc'
     }
     
     angular
