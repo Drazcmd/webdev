@@ -4,7 +4,7 @@
 	{"item":"correct html, head, body elements", "pts":1 },
 	{"item":"author meta tag", "pts":1 },
 	{"item":"page contains a form", "pts":1 },
-	{"item":"There are input text areas for the following: account name, display name, email address, phone number, date of birth, zipcode, password, password confirmation", "pts":5 },
+	{"item":"There are inputs for the following: account name, display name, email address, phone number, date of birth, zipcode, password, password confirmation", "pts":5 },
 	{"item":"password and password confirmation should be password type", "pts":1 },
 	{"item":"only users aged 18 or older on the date of registration are valid", "pts": 3},
 	{"item":"hidden field contains the current timestamp in millis when the page is loaded", "pts":5 },
