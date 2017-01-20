@@ -11,6 +11,7 @@ window.onload = function() {
 	
 	var username = document.getElementById("username")
 	var loginBtn = document.getElementById("login")
+    var loggedInUser = document.getElementById("loggedInUser")
 	var post = document.getElementById('post')
 	loginBtn.value = LOGIN
 
@@ -26,6 +27,8 @@ window.onload = function() {
 		if (!username.value) {
 			window.alert("Please enter a username")
 		} else {
+            loggedInUser.innerHTML = username.value
+            loggedInUser.style.display='block'
             username.style.display='none'
             post.style.display='block'
             loginBtn.value = LOGOUT
@@ -36,6 +39,7 @@ window.onload = function() {
        username.value='' // clear that username!
        username.style.display='inline-block'
        post.style.display='none'
+       loggedInUser.style.display='none'
        loginBtn.value = LOGIN
 	}
 
@@ -47,6 +51,7 @@ window.onload = function() {
      <nav>
           <h1>Rice Book</h1>
 
+          <span id="loggedInUser" style="display: none"></span>
           <input type="text" placeholder="username" id="username">
           <input type="button" value="Login" id="login">
 

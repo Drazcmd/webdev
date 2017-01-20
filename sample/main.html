@@ -11,7 +11,8 @@ window.onload = function() {
 	
 	var username = document.getElementById("username")
 	var loginBtn = document.getElementById("login")
-	
+    var loggedInUser = document.getElementById("loggedInUser")
+
 	loginBtn.value = LOGIN
 
 	loginBtn.onclick = function() {
@@ -47,10 +48,11 @@ window.onload = function() {
 
 <h1>Rice Book</h1>
 
+<span id="loggedInUser" style="display: none"></span>
 <input type="text" placeholder="username" id="username">
 <input type="button" value="Login" id="login">
 
-<div style="display: none">
+<div id="post" style="display: none">
 	<input type="text" placeholder="share something" width="200">
 	<input type="button" value="Post">
 </div>
