@@ -154,8 +154,7 @@ window.onload = function() {
 	box.onmousedown = function(e) {
 		appendResponse('mouse button ' + e.button + ' on ' + e.target.className)
 	}
-	var indent = ''
-	for (var ii=0; ii < 35; ++ii) indent += '&nbsp;'
+	const indent = Array(35).fill('&nbsp;').join('')
 
 	// move the box
 	var moveBox = document.getElementById("moveTheBox")
