@@ -19,6 +19,7 @@
 {"section":"Demerits", "items": [
     {"item":"game was not approved", "pts": 50},
     {"item":"submission does not properly include README.json", "pts":25},
+    {"item":"unapproved module or JavaScript library", "pts": 25},
 
     {"item":"game crashes", "pts": 10},
     {"item":"bug or error in game during load with Chrome", "pts": 10},
