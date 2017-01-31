@@ -54,7 +54,7 @@ describe(`Mocha+Chai Inclass Fetch Exercise for "${inclass.author}"`, () => {
     it('countWords should pass through errors', (done) => {
         inclass.countWords(`${baseURL}/badURL`)
         .then(r => {
-            done(new Error('Received response instead of error ${r}'))
+            done(new Error(`Received response instead of error ${r}`))
         })
         .catch(e => {
             done()
