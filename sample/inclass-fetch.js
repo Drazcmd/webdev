@@ -45,6 +45,14 @@
     function countWordsSafe(url) {
         // IMPLEMENT ME
         return countWords(url)
+            .then(res => {
+                console.log('this is inside countWordsSafe')
+                throw new Error('There was a problem...')
+            })
+            .catch(err => {
+                console.error(`Error inside countWordsSafe: ${err.message}`);
+                return { 99: 12345 }
+            })
     }
 
     function getLargest(url) {
