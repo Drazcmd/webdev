@@ -42,7 +42,7 @@ describe(`Mocha+Chai Inclass Fetch Exercise for "${inclass.author}"`, () => {
 	it('countWords should count the number of words in each article', (done) => {
         inclass.countWords(sample)
         .then(r => {
-            expect(Object.keys(r).length).to.equal(15)
+            expect(Object.keys(r).length).to.equal(10)
             Object.keys(r).forEach(key => {
                 expect(r[key]).to.be.above(0)
             })
@@ -76,7 +76,7 @@ describe(`Mocha+Chai Inclass Fetch Exercise for "${inclass.author}"`, () => {
     it('countWordsSafe should count the number of words in each article', (done) => {
         inclass.countWordsSafe(sample)
         .then(r => {
-            expect(Object.keys(r).length).to.equal(15)
+            expect(Object.keys(r).length).to.equal(10)
             Object.keys(r).forEach(key => {
                 expect(r[key]).to.be.above(0)
             })
