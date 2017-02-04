@@ -27,11 +27,17 @@ var createApp = function(canvas) {
 		c.fillStyle= blgColors[ Math.floor(Math.random()*blgColors.length)]
 		c.fillRect(x0, floor - blgHeight, blgWidth, blgHeight)
 		c.fillStyle="yellow"
-		for (var y = floor - floorSpacing; y > floor - blgHeight; y -= floorSpacing + windowHeight) {
-			for (var x = windowSpacing; x < blgWidth - windowWidth; x += windowSpacing + windowWidth) {
-				c.fillRect(x0 + x, y - windowHeight, windowWidth, windowHeight)
-			}
-		}
+
+		const dx = floorSpacing + windowHeight    
+		const dy = windowSpacing + windowWidth
+		const floors = Math.floor(blgHeight/dx)
+		const rows = Math.floor(blgWidth/dy) - 1
+		const range = (n, delta, x0) => Array(n).fill(1).map((_, i) => x0 + i * delta)
+		range(floors, dx, floor - blgHeight + dx).forEach(y => {
+		    range(rows, dy, windowSpacing).forEach(x => {
+			c.fillRect(x0 + x, y - windowHeight, windowWidth, windowHeight)
+		    })
+		})
 	}
 
 	return {
