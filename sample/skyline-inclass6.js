@@ -28,13 +28,18 @@ var createApp = function(canvas) {
 		c.fillStyle= building.color
 		
 		c.fillRect(x0, floor - blgHeight, blgWidth, blgHeight)
-		
-		for (var y = floor - floorSpacing; y > floor - blgHeight; y -= floorSpacing + windowHeight) {
-			for (var x = windowSpacing; x < blgWidth - windowWidth; x += windowSpacing + windowWidth) {
-				c.fillStyle = Math.random() > 0.5 ? "yellow" : "black"
-				c.fillRect(x0 + x, y - windowHeight, windowWidth, windowHeight)
-			}
-		}
+
+        const dx = floorSpacing + windowHeight    
+        const dy = windowSpacing + windowWidth
+        const floors = Math.floor(blgHeight/dx)
+        const rows = Math.floor(blgWidth/dy) - 1
+        const range = (n, delta, x0) => Array(n).fill(1).map((_, i) => x0 + i * delta)
+        range(floors, dx, floor - blgHeight + dx).forEach(y => {
+            range(rows, dy, windowSpacing).forEach(x => {
+                c.fillStyle = Math.random() > 0.5 ? "yellow" : "black"
+                c.fillRect(x0 + x, y - windowHeight, windowWidth, windowHeight)
+			})
+		})
 	}
 
 	// Sometimes we have to make executive decisions!
@@ -172,9 +177,7 @@ window.onload = function() {
 	canvas.addEventListener("mousedown", app.click, false)
 	document.getElementById("build").onclick = app.build
 	// let's start with some buildings so I don't have to click a lot
-	for (var i = 0; i < 10; i++) {
-		app.build()
-	}
+	Array(10).fill(1).forEach(app.build)
 	// The car moves by itself!
 	// To make this happen, we go ahead and repaint the world.
 	// This actually isn't that slow to do.	
