@@ -4,9 +4,9 @@
     {"item":"included screenshot of game in action", "pts": 5},    
     {"item":"game is playable in Chrome", "pts":5 },
     {"item":"no lingering console messages", "pts":5 },
-    {"item":"game is primarily visually based with moving or transforming graphics", "pts":10 },
+    {"item":"game is primarily visually based with moving or transforming graphics", "pts":5 },
     {"item":"game utilizes mouse for primary interaction", "pts":5 },
-    {"item":"unobtrusive JavaScript and CSS", "pts":10 },
+    {"item":"unobtrusive JavaScript and CSS", "pts":5 },
     {"item":"single player game, playable in about 10 minutes or less", "pts":10 },
     {"item":"game has some unique aspect which makes the game your own", "pts":10 },
     {"item":"source is well formatted", "pts":5 },
@@ -14,6 +14,8 @@
     {"item":"game difficulty adjusts by user action or with play over time", "pts":10 },
     {"item":"game includes score that is updated during play", "pts":5 },
     {"item":"game includes a metric other than score that is updated during or between play", "pts": 5},
+    {"item":"metrics are stored as cookies or in local storage", "pts": 5},
+    {"item":"metrics and best score are displayed for the user to see", "pts": 5},
     {"item":"Correct HTML header including doctype, html, author meta tag in head", "pts": 5}
 ]},
 {"section":"Demerits", "items": [
