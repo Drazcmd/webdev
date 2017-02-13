@@ -1,7 +1,7 @@
 [
 {"section":"Merits", "items": [
     {"item":"game is hosted and playable on surge", "pts": 5},
-    {"item":"included screenshot of game in action", "pts": 5},    
+    {"item":"included screenshot.png of game in action", "pts": 5},    
     {"item":"game is playable in Chrome", "pts":5 },
     {"item":"no lingering console messages", "pts":5 },
     {"item":"game is primarily visually based with moving or transforming graphics", "pts":5 },
