@@ -12,11 +12,11 @@ describe('Test Dummy Server Example Page', () => {
 
     it('should log in as the test user', (done) => {
         sleep(500)
-        .then(findId('message').getText()
-            .then(text => {
-                expect(text.indexOf(preamble)).to.equal(0)
-            })
-            .then(done))
+            .then(findId('message').getText()
+                .then(text => {
+                    expect(text.indexOf(preamble)).to.equal(0)
+                })
+                .then(done))
     })
 
     it("Update the headline and verify the change", (done) => {

@@ -1,13 +1,13 @@
-var http = require('http')
+const http = require('http')
 
-var host = '127.0.0.1'
-var port = 3333
+const host = '127.0.0.1'
+const port = 3333 || process.env.PORT
 
 http.createServer(preprocess).listen(port, host)
-console.log('Server running at http://' + host + ':' + port)
+console.log(`Server running at http://${host}:${port}`)
 
 function preprocess(req, res) {
-     var body = ''
+     let body = ''
      req.on('data', function(chunk) {
           body += chunk
      })
@@ -23,7 +23,7 @@ function server(req, res) {
      console.log('Request content-type  :', req.headers['content-type'])
      console.log('Request payload       :', req.body)
 
-     var payload = { 'hello': 'world' }
+     const payload = { 'hello': 'world' }
      res.setHeader('Content-Type', 'application/json')
      res.statusCode = 200
      res.end(JSON.stringify(payload))

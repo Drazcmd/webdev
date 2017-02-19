@@ -1,6 +1,6 @@
 const webdriver = require('selenium-webdriver')
 
-const url = 'http://localhost:3000/index.html'
+const url = 'http://localhost:8080/index.html'
 
 const driver = new webdriver.Builder()
     .forBrowser('chrome')
