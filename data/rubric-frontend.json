@@ -91,7 +91,7 @@
     {"item":"poorly named function", "pts": 3},
     {"item":"missing cached variable, e.g., not caching DOM lookup", "pts": 3},
     {"item":"reassigning or multiply assigning variables", "pts": 3},
-    {"item":"code line length too long (more than about 120 characters)", "pts": 3},
+    {"item":"non-html code line length too long (more than about 120 characters)", "pts": 3},
     {"item":"too much white space (use white space for logical separations and promote grouping)", "pts": 3},
     {"item":"excessive use of DOM ids", "pts": 3},
     {"item":"missing clear abstraction usage opportunity", "pts": 3},
