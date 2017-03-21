@@ -1,7 +1,7 @@
 const http = require('http')
 
 const host = '127.0.0.1'
-const port = 3333 || process.env.PORT
+const port = process.env.PORT || 3333
 
 http.createServer(preprocess).listen(port, host)
 console.log(`Server running at http://${host}:${port}`)
