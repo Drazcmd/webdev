@@ -45,6 +45,7 @@
     {"item":"fat React component instead of simple function", "pts": 15},
     {"item":"did not use fetch or wrapped fetch (aka resource) for AJAX calls", "pts": 10},
     {"item":"state mutation", "pts": 10},
+    {"item":"refreshing the page when logged in should keep the user logged in", "pts":10},
 
     {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
