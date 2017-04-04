@@ -199,8 +199,8 @@ me "Hello".  GET /headlines/foo will return a default value for
 the user "foo".
 </p>
 
-<p>Make the zipcode, email, and avatar endpoints also persistent, i.e., PUT /zipcode should update
-the zipcode value returned by GET /zipcdode.</p>
+<p>Make the zipcode and email endpoints also persistent, i.e., PUT /zipcode should update
+the zipcode value returned by GET /zipcdode.  PUT /avatar is just a stub.</p>
 
 <p>Similar to the headline, we'll have an array for articles.  
 We should start with 3 hardcoded articles in this array,
@@ -343,7 +343,7 @@ your implementation, so be sure you test your deployed server before you submit.
 	<li>Unit test that PUT headline updates the headline message, i.e., GET, PUT to change the value, GET to verify it was changed</li>
 	<li>Unit test adding an article, i.e., GET and count the current number of articles, POST a new article, 
         verify you get back what you added, then GET again and count the number verifying it increased by one</li>
-    <li>Profile endpoints avatar, email, and zipcode will update the inmemory stored values.</li>
+    <li>Profile endpoints email and zipcode will update the inmemory stored values.</li>
 	<li>The other endpoints on the API page all function and return stubbed data according to the API definition.</li>
 </ul>
 <p>Inlucde a JUnitXML report of your backend unit tests.
