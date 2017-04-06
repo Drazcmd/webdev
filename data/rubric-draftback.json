@@ -51,6 +51,7 @@
 ]},
 {"section":"Demerits", "items": [
     {"item":"late submission 10pts per day", "pts": 10},
+    {"item":"followed directions in repo submission", "pts": 5},
     {"item":"unapproved module or JavaScript library", "pts": 25},
 
     {"item":"did not follow Redux tutorial in implementation details", "pts": 25},
