@@ -62,6 +62,7 @@
     {"item":"state mutation", "pts": 10},
     {"item":"submitted .git or node_modules directory", "pts":10},
     {"item":"submitted bundle.js file", "pts":10},
+    {"item":"refreshing the page when logged in should keep the user logged in", "pts":10},
     
     {"item":"code smells bad or has some issue", "pts": 10},
     {"item":"sections of code repeated more than twice (i.e., it's not DRY code)", "pts": 10},
