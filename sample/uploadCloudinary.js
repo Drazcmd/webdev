@@ -6,7 +6,13 @@ const stream = require('stream')
 const cloudinary = require('cloudinary')
 
 if (!process.env.CLOUDINARY_URL) {
-     process.env.CLOUDINARY_URL="cloudinary:// get value from heroku"
+    console.error('*******************************************************************************')
+    console.error('*******************************************************************************\n')
+    console.error('You must set the CLOUDINARY_URL environment variable for Cloudinary to function\n')
+    console.error('\texport CLOUDINARY="cloudinary:// get value from heroku"\n')
+    console.error('*******************************************************************************')
+    console.error('*******************************************************************************')
+    process.exit(1)
 }
 
 const doUpload = (publicId, req, res, next) => {
