@@ -11,13 +11,16 @@
 	{"item":"Is free of most errors in grammar, usage, and mechanics", "pts": 10 }
 ]},
 {"section":"Presentation", "items": [
-	{"item":"Talk is no more than 5 minutes in length", "pts": 10},
-	{"item":"Opening of presentation clearly describes topic premise including opinion", "pts": 6}, 
-	{"item":"Demonstrates enthusiasm about topic", "pts": 6},
-	{"item":"Demonstrates understanding of the topic", "pts": 6}, 
-	{"item":"Presentation materials are legible", "pts": 6}, 
-	{"item":"Presentation materials are additive to content delivery", "pts": 6},
-	{"item":"Closing of presentation summarizes main points", "pts": 6},
+	{"item":"Talk is between 3:30 and 4:15 in length", "pts": 10},
+    {"item":"Presentation etiquette: introduce yourself and talk to audience", "pts": 4},
+	{"item":"Opening of presentation clearly describes topic premise including opinion", "pts": 4}, 
+    {"item":"Critically informative, i.e., more than just an overview", "pts": 4},
+	{"item":"Demonstrates enthusiasm about topic", "pts": 4},
+	{"item":"Demonstrates understanding of the topic", "pts": 4}, 
+    {"item":"Includes demonstration or example of topic", "pts": 4},
+	{"item":"Presentation materials are legible and polished", "pts": 4}, 
+    {"item":"Novelty of slides, not just text", "pts": 4},
+	{"item":"Closing of presentation summarizes main points", "pts": 4},
 	{"item":"Provides references for additional information", "pts": 4}
 ]}
 ]
