@@ -1,6 +1,6 @@
 [
 {"section":"Merits", "items": [
-    {"item":"README.txt file with netid, frontend and backend URLs", "pts":1},
+    {"item":"README.json file with netid, frontend and backend URLs", "pts":1},
     {"item":"AutoGrader: bad creds do not login", "pts":1},
     {"item":"AutoGrader: test user can login with 3-word passphrase", "pts":1},
     {"item":"AutoGrader: logged out user cannot access content", "pts":3},
