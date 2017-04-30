@@ -1,6 +1,6 @@
 [
 {"section":"Merits", "items": [    
-    {"item":"README.txt file with netid, frontend and backend URLs", "pts": 2},
+    {"item":"README.json file with netid, frontend and backend URLs", "pts": 2},
     {"item":"AutoGrader: all backend functionality is present as per previous assignment", "pts":15},
     {"item":"Frontend: user interface and style", "pts":5},
     {"item":"Frontend: fully functional as per previous assignments", "pts":10},
